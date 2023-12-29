@@ -7,6 +7,7 @@ const ProfileComponent = ({ lawyer }) => {
     const [showAllComments, setShowAllComments] = useState(false);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
+    
 
     // Assuming the lawyer object has a comments array property
     useEffect(() => {
