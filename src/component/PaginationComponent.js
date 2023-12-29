@@ -1,4 +1,5 @@
 // PaginationComponent.js
+import './pagination.css'
 
 import React from 'react';
 

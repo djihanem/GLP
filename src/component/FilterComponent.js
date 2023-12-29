@@ -1,9 +1,10 @@
 // FilterComponent.js
+import './filter.css';
 import React from 'react';
 
 const FilterComponent = ({ onSearch, onFilterChange }) => {
     return (
-        <div>
+        <div className='filter'>
             <input type="text" placeholder="Rechercher par nom, spécialité, localisation, etc." onChange={onSearch} />
             <select onChange={onFilterChange}>
                 <option value="specialite">Spécialité</option>

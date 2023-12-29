@@ -1,0 +1,35 @@
+/* pagination.css */
+
+/* Style for the pagination container */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Add space above the pagination */
+}
+
+/* Style for individual pagination buttons */
+.pagination button {
+    background-color: #f8f9fa; /* Default background color for buttons */
+    color: #007bff; /* Default text color for buttons */
+    border: 1px solid #dee2e6; /* Border for buttons */
+    padding: 8px 12px; /* Padding inside each button */
+    margin: 0 3px; /* Space between each button */
+    border-radius: 4px; /* Rounded corners for buttons */
+    cursor: pointer; /* Cursor style for better UX */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+/* Style for active pagination button */
+.pagination button.active {
+    background-color: #007bff; /* Active button background color */
+    color: white; /* Active button text color */
+    border: 1px solid #007bff; /* Border for active button */
+}
+
+/* Hover effect for pagination buttons */
+.pagination button:hover:not(.active) {
+    background-color: #e9ecef; /* Hover background color */
+}
+
+/* You can add more styles as needed */
