@@ -62,7 +62,7 @@ const LawyerListComponent = () => {
             speciality: "Droit des affaires",
             rating: 4.8,
             description: "Jane Smith is an expert in business law with a focus on mergers and acquisitions...",
-            image: "path_to_lawyer2_image.jpg",
+            image: lawyer2,
             phone: "234-567-8901",
             email: "janesmith@example.com",
             languages: ["Français", "Allemand"],
@@ -107,7 +107,7 @@ const LawyerListComponent = () => {
             speciality: "Droit pénal",
             rating: 4.2,
             description: "Robert Johnson has a strong background in criminal law...",
-            image: "path_to_lawyer3_image.jpg",
+            image: lawyer3,
             phone: "345-678-9012",
             email: "robertjohnson@example.com",
             languages: ["Français", "Espagnol"],
@@ -152,7 +152,7 @@ const LawyerListComponent = () => {
             speciality: "Droit de la famille",
             rating: 4.6,
             description: "Emily White specializes in family law with a focus on divorce and child custody...",
-            image: "path_to_lawyer4_image.jpg",
+            image: lawyer1,
             phone: "456-789-0123",
             email: "emilywhite@example.com",
             languages: ["Français", "Italien"],
@@ -197,7 +197,7 @@ const LawyerListComponent = () => {
             speciality: "Droit du travail",
             rating: 4.7,
             description: "William Brown is a seasoned labor law attorney...",
-            image: "path_to_lawyer5_image.jpg",
+            image: lawyer3,
             phone: "567-890-1234",
             email: "williambrown@example.com",
             languages: ["Français", "Portugais"],
@@ -242,7 +242,7 @@ const LawyerListComponent = () => {
             speciality: "Droit des biens immobiliers",
             rating: 4.9,
             description: "Sophia Martinez is an expert in real estate law...",
-            image: "path_to_lawyer6_image.jpg",
+            image: lawyer4,
             phone: "678-901-2345",
             email: "sophiamartinez@example.com",
             languages: ["Français", "Néerlandais"],
@@ -306,6 +306,7 @@ const LawyerListComponent = () => {
                     <p>{lawyer.description}</p>
                 </div>
                 <button onClick={() => goToProfile(lawyer.id)}>Voir le profil</button>
+                
             </div>
         ))}
     </div>
