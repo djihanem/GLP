@@ -1,6 +1,4 @@
-// PaginationComponent.js
-import './pagination.css'
-
+import './pagination.css';
 import React from 'react';
 
 const PaginationComponent = ({ currentPage, totalPages, onPageChange }) => {
@@ -9,6 +7,14 @@ const PaginationComponent = ({ currentPage, totalPages, onPageChange }) => {
 
     return (
         <div className="pagination">
+            {/* Previous Button */}
+            {currentPage > 1 && (
+                <button onClick={() => onPageChange(currentPage - 1)}>
+                    Previous
+                </button>
+            )}
+
+            {/* Page Buttons */}
             {pages.map(page => (
                 <button 
                     key={page} 
@@ -18,6 +24,13 @@ const PaginationComponent = ({ currentPage, totalPages, onPageChange }) => {
                     {page}
                 </button>
             ))}
+
+            {/* Next Button */}
+            {currentPage < totalPages && (
+                <button onClick={() => onPageChange(currentPage + 1)}>
+                    Next
+                </button>
+            )}
         </div>
     );
 };

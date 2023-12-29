@@ -1,14 +1,14 @@
 // LawyerListComponent.js
 import React from 'react';
 import { useState } from 'react';
-import ProfileComponent from "./ProfileComponent";
+// import ProfileComponent from "./ProfileComponent";
 import './lawyerlist.css';
 import lawyer1 from "./pic/lawyers/lawyer1.jpeg";
 import lawyer2 from "./pic/lawyers/lawyer2.jpeg";
 import lawyer3 from "./pic/lawyers/lawyer3.jpeg";
 import lawyer4 from "./pic/lawyers/lawyer4.jpeg";
-const LawyerListComponent = () => {
-    const [selectedLawyerId, setSelectedLawyerId] = useState(null);
+const LawyerListComponent = (s) => {
+//     const [selectedLawyerId, setSelectedLawyerId] = useState(null);
 
     const lawyers = [
         {
@@ -284,15 +284,15 @@ const LawyerListComponent = () => {
     ];
     
 
-    const goToProfile = (id) => {
-        setSelectedLawyerId(id);
-        console.log(`Navigating to profile of lawyer with ID: ${id}`);
-    };
+    // const goToProfile = (id) => {
+    //     setSelectedLawyerId(id);
+    //     console.log(`Navigating to profile of lawyer with ID: ${id}`);
+    // };
 
-    if (selectedLawyerId) {
-        const selectedLawyer = lawyers.find(lawyer => lawyer.id === selectedLawyerId);
-        return <ProfileComponent lawyer={selectedLawyer} />;
-    }
+    // if (selectedLawyerId) {
+    //     const selectedLawyer = lawyers.find(lawyer => lawyer.id === selectedLawyerId);
+    //     return <ProfileComponent lawyer={selectedLawyer} />;
+    // }
     
     return (
         <div className='lawyerslist'>
@@ -304,9 +304,8 @@ const LawyerListComponent = () => {
                     <p>Spécialité: {lawyer.speciality}</p>
                     <p>Note: {lawyer.rating}</p>
                     <p>{lawyer.description}</p>
+                    <button>Voir Profile</button>
                 </div>
-                <button onClick={() => goToProfile(lawyer.id)}>Voir le profil</button>
-                
             </div>
         ))}
     </div>
