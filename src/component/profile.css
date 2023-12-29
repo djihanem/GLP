@@ -1,64 +1,18 @@
-/* General styling for the profile container */
+/* profile.css */
+
 .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin: 40px;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    max-width: 400px;
-    margin: 40px auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+    background-color: rgb(222, 215, 206);
 }
 
-/* Styling for the profile image */
-.profile-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%; /* Makes the image round */
-    margin-bottom: 20px;
-    object-fit: cover;
-    border: 3px solid #ffffff; /* Optional, adds a white border */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Styling for the profile details */
-.profile-details {
-    text-align: center;
-}
-
-.profile-details h2 {
-    margin-bottom: 10px;
-    color: #333333;
-}
-
-.profile-details p {
-    margin-bottom: 8px;
-    color: #666666;
-    font-size: 16px;
-}
-
-/* Styling for additional details, if any */
-/* .additional-details {
-    // Add your styling here for any additional details
-} */
-
-/* Media query for responsiveness (optional) */
-@media (max-width: 600px) {
-    .profile-container {
-        max-width: 90%;
-    }
-
-    .profile-image {
-        width: 120px;
-        height: 120px;
-    }
-
-    .profile-details h2 {
-        font-size: 1.5em;
-    }
-
-    .profile-details p {
-        font-size: 14px;
-    }
+.profile-header img{
+ border-radius: 50%;
+ max-width: 200px;
+ border: #ccc;
 }

@@ -6,6 +6,8 @@ import About from './component/containers/About'
 import Lawyer from './component/containers/Lawyer';
 import User from './component/avocat/User';
 import Footer from './component/Footer';
+import ProfileComponent from './component/ProfileComponent';
+
 
 //import Utilisateur from './component/avocat/utilisateur';
 function App() {
@@ -19,6 +21,8 @@ function App() {
          <Route path="/lawyer" element={<Lawyer />}/>
          <Route path="/user" element={<User/>}/>
          <Route path="/footer" element={<Footer/>}/>
+         <Route path='/profile/:id' element={<ProfileComponent/>}/>
+         
          
         
        </Routes>
