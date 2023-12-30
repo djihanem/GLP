@@ -134,10 +134,17 @@ const Profile = () => {
 <section className="reviews-section">
                 <h2>Commentaires et Évaluations</h2>
                 <ul className="comment-list">
-                    {displayedComments.map((comment, index) => (
-                        <li key={index}>{comment}</li>
-                    ))}
-                </ul>
+    {displayedComments.map((comment, index) => (
+        <li key={comment.id} className="comment-card">
+            <img src={lawyer.image} alt={lawyer.name} className="lawyer-avatar" />
+            <div className="comment-content">
+                <h4>{lawyer.name}</h4>
+                <p>{comment}</p>
+            </div>
+        </li>
+    ))}
+</ul>
+
                 {comments.length > 3 && (
                     <button onClick={() => setShowAllComments(!showAllComments)}>
                         {showAllComments ? 'Voir moins' : 'Voir tous les commentaires'}
