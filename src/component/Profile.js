@@ -39,17 +39,16 @@ const Profile = () => {
             ],
             address: (
                 <div className="map-carte">
-                    <p>
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102439.54174620449!2d4.8550631212012645!3d36.6447804553586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128d2e53efa9d9cf%3A0x6ea31897a5bddc54!2sAmizour!5e0!3m2!1sfr!2sdz!4v1703300570108!5m2!1sfr!2sdz" 
-                            width="600" 
-                            height="450" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade"
-                        ></iframe>
-                    </p>
-                </div>
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102439.54174620449!2d4.8550631212012645!3d36.6447804553586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128d2e53efa9d9cf%3A0x6ea31897a5bddc54!2sAmizour!5e0!3m2!1sfr!2sdz!4v1703300570108!5m2!1sfr!2sdz" 
+            width="600" 
+            height="450" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            className="map-iframe"
+        ></iframe>
+    </div>
             ),
             comments: [
                 "Great lawyer! Helped me with my divorce case.",
@@ -89,41 +88,43 @@ const Profile = () => {
             <div className="profile-header">
                 <h1>{lawyer.name}</h1>
                 <img src={lawyer.image} alt={lawyer.name} className="profile-image" />
+                <button>Editer Le Profile</button>
             </div>
             
-            {/* Basic Information Section */}
             <section className="basic-info-section">
-                <h2>Informations de Base</h2>
-                <p><strong>Spécialité:</strong> {lawyer.speciality}</p>
-                <p><strong>Coordonnées:</strong> {lawyer.phone} | {lawyer.email}</p>
-                <p><strong>Langues parlées:</strong> {lawyer.languages.join(', ')}</p>
-            </section>
+    <h2 className="section-title">Informations de Base</h2>
+    
+    <p className="info-item"><strong>Rating :</strong> {lawyer.rating}</p>
+    <p className="info-item"><strong>Spécialité :</strong> {lawyer.speciality}</p>
+    <p className="info-item"><strong>Coordonnées :</strong> {lawyer.phone} | {lawyer.email}</p>
+    <p className="info-item"><strong>Langues parlées :</strong> {lawyer.languages.join(', ')}</p>
+</section>
+
 
             {/* Skills and Experience Section */}
-            <section className="skills-experience-section">
-                <h2>Compétences et Expériences</h2>
-                <ul>
+                        <section className="skills-experience-section">
+                <h2 className="section-title">Compétences et Expériences</h2>
+                
+                <ul className="skills-list">
                     {lawyer.skills.map((skill, index) => (
-                        <li key={index}>{skill}</li>
+                        <li key={index} className="skill-item">{skill}</li>
                     ))}
                 </ul>
+                
                 <div className="experiences">
                     {lawyer.experiences.map((exp, index) => (
                         <div key={index} className="experience-item">
-                            <h3>{exp.title}</h3>
-                            <p>{exp.description}</p>
-                            <p>{exp.date}</p>
+                            <h3 className="experience-title">{exp.title}</h3>
+                            <p className="experience-description">{exp.description}</p>
+                            <p className="experience-date">{exp.date}</p>
                         </div>
                     ))}
                 </div>
             </section>
 
-             {/* Google Maps Section */}
-             <section className="map-section">
-                {/* You can integrate Google Maps API here or use a library */}
-                <h2>Carte Géographique</h2>
-                <p>{lawyer.address}</p>
-            </section>
+                        {/* Appointment Section */}
+             <AppointmentSection/>
+            
 
             </div>
             {/*  secoooooooooooooooooooooooooond */}
@@ -131,26 +132,29 @@ const Profile = () => {
 
                         <div className="second">
                                 {/* Reviews Section */}
-<section className="reviews-section">
-                <h2>Commentaires et Évaluations</h2>
-                <ul className="comment-list">
-    {displayedComments.map((comment, index) => (
-        <li key={comment.id} className="comment-card">
-            <img src={lawyer.image} alt={lawyer.name} className="lawyer-avatar" />
-            <div className="comment-content">
-                <h4>{lawyer.name}</h4>
-                <p>{comment}</p>
-            </div>
-        </li>
-    ))}
-</ul>
+                                <section className="reviews-section">
+    <div className="comments">
+        <h2 className="section-title">Commentaires et Évaluations</h2>
+        <ul className="comment-list">
+            {displayedComments.map((comment, index) => (
+                <li key={comment.id} className="comment-card">
+                    <img src={lawyer.image} alt={lawyer.name} className="lawyer-avatar" />
+                    <div className="comment-content">
+                        <h4>{lawyer.name}</h4>
+                        <p>{comment}</p>
+                    </div>
+                </li>
+            ))}
+        </ul>
 
-                {comments.length > 3 && (
-                    <button onClick={() => setShowAllComments(!showAllComments)}>
-                        {showAllComments ? 'Voir moins' : 'Voir tous les commentaires'}
-                    </button>
-                )}
-                 {/* Input field for adding a new comment */}
+        {comments.length > 3 && (
+            <button onClick={() => setShowAllComments(!showAllComments)} className="center-button">
+                {showAllComments ? 'Voir moins' : 'Voir tous les commentaires'}
+            </button>
+        )}
+    </div>
+
+    {/* Input field for adding a new comment */}
     <div className="add-comment-section">
         <input 
             type="text" 
@@ -161,9 +165,13 @@ const Profile = () => {
         />
         <button onClick={handleAddComment} className="add-comment-btn">Ajouter</button>
     </div>
+</section>
+ {/* Google Maps Section */}
+ <section className="map-section">
+             <h2 className="section-title">Carte Géographique</h2>
+             <p className="address-info">{lawyer.address}</p>
             </section>
-             {/* Appointment Section */}
-             <AppointmentSection/>
+             
                         </div>
            
 

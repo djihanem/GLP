@@ -1,40 +1,32 @@
-/* filter.css */
-
-/* Style for the filter container */
 .filter {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 15px; /* Add padding inside the filter container */
-    border: 1px solid #ccc; /* Add a border around the filter container */
-    border-radius: 5px; /* Rounded corners for the filter container */
-    background-color: #f8f9fa; /* Background color for the filter container */
+    padding: 10px 15px;
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    background-color: #f8f9fa; 
     margin-left: 100px;
     margin-right: 100px;
 }
 
-/* Style for the input element */
 .filter input[type="text"] {
-    padding: 8px 12px; /* Padding inside the input field */
-    border: 1px solid #ccc; /* Border for the input field */
-    border-radius: 4px; /* Rounded corners for the input field */
-    flex-grow: 1; /* Allow the input to grow and occupy available space */
+    padding: 8px 12px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    flex-grow: 1; 
 }
 
-/* Style for the select dropdown */
+
 .filter select {
-    padding: 8px 12px; /* Padding inside the select dropdown */
-    border: 1px solid #ccc; /* Border for the select dropdown */
-    border-radius: 4px; /* Rounded corners for the select dropdown */
-    margin-left: 10px; /* Space between the input and select dropdown */
-    cursor: pointer; /* Cursor style for better UX */
-    background-color: white; /* Background color for the select dropdown */
-    transition: border-color 0.3s ease; /* Smooth transition effect */
+    padding: 8px 12px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    margin-left: 10px; 
+    cursor: pointer;
+    background-color: white; 
+    transition: border-color 0.3s ease; 
 }
-
-/* Hover effect for select dropdown */
 .filter select:hover {
-    border-color: #007bff; /* Border color on hover */
+    border-color: #007bff; 
 }
-
-/* You can add more styles as needed */

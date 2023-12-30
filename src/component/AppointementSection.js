@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './profile.css';
 
 const AppointmentSection = () => {
     const availableSlots = [
@@ -24,31 +25,32 @@ const AppointmentSection = () => {
 
     return (
         <section className="appointment-section">
-            <h2>Rendez-vous</h2>
-            <form onSubmit={handleSubmit}>
-                <p>Choisissez une date et heure pour votre rendez-vous :</p>
-                
-                {/* Dropdown to select available time slots */}
-                <select value={selectedSlot} onChange={handleSlotChange}>
-                    <option value="">Sélectionnez une heure</option>
-                    {availableSlots.map((slot, index) => (
-                        <option key={index} value={slot}>
-                            {new Date(slot).toLocaleString()}
-                        </option>
-                    ))}
-                </select>
-                
-                {/* Submit button */}
-                <button type="submit">Réserver</button>
-            </form>
+        <h2 className="section-title">Rendez-vous</h2>
+        <form onSubmit={handleSubmit} className="appointment-form">
+            <p className="form-description">Choisissez une date et heure pour votre rendez-vous :</p>
             
-            {/* Display confirmation message after submission */}
-            {submitted && (
-                <div>
-                    Vous avez réservé un rendez-vous pour : {new Date(selectedSlot).toLocaleString()}
-                </div>
-            )}
-        </section>
+            {/* Dropdown to select available time slots */}
+            <select value={selectedSlot} onChange={handleSlotChange} className="time-slot-dropdown">
+                <option value="">Sélectionnez une heure</option>
+                {availableSlots.map((slot, index) => (
+                    <option key={index} value={slot}>
+                        {new Date(slot).toLocaleString()}
+                    </option>
+                ))}
+            </select>
+            
+            {/* Submit button */}
+            <button type="submit" className="submit-button">Réserver</button>
+        </form>
+        
+        {/* Display confirmation message after submission */}
+        {submitted && (
+            <div className="confirmation-message">
+                Vous avez réservé un rendez-vous pour : {new Date(selectedSlot).toLocaleString()}
+            </div>
+        )}
+    </section>
+    
     );
 };
 
