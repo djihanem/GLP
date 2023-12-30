@@ -10,6 +10,7 @@ const Profile = () => {
     const [showAllComments, setShowAllComments] = useState(false);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
+    
 
 
     const lawyer =
