@@ -30,13 +30,12 @@ function Navbar() {
           {/* Le bouton du menu déroulant */}
           <div className="dropdown">
             <button className="dropbtn" onClick={toggleDropdown}>
-             Inscreption
+             Inscription
               {/* {isDropdownOpen ? <FaTimes /> : <FaBars />} */}
             </button>
             {isDropdownOpen && (
               <div className="dropdown-content">
-                <a href="./Lawyer">Lawyer</a>
-               
+                <a href="./LogInSignUpAvocat">Lawyer</a>
                 <a href="./User">User</a>
                 
               </div>
