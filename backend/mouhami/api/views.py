@@ -1,11 +1,64 @@
-from django.shortcuts import render
+from django.http import JsonResponse
 # from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Commentaire
 from .serializers import CommentaireSerializer
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from .forms import LawyerSignUpForm, LawyerLoginForm
+from django.contrib.auth import authenticate, login
 
-# Create your views here.
+from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from django.http import JsonResponse
+
+User = get_user_model()
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def lawyer_signup(request):
+    try:
+        if request.method == 'POST':
+            form = LawyerSignUpForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                refresh = RefreshToken.for_user(user)
+                access_token = str(refresh.access_token)
+                return JsonResponse({'message': 'Signup successful', 'access_token': access_token})
+            else:
+                return JsonResponse({'message': 'Invalid form data'}, status=400)
+        else:
+            return JsonResponse({'message': 'Invalid request method'}, status=400)
+    except Exception as e:
+        print(f"Error in lawyer_signup view: {str(e)}")
+        return JsonResponse({'message': 'Internal Server Error'}, status=500)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def lawyer_login(request):
+    try:
+        if request.method == 'POST':
+            form = LawyerLoginForm(request.POST)
+            if form.is_valid():
+                email = form.cleaned_data.get('email') 
+                password = form.cleaned_data.get('password')
+                user = authenticate(request, email=email, password=password)
+                if user is not None:
+                    refresh = RefreshToken.for_user(user)
+                    access_token = str(refresh.access_token)
+                    return JsonResponse({'message': 'Login successful', 'access_token': access_token})
+                else:
+                    return JsonResponse({'message': 'Invalid credentials'}, status=401)
+            else:
+                return JsonResponse({'message': 'Invalid form data'}, status=400)
+        else:
+            return JsonResponse({'message': 'Invalid request method'}, status=400)
+    except Exception as e:
+        print(f"Error in lawyer_login view: {str(e)}")
+        return JsonResponse({'message': 'Internal Server Error'}, status=500)
 
 @api_view(['GET']) #method allows to this view
 def getRoutes(request):

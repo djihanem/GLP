@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7l28a2gy3a**fql8y(s#g1@h)nenxhh6@mnwim7i7^hu#0ka+4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders', 
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -107,7 +113,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+AUTHENTICATION_BACKENDS = [
+    'path.to.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
