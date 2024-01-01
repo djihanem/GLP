@@ -11,6 +11,16 @@ const FilterComponent = ({ onSearch, onFilterChange }) => {
                 <option value="langue">Langue</option>
                 <option value="ville">Ville</option>
             </select>
+            <select onChange={onFilterChange}>
+                <option value="specialite">Spécialité</option>
+                <option value="langue">Langue</option>
+                <option value="ville">Ville</option>
+            </select>
+            <select onChange={onFilterChange}>
+                <option value="specialite">Spécialité</option>
+                <option value="langue">Langue</option>
+                <option value="ville">Ville</option>
+            </select>
             {/* Ajoutez d'autres options de filtrage ici */}
         </div>
     );

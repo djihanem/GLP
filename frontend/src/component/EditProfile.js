@@ -35,7 +35,7 @@ const EditProfile = () => {
             "Always available when needed."
         ]
     });
-
+    const availableLanguages = ["Français", "Anglais", "Español", "Deutsch", "Italiano", "Português"];
     const handleChange = (e) => {
         const { name, value } = e.target;
         setLawyer(prevLawyer => ({
@@ -50,12 +50,30 @@ const EditProfile = () => {
         console.log('Updated lawyer profile:', lawyer);
     };
 
+    const handleLanguageChange = (e) => {
+        const selectedLanguages = Array.from(e.target.selectedOptions, option => option.value);
+        setLawyer(prevLawyer => ({
+            ...prevLawyer,
+            languages: selectedLanguages
+        }));
+    };
+
     return (
         <div className="edit-lawyer-profile">
         <NavBar />
         <div className="editing-section">
             <h2>Edit Lawyer Profile</h2>
             <form onSubmit={handleSubmit} className="profile-form">
+            <div className="form-group-img">
+                        <label htmlFor="image">Upload Picture:</label>
+                        <input 
+                            type="file" 
+                            id="image" 
+                            name="image" 
+                            accept="image/*" 
+                        />
+                    </div>
+
                 <div className="form-group">
                     <label htmlFor="name">Name:</label>
                     <input type="text" id="name" name="name" value={lawyer.name} onChange={handleChange} />
@@ -68,6 +86,23 @@ const EditProfile = () => {
                     <label htmlFor="description">Description:</label>
                     <textarea id="description" name="description" value={lawyer.description} onChange={handleChange}></textarea>
                 </div>
+
+                <div className="form-group-lang">
+                        <label htmlFor="languages">Languages:</label>
+                        <select 
+                            id="languages" 
+                            name="languages" 
+                            multiple 
+                            value={lawyer.languages} 
+                            onChange={handleLanguageChange}
+                        >
+                            {availableLanguages.map((lang, index) => (
+                                <option key={index} value={lang}>
+                                    {lang}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 <div className="form-group">
                     <label htmlFor="phone">Phone:</label>
                     <input type="tel" id="phone" name="phone" value={lawyer.phone} onChange={handleChange} />
