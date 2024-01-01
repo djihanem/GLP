@@ -14,6 +14,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from django.http import JsonResponse
+from .models import Lawyer
+
 
 User = get_user_model()
 
@@ -42,17 +44,27 @@ def lawyer_login(request):
     try:
         if request.method == 'POST':
             form = LawyerLoginForm(request.POST)
+            print(request.POST)
             if form.is_valid():
                 email = form.cleaned_data.get('email') 
                 password = form.cleaned_data.get('password')
-                user = authenticate(request, email=email, password=password)
-                if user is not None:
-                    refresh = RefreshToken.for_user(user)
-                    access_token = str(refresh.access_token)
-                    return JsonResponse({'message': 'Login successful', 'access_token': access_token})
+                
+                # Check if a user with the provided email exists
+                user = Lawyer.objects.filter(email=email).first()
+                
+                if user is not None and user.check_password(password):
+                    # Authenticate the user
+                    authenticated_user = authenticate(request, email=email, password=password)
+
+                    if authenticated_user is not None:
+                        # Your token generation logic here
+                        return JsonResponse({'message': 'Login successful'})
+                    else:
+                        return JsonResponse({'message': 'Authentication failed'}, status=401)
                 else:
                     return JsonResponse({'message': 'Invalid credentials'}, status=401)
             else:
+                print(form.errors)
                 return JsonResponse({'message': 'Invalid form data'}, status=400)
         else:
             return JsonResponse({'message': 'Invalid request method'}, status=400)
