@@ -17,6 +17,28 @@ from django.http import JsonResponse
 
 User = get_user_model()
 
+# @api_view(['POST'])
+# @permission_classes([AllowAny])
+# def lawyer_signup(request):
+#     try:
+#         if request.method == 'POST':
+#             form = LawyerSignUpForm(request.POST)
+#             if form.is_valid():
+#                 user = form.save()
+#                 refresh = RefreshToken.for_user(user)
+#                 access_token = str(refresh.access_token)
+#                 return JsonResponse({'message': 'Signup successful', 'access_token': access_token})
+#             else:
+#                 return JsonResponse({'message': 'Invalid form data'}, status=400)
+#         else:
+#             return JsonResponse({'message': 'Invalid request method'}, status=400)
+#     except Exception as e:
+#         print(f"Error in lawyer_signup view: {str(e)}")
+#         return JsonResponse({'message': 'Internal Server Error'}, status=500)
+import logging
+
+logger = logging.getLogger(__name__)
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def lawyer_signup(request):
@@ -27,13 +49,16 @@ def lawyer_signup(request):
                 user = form.save()
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
+                logger.info(f"New user signed up: {user.email}")  # Log réussi
                 return JsonResponse({'message': 'Signup successful', 'access_token': access_token})
             else:
+                logger.warning("Invalid form data received")  # Log de données de formulaire invalides
                 return JsonResponse({'message': 'Invalid form data'}, status=400)
         else:
+            logger.warning("Invalid request method")  # Log pour méthode de requête invalide
             return JsonResponse({'message': 'Invalid request method'}, status=400)
     except Exception as e:
-        print(f"Error in lawyer_signup view: {str(e)}")
+        logger.exception(f"Error in lawyer_signup view: {str(e)}")  # Log pour toute exception
         return JsonResponse({'message': 'Internal Server Error'}, status=500)
 
 @api_view(['POST'])
