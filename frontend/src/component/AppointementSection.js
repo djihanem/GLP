@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './profile.css';
+import NavBar from './NavBar';
+import Footer from './Footer';
 
 const AppointmentSection = () => {
     const availableSlots = [
@@ -24,7 +26,9 @@ const AppointmentSection = () => {
     };
 
     return (
-        <section className="appointment-section">
+        <section className="appointment-page">
+<NavBar/>
+            <div className="appointement">
         <h2 className="section-title">Rendez-vous</h2>
         <form onSubmit={handleSubmit} className="appointment-form">
             <p className="form-description">Choisissez une date et heure pour votre rendez-vous :</p>
@@ -49,6 +53,10 @@ const AppointmentSection = () => {
                 Vous avez réservé un rendez-vous pour : {new Date(selectedSlot).toLocaleString()}
             </div>
         )}
+
+</div>
+
+<Footer/>
     </section>
     
     );

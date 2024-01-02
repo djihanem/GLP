@@ -223,6 +223,15 @@
     max-width: 800px; 
     margin: 20px auto; 
 }
+.appointment-section button{
+    background-color: #007bff;
+    padding: 8px;
+    border-radius: 5px;
+    color: white;
+}
+
+
+
 
 .section-title {
     font-size: 1.3em; 
@@ -267,3 +276,42 @@
     display: block;
     margin: 0 auto; 
 }
+
+
+
+
+
+/* rate style */
+
+.rate-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .rate{
+    margin-top: 20px;
+  }
+  
+  .rate-select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .rate-btn {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .rate-btn:hover {
+    background-color: #0056b3;
+  }
+  
