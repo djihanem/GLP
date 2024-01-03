@@ -9,9 +9,9 @@ import Footer from './component/Footer';
 import Profile from './component/Profile';
 import EditProfile from './component/EditProfile';
 import AppointmentSection from './component/AppointementSection';
+import SignUpAvocat from './component/avocat/SignUpAvocat';
+import LoginAvocat from './component/avocat/loginAvocat';
 
-
-//import Utilisateur from './component/avocat/utilisateur';
 function App() {
   return (
     <div className="App">
@@ -26,9 +26,8 @@ function App() {
          <Route path='/profil' element={<Profile/>}/>
          <Route path='/editprofile' element={<EditProfile/>}/>
          <Route path='/rendezvous' element={<AppointmentSection/>}/>
-         
-         
-        
+         <Route path="/SignUpAvocat" element={<SignUpAvocat />} />
+         <Route path="/loginAvocat" element={<LoginAvocat />} />
        </Routes>
      </BrowserRouter>
     </div>

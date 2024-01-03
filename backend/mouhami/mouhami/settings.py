@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'api.apps.ApiConfig',
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders', 
 ]
 
@@ -64,7 +65,9 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-CORS_ORIGIN_ALLOW_ALL=True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  
+]
 
 ROOT_URLCONF = 'mouhami.urls'
 
@@ -117,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'path.to.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 # Internationalization

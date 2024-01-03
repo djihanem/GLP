@@ -1,8 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './NavBar.css';
-// import './avocat/LogInSignUpAvocat'; 
-import LogInSignUpAvocat from "./avocat/LogInSignUpAvocat";
 
 function Navbar() {
   const navRef = useRef();
@@ -35,7 +33,7 @@ function Navbar() {
             </button>
             {isDropdownOpen && (
               <div className="dropdown-content">
-                <a href="./LogInSignUpAvocat">Lawyer</a>
+                <a href="./loginAvocat">Lawyer</a>
                 <a href="./User">User</a>
                 
               </div>

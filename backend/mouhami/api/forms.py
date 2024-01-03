@@ -2,6 +2,7 @@ from django import forms
 from .models import Lawyer
 from django.contrib.auth.hashers import make_password
 
+
 class LawyerSignUpForm(forms.ModelForm):
     class Meta:
         model = Lawyer
@@ -12,8 +13,4 @@ class LawyerSignUpForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
-class LawyerLoginForm(forms.ModelForm):
-    class Meta:
-        model = Lawyer
-        fields = ['email', 'password']
+    from django.contrib.auth.forms import AuthenticationForm
