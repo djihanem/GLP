@@ -7,6 +7,10 @@ class Lawyer(models.Model):
     phoneNumber = models.IntegerField()
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=50)
+    specialite = models.CharField(max_length=100, null=True)
+    langues = models.CharField(max_length=100, null=True)
+    description = models.TextField(null=True)
+    adresse = models.CharField(max_length=200, null=True)
 
 class Commentaire(models.Model):
     name = models.CharField(max_length=30)

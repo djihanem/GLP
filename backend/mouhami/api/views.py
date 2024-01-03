@@ -15,6 +15,32 @@ from rest_framework.permissions import AllowAny
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from django.contrib.auth import authenticate
+
+from django.contrib.auth.hashers import check_password
+
+@csrf_exempt
+@api_view(['POST'])
+def lawyer_login(request):
+    try:
+        if request.method == 'POST':
+            # Get email and password from the request
+            email = request.data.get('email')
+            password = request.data.get('password')
+
+            # Check if email exists in the database
+            user = Lawyer.objects.filter(email=email).first()
+
+            if user is not None and check_password(password, user.password):
+                # Here you might want to create tokens or send any success response
+                return JsonResponse({'message': 'Login successful'})
+            else:
+                return JsonResponse({'message': 'Invalid credentials'}, status=401)
+        else:
+            return JsonResponse({'message': 'Invalid request method'}, status=400)
+    except Exception as e:
+        print(f"Error in lawyer_login view: {str(e)}")
+        return JsonResponse({'message': 'Internal Server Error'}, status=500)
 
 User = get_user_model()
 
@@ -38,38 +64,6 @@ def lawyer_signup(request):
     except Exception as e:
         print(f"Error in lawyer_signup view: {str(e)}")
         return JsonResponse({'message': 'Internal Server Error'}, status=500)
-
-
-@csrf_exempt
-@api_view(['POST'])
-def lawyer_login(request):
-    try:
-        if request.method == 'POST':
-            # Get email and password from the request
-            email = request.data.get('email')
-            password = request.data.get('password')
-
-            # Check if email exists in the database
-            user = Lawyer.objects.filter(email=email).first()
-
-            if user is not None and user.check_password(password):
-                # Authenticate the user and generate JWT tokens
-                authenticate_user = authenticate(request, username=user.username, password=password)
-                login(request, authenticate_user)
-
-                refresh = RefreshToken.for_user(authenticate_user)
-                access_token = str(refresh.access_token)
-
-                return JsonResponse({'message': 'Login successful', 'access_token': access_token})
-            else:
-                return JsonResponse({'message': 'Invalid credentials'}, status=401)
-        else:
-            return JsonResponse({'message': 'Invalid request method'}, status=400)
-    except Exception as e:
-        print(f"Error in custom_login view: {str(e)}")
-        return JsonResponse({'message': 'Internal Server Error'}, status=500)
-
-
 
 @api_view(['GET']) #method allows to this view
 def getRoutes(request):
@@ -119,4 +113,10 @@ def getCommentaires(request):
 def getCommentaire(request,pk):
     commentaire=Commentaire.objects.get(id=pk) #get the specific comment with the pk 
     serializer = CommentaireSerializer(commentaire, many=False) #serialize them
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getLawyers(request):
+    Lawyers=Lawyer.objects.all() #get all lawyers from the database 
+    serializer = LawyerSerializer(Lawyers, many=True) #serialize them
     return Response(serializer.data)

@@ -3,8 +3,10 @@ import axios from 'axios';
 import './loginAvocat.css';
 import email_icon from '../pic/email.png';
 import password_icon from '../pic/password.png';
+import { useNavigate } from 'react-router-dom'; // Import de useHistory depuis react-router-dom
 
 const LoginAvocat = () => {
+  let navigate = useNavigate(); // Use useNavigate to get navigation functionality
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -27,6 +29,7 @@ const LoginAvocat = () => {
         }
       });
       console.log('Logged in:', response.data);
+      navigate('/editprofile');
     } catch (error) {
       console.error('Error:', error);
     }

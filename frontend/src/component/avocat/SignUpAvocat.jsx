@@ -4,8 +4,13 @@ import './SignUpAvocat.css';
 import email_icon from '../pic/email.png';
 import password_icon from '../pic/password.png';
 import number_icon from '../pic/number.png';
+import { useNavigate } from 'react-router-dom'; // Import de useHistory depuis react-router-dom
+
 
 const SignUpAvocat = () => {
+
+  let navigate = useNavigate(); // Use useNavigate to get navigation functionality
+
   const [formData, setFormData] = useState({
     firstName: '',
     secondName: '',
@@ -35,6 +40,9 @@ const SignUpAvocat = () => {
       });
   
       console.log('Signed up:', response.data);
+      // Si l'inscription est réussie, redirigez vers la page d'édition du profil
+      navigate('/editprofile'); // Redirection vers la page d'édition du profil
+
     } catch (error) {
       console.error('Error:', error);
     }
