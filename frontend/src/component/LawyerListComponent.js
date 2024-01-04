@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 // import ProfileComponent from "./ProfileComponent";
 import "./lawyerlist.css";
+import { Link } from "react-router-dom";
 
 // import lawyer2 from "./pic/lawyers/lawyer2.jpeg";
 // import lawyer3 from "./pic/lawyers/lawyer3.jpeg";
@@ -321,7 +322,10 @@ const LawyerListComponent = (s) => {
             <p>Spécialité: {lawyer.specialite}</p>
             <p>Phone: {lawyer.phoneNumber}</p>
             <p>{lawyer.description}</p>
-            <button>Voir Profile</button>
+            <button>
+              {" "}
+              <Link to={`/profil/${lawyer.id}`}>Voir Profile</Link>
+            </button>
           </div>
         </div>
       ))}
