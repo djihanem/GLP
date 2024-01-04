@@ -27,7 +27,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,7 +42,14 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'rest_framework',
     'rest_framework_simplejwt',
-    'corsheaders', 
+    'corsheaders',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    'rest_framework.authtoken',
 ]
 
 REST_FRAMEWORK = {
@@ -63,6 +69,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     "corsheaders.middleware.CorsMiddleware",
+
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -121,7 +129,23 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google' : {
+        'SCOPE' : {
+            'profile',
+            'email'
+        },
+        'AUTH_PARAMS': {'access_type' : 'online'}
+    },
+}
+    
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 

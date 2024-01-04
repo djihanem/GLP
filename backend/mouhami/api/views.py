@@ -1,23 +1,25 @@
 from django.http import JsonResponse
 # from django.http import JsonResponse
 from rest_framework.response import Response
-from django.contrib.auth.forms import AuthenticationForm
 from rest_framework.decorators import api_view
 from .models import Commentaire, Lawyer
-from django.contrib.auth import authenticate, login
 from .serializers import CommentaireSerializer, LawyerSerializer
 from .forms import LawyerSignUpForm
-from django.contrib.auth import login
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
-from django.contrib.auth import authenticate
-
 from django.contrib.auth.hashers import check_password
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from dj_rest_auth.registration.views import SocialLoginView
+
+class GoogleLogin(SocialLoginView): # if you want to use Authorization Code Grant, use this
+    adapter_class = GoogleOAuth2Adapter
+    callback_url = 'http://127.0.0.1:3000/'
+    client_class = OAuth2Client
 
 @csrf_exempt
 @api_view(['POST'])
@@ -64,6 +66,7 @@ def lawyer_signup(request):
     except Exception as e:
         print(f"Error in lawyer_signup view: {str(e)}")
         return JsonResponse({'message': 'Internal Server Error'}, status=500)
+
 
 @api_view(['GET']) #method allows to this view
 def getRoutes(request):
