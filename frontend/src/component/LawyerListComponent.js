@@ -4,6 +4,7 @@ import { useState } from "react";
 // import ProfileComponent from "./ProfileComponent";
 import "./lawyerlist.css";
 import { Link } from "react-router-dom";
+import avatar from "./pic/avatar.png";
 
 // import lawyer2 from "./pic/lawyers/lawyer2.jpeg";
 // import lawyer3 from "./pic/lawyers/lawyer3.jpeg";
@@ -312,7 +313,7 @@ const LawyerListComponent = (s) => {
       {lawyers.map((lawyer) => (
         <div key={lawyer.id} className="lawyer-card">
           <img
-            src={lawyer.image}
+            src={lawyer.image || avatar}
             alt={`${lawyer.firstName} ${lawyer.secondName}`}
           />
           <div className="lawyer-details">

@@ -6,6 +6,7 @@ import lawyer1 from "./pic/lawyers/lawyer1.jpeg";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import { Link, useParams } from "react-router-dom";
+import avatar from "./pic/avatar.png";
 
 const Profile = () => {
   let { idlawyer } = useParams();
@@ -64,7 +65,7 @@ const Profile = () => {
               {lawyer.firstName} {lawyer.secondName}
             </h1>
             <img
-              src={lawyer.image}
+              src={lawyer.image || avatar}
               alt={`${lawyer.firstName} ${lawyer.secondName}`}
               className="profile-image"
             />
@@ -148,7 +149,7 @@ const Profile = () => {
                 {displayedComments.map((comment, index) => (
                   <li key={comment.id} className="comment-card">
                     <img
-                      src={lawyer1}
+                      src={avatar}
                       alt={comment.name}
                       className="lawyer-avatar"
                     />
