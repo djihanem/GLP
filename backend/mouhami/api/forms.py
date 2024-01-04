@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import make_password
 
 
 class LawyerSignUpForm(forms.ModelForm):
-    class Meta:
+    class Meta: 
         model = Lawyer
         fields = ['firstName', 'secondName', 'phoneNumber', 'email', 'password']
     def save(self, commit=True):

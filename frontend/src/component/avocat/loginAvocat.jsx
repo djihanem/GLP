@@ -29,7 +29,13 @@ const LoginAvocat = () => {
         }
       });
       console.log('Logged in:', response.data);
-      navigate('/editprofile');
+      // navigate('/editprofile');
+      const lawyerId = response.data.user_id; // Supposons que l'ID de l'avocat soit récupéré de la réponse
+    
+    // Redirection vers la page d'édition du profil avec l'ID en tant que paramètre de requête
+    navigate(`/editprofile?id=${lawyerId}`); // Redirection vers la page d'édition du profil avec l'ID de l'avocat
+
+    
     } catch (error) {
       console.error('Error:', error);
     }

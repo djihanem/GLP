@@ -34,8 +34,12 @@ def lawyer_login(request):
             user = Lawyer.objects.filter(email=email).first()
 
             if user is not None and check_password(password, user.password):
-                # Here you might want to create tokens or send any success response
-                return JsonResponse({'message': 'Login successful'})
+                # # Here you might want to create tokens or send any success response
+                # return JsonResponse({'message': 'Login successful'})
+
+                 # Login successful, include user ID in the response
+                print(user.id)
+                return JsonResponse({'message': 'Login successful', 'user_id': int(user.id)})
             else:
                 return JsonResponse({'message': 'Invalid credentials'}, status=401)
         else:
@@ -57,7 +61,10 @@ def lawyer_signup(request):
                 user = form.save()
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
-                return JsonResponse({'message': 'Signup successful', 'access_token': access_token})
+                user_id = user.id  # Récupérer l'ID de l'utilisateur créé
+                return JsonResponse({'message': 'Signup successful', 'access_token': access_token, 'user_id': int(user.id)})
+                print(user_id)
+                # return JsonResponse({'message': 'Signup successful', 'access_token': access_token})
             else:
                 print(form.errors)
                 return JsonResponse({'message': 'Invalid form data'}, status=400)
@@ -128,4 +135,14 @@ def getLawyers(request):
 def getLawyer(request,pk):
     oneLawyer=Lawyer.objects.get(id=pk) 
     serializer = LawyerSerializer(oneLawyer, many=False) #serialize it
+    return Response(serializer.data)
+    
+@api_view(['PUT'])
+def updateLawyer(request,pk):
+    data= request.data
+    lawyer=Lawyer.objects.get(id=pk)
+    serializer=LawyerSerializer(instance=lawyer,data=data)
+
+    if serializer.is_valid():
+        serializer.save()
     return Response(serializer.data)

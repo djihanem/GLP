@@ -12,5 +12,9 @@ urlpatterns=[
     path('login/', lawyer_login, name='lawyer_login'),
 
     path('Lawyers/',views.getLawyers,name='Lawyers'),
+
+    path('Lawyers/<str:pk>/update/',views.updateLawyer,name='update-Lawyer'),
+
     path('Lawyers/<str:pk>/',views.getLawyer,name='Lawyer'),
+
 ]
