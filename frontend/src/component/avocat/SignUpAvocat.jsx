@@ -39,9 +39,14 @@ const SignUpAvocat = () => {
         },
       });
   
+      // console.log('Signed up:', response.data);
+      // // Si l'inscription est réussie, redirigez vers la page d'édition du profil
+      // navigate('/editprofile'); // Redirection vers la page d'édition du profil
       console.log('Signed up:', response.data);
-      // Si l'inscription est réussie, redirigez vers la page d'édition du profil
-      navigate('/editprofile'); // Redirection vers la page d'édition du profil
+    const lawyerId = response.data.user_id; // Supposons que l'ID de l'avocat soit récupéré de la réponse
+    
+    // Redirection vers la page d'édition du profil avec l'ID en tant que paramètre de requête
+    navigate(`/editprofile?id=${lawyerId}`); // Redirection vers la page d'édition du profil avec l'ID de l'avocat
 
     } catch (error) {
       console.error('Error:', error);

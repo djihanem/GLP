@@ -40,7 +40,6 @@ const Profile = () => {
     );
     let data = await response.json();
     setLawyer(data);
-    setComments(data.comments || []); // Set comments here if available in the lawyer data
   };
 
   const displayedComments = showAllComments
@@ -79,6 +78,7 @@ const Profile = () => {
             <p className="info-item">
               <strong>rating :</strong> 4.5
             </p>
+
             <p className="info-item">
               <strong>Spécialité :</strong> {lawyer.specialite}
             </p>
@@ -109,6 +109,10 @@ const Profile = () => {
           <section className="skills-experience-section">
             <h2 className="section-title">Compétences et Expériences</h2>
             <ul className="skills-list">
+              {" "}
+              <p className="info-item">
+                <strong>Description :</strong> {lawyer.description}
+              </p>
               <li className="skill-item">Mediation</li>
               <li className="skill-item">Contract Law</li>
               <li className="skill-item">Litigation</li>
