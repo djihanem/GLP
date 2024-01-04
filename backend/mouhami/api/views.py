@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from rest_framework.decorators import api_view
 from .models import Commentaire, Lawyer
 from django.contrib.auth import authenticate, login
-from .serializers import CommentaireSerializer
+from .serializers import CommentaireSerializer, LawyerSerializer
 from .forms import LawyerSignUpForm
 from django.contrib.auth import login
 from django.contrib.auth import get_user_model
@@ -119,4 +119,10 @@ def getCommentaire(request,pk):
 def getLawyers(request):
     Lawyers=Lawyer.objects.all() #get all lawyers from the database 
     serializer = LawyerSerializer(Lawyers, many=True) #serialize them
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getLawyer(request,pk):
+    oneLawyer=Lawyer.objects.get(id=pk) 
+    serializer = LawyerSerializer(oneLawyer, many=False) #serialize it
     return Response(serializer.data)

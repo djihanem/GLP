@@ -6,11 +6,12 @@ class Lawyer(models.Model):
     secondName = models.CharField(max_length=100)
     phoneNumber = models.IntegerField()
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=50)
+    password = models.CharField(max_length=100)
     specialite = models.CharField(max_length=100, null=True)
     langues = models.CharField(max_length=100, null=True)
     description = models.TextField(null=True)
     adresse = models.CharField(max_length=200, null=True)
+    image = models.ImageField(upload_to='./lawyer_images/', null=True, blank=True)
 
 class Commentaire(models.Model):
     name = models.CharField(max_length=30)

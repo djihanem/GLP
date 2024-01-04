@@ -9,4 +9,5 @@ class CommentaireSerializer(ModelSerializer):
 class LawyerSerializer(ModelSerializer):
     class Meta:
         model= Lawyer
-        fields=['firstName','secondName','phoneNumber','email','adresse','specialite',"langues",'desciption'] 
+        fields='__all__' 
+        # fields=['firstName','secondName','phoneNumber','email','adresse','specialite',"langues",'desciption'] 
