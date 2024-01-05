@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Commentaire, Lawyer
+from .models import Commentaire, Lawyer, User
 from .serializers import CommentaireSerializer, LawyerSerializer
 from .forms import LawyerSignUpForm
 from django.contrib.auth import get_user_model
@@ -56,6 +56,9 @@ def google_login(request):
 
             user_email = id_info['email']
             user_name = id_info.get('name', '')
+
+            user_account, created = User.objects.get_or_create(email=user_email, defaults={'name': user_name})
+            user_account.save()
 
             request.session['user_email'] = user_email
             request.session['user_name'] = user_name
