@@ -29,6 +29,8 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
+SITE_ID = 1
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,6 +53,9 @@ INSTALLED_APPS = [
 
     'rest_framework.authtoken',
 ]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '743505389927-hjfqqjm0hf0cvh4r1sc9icuu5qscq84f.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'AIzaSyAxfwGTnhGGMfetTA6TY3nxcBWotBjAbec'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -75,6 +80,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  
+    "http://127.0.0.1:3000",
 ]
 
 ROOT_URLCONF = 'mouhami.urls'

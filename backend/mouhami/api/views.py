@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-# from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Commentaire, Lawyer
@@ -11,12 +10,36 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.hashers import check_password
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
+from google.auth.transport import requests
+from google.oauth2 import id_token
 
-class GoogleLogin(SocialLoginView): # if you want to use Authorization Code Grant, use this
+@csrf_exempt  
+def google_login(request):
+    if request.method == 'POST':
+        id_token_data = request.POST.get('idToken')
+
+        try:
+            id_info = id_token.verify_oauth2_token(id_token_data, requests.Request())
+
+            user_email = id_info['email']
+            user_name = id_info.get('name', '')
+
+            request.session['user_email'] = user_email
+            request.session['user_name'] = user_name
+
+            return JsonResponse({'message': 'Login successful'})
+        except ValueError as e: 
+            return JsonResponse({'error': 'Invalid token'}, status=400)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+class GoogleLogin(SocialLoginView): 
     adapter_class = GoogleOAuth2Adapter
     callback_url = 'http://127.0.0.1:3000/'
     client_class = OAuth2Client
@@ -73,6 +96,7 @@ def lawyer_signup(request):
     except Exception as e:
         print(f"Error in lawyer_signup view: {str(e)}")
         return JsonResponse({'message': 'Internal Server Error'}, status=500)
+    
 
 
 @api_view(['GET']) #method allows to this view
