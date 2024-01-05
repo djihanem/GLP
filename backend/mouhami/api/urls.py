@@ -18,4 +18,6 @@ urlpatterns=[
     path('Lawyers/<str:pk>/update/',views.updateLawyer,name='update-Lawyer'),
 
     path('Lawyers/<str:pk>/',views.getLawyer,name='Lawyer'),
+
+    path('search-lawyers/', views.searchLawyers, name='search-lawyers'),
 ]

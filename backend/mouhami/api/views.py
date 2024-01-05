@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Commentaire, Lawyer, User
+from .models import Commentaire, Lawyer
 from .serializers import CommentaireSerializer, LawyerSerializer
 from .forms import LawyerSignUpForm
 from django.contrib.auth import get_user_model
@@ -17,29 +17,45 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from google.auth.transport import requests
 from google.oauth2 import id_token
+from rest_framework import status
 from django.contrib.auth import logout
-from django.http import HttpResponse
+
+
+@api_view(['GET'])
+def searchLawyers(request):
+    # Récupère les paramètres de recherche depuis la requête GET
+    adresse = request.GET.get('adresse', None)
+    specialite = request.GET.get('specialite', None)
+    langues = request.GET.get('langues', None)
+
+    # Filtrer les lawyers en fonction des paramètres de recherche s'ils sont présents
+    lawyers = Lawyer.objects.all()
+    if adresse:
+        lawyers = lawyers.filter(adresse__icontains=adresse)
+    if specialite:
+        lawyers = lawyers.filter(specialite__icontains=specialite)
+    if langues:
+        lawyers = lawyers.filter(langues__icontains=langues)
+
+    # Serializer les résultats filtrés
+    serializer = LawyerSerializer(lawyers, many=True)
+    
+    if not serializer.data:  # Si la liste des avocats est vide
+        return Response({"message": "Aucun avocat trouvé avec ces critères de recherche."}, status=status.HTTP_404_NOT_FOUND)
+
+    return Response(serializer.data)
+
 
 @csrf_exempt  
 def google_login(request):
-    response = HttpResponse()
-    response['Access-Control-Allow-Origin'] = 'http://localhost:3000'  
-    response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
-    response['Access-Control-Allow-Headers'] = 'Content-Type, X-CSRFToken'
-    response['Access-Control-Allow-Credentials'] = 'true'
     if request.method == 'POST':
         id_token_data = request.POST.get('idToken')
-        print(f"Received id_token_data: {id_token_data}")
 
         try:
             id_info = id_token.verify_oauth2_token(id_token_data, requests.Request())
-            
+
             user_email = id_info['email']
             user_name = id_info.get('name', '')
-            print(user_email, user_name)
-
-            user_account, created = User.objects.get_or_create(email=user_email, defaults={'name': user_name})
-            user_account.save()
 
             request.session['user_email'] = user_email
             request.session['user_name'] = user_name
@@ -50,6 +66,9 @@ def google_login(request):
 
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
+def logout(request):
+    logout(request)
+    return JsonResponse({"message": "Logged out successfully"})
 
 class GoogleLogin(SocialLoginView): 
     adapter_class = GoogleOAuth2Adapter
@@ -109,9 +128,6 @@ def lawyer_signup(request):
         print(f"Error in lawyer_signup view: {str(e)}")
         return JsonResponse({'message': 'Internal Server Error'}, status=500)
     
-def logout(request):
-    logout(request)
-    return JsonResponse({"message": "Logged out successfully"})
 
 
 @api_view(['GET']) #method allows to this view
