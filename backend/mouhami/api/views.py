@@ -17,6 +17,7 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from google.auth.transport import requests
 from google.oauth2 import id_token
+from django.contrib.auth import logout
 
 @csrf_exempt  
 def google_login(request):
@@ -97,6 +98,9 @@ def lawyer_signup(request):
         print(f"Error in lawyer_signup view: {str(e)}")
         return JsonResponse({'message': 'Internal Server Error'}, status=500)
     
+def logout(request):
+    logout(request)
+    return JsonResponse({"message": "Logged out successfully"})
 
 
 @api_view(['GET']) #method allows to this view
