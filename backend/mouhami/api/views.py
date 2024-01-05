@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Commentaire, Lawyer
+from .models import Commentaire, Lawyer, User
 from .serializers import CommentaireSerializer, LawyerSerializer
 from .forms import LawyerSignUpForm
 from django.contrib.auth import get_user_model
@@ -18,17 +18,28 @@ from dj_rest_auth.registration.views import SocialLoginView
 from google.auth.transport import requests
 from google.oauth2 import id_token
 from django.contrib.auth import logout
+from django.http import HttpResponse
 
 @csrf_exempt  
 def google_login(request):
+    response = HttpResponse()
+    response['Access-Control-Allow-Origin'] = 'http://localhost:3000'  
+    response['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+    response['Access-Control-Allow-Headers'] = 'Content-Type, X-CSRFToken'
+    response['Access-Control-Allow-Credentials'] = 'true'
     if request.method == 'POST':
         id_token_data = request.POST.get('idToken')
+        print(f"Received id_token_data: {id_token_data}")
 
         try:
             id_info = id_token.verify_oauth2_token(id_token_data, requests.Request())
-
+            
             user_email = id_info['email']
             user_name = id_info.get('name', '')
+            print(user_email, user_name)
+
+            user_account, created = User.objects.get_or_create(email=user_email, defaults={'name': user_name})
+            user_account.save()
 
             request.session['user_email'] = user_email
             request.session['user_name'] = user_name

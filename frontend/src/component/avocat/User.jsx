@@ -25,12 +25,15 @@ const User = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken,
+                    'X-CSRFToken': csrfToken || '', 
                 },
                 body: JSON.stringify({
-                    idToken: credentialResponse.idToken,
+                    idToken: credentialResponse.tokenId,
                 }),
-            });
+                credentials: 'include',
+            }); 
+            
+            console.log('Payload:', credentialResponse);
 
             if (response.ok) {
                 console.log('Login successful');

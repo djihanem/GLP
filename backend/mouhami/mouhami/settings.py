@@ -50,8 +50,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-
+    
     'rest_framework.authtoken',
+
+    'social_django',
 ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '743505389927-hjfqqjm0hf0cvh4r1sc9icuu5qscq84f.apps.googleusercontent.com'
@@ -76,11 +78,15 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 
     'allauth.account.middleware.AccountMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  
     "http://127.0.0.1:3000",
+    'http://localhost:8000',  
+    'http://127.0.0.1:8000',
 ]
 
 AUTHENTICATION_PROVIDERS = [
@@ -140,6 +146,8 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    'path.to.YourCustomUserBackend',
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
