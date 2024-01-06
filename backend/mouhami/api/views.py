@@ -17,6 +17,32 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from google.auth.transport import requests
 from google.oauth2 import id_token
+from rest_framework import status
+
+@api_view(['GET'])
+def searchLawyers(request):
+    # Récupère les paramètres de recherche depuis la requête GET
+    adresse = request.GET.get('adresse', None)
+    specialite = request.GET.get('specialite', None)
+    langues = request.GET.get('langues', None)
+
+    # Filtrer les lawyers en fonction des paramètres de recherche s'ils sont présents
+    lawyers = Lawyer.objects.all()
+    if adresse:
+        lawyers = lawyers.filter(adresse__icontains=adresse)
+    if specialite:
+        lawyers = lawyers.filter(specialite__icontains=specialite)
+    if langues:
+        lawyers = lawyers.filter(langues__icontains=langues)
+
+    # Serializer les résultats filtrés
+    serializer = LawyerSerializer(lawyers, many=True)
+    
+    if not serializer.data:  # Si la liste des avocats est vide
+        return Response({"message": "Aucun avocat trouvé avec ces critères de recherche."}, status=status.HTTP_404_NOT_FOUND)
+
+    return Response(serializer.data)
+
 
 @csrf_exempt  
 def google_login(request):
