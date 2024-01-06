@@ -17,3 +17,7 @@ class Commentaire(models.Model):
     name = models.CharField(max_length=30)
     body=models.TextField()
     date = models.DateTimeField(auto_now=True)
+
+class User(models.Model):
+    email = models.EmailField(unique=True)
+    name = models.CharField(max_length=100)
