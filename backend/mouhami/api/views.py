@@ -18,6 +18,8 @@ from dj_rest_auth.registration.views import SocialLoginView
 from google.auth.transport import requests
 from google.oauth2 import id_token
 from rest_framework import status
+from django.contrib.auth import logout
+
 
 @api_view(['GET'])
 def searchLawyers(request):
@@ -64,6 +66,9 @@ def google_login(request):
 
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
+def logout(request):
+    logout(request)
+    return JsonResponse({"message": "Logged out successfully"})
 
 class GoogleLogin(SocialLoginView): 
     adapter_class = GoogleOAuth2Adapter
