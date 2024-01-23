@@ -29,7 +29,6 @@ const Profile = () => {
   const [newComment, setNewComment] = useState("");
 
   let [lawyer, setLawyer] = useState({});
-
   useEffect(() => {
     getLawyer(); // Add parentheses to call the function
   }, [idlawyer]);
@@ -65,11 +64,14 @@ const Profile = () => {
             </h1>
             <img
               src={lawyer.image || avatar}
+              //src={test}
+              // src={`../../../../backend/mouhami${lawyer.image}`}
+
               alt={`${lawyer.firstName} ${lawyer.secondName}`}
               className="profile-image"
             />
             {/* <h1> this is ID {idlawyer}</h1> */}
-            <button>Editer Le Profile</button>
+            {/* <button>Editer Le Profile</button> */}
           </div>
 
           <section className="basic-info-section">
