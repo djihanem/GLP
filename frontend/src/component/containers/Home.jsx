@@ -7,6 +7,7 @@ import { BsFillAwardFill } from "react-icons/bs";
 import law_icon from '../pic/law.jpg';
 import team_one from '../pic/team1.jpg';
 import team_two from '../pic/team2.jpg';
+import home from '../pic/homee.JPG';
 import team_three from '../pic/team3.jpg';
 import { MdChat } from "react-icons/md";
 import { MdOutlineMiscellaneousServices, MdMediation,MdOutlineFamilyRestroom  } from "react-icons/md";
@@ -24,11 +25,11 @@ const Home = () => {
         <main>
          <Navbar/>
          <section id="home">
-            <img src={lawyer_icon} alt="" />
-            <div className="write">
-             <h1>Welcome to our Law Firm</h1>
-             <p>Your Problem <span>Our Goal</span></p>
-            </div>
+            <div className="home">
+              <div className="my-pic">
+                <img src={home} />
+              </div>
+           </div>
          </section>
            <section id="services">
              
@@ -74,30 +75,7 @@ const Home = () => {
               </div>
             </div>
            </section>
-           <section id="team">
-             
-                 <h2>Our Team</h2>
-                 <hr />
-        
-             <div className="team-members">
-                 <div className="team-member1">
-                     <img src={team_one} alt="Attorney 1"></img>
-                     
-                     <h3>John Doe</h3>
-                     <p>Attorney at Law</p>
-                 </div>
-                 <div className="team-member2">
-                     <img src={team_two} alt="Attorney 2" />
-                     <h3>Jane Smith</h3>
-                     <p>Senior Counsel</p>
-                 </div>
-                 <div className="team-member3">
-                     <img src={team_three} alt="Attorney 1" />
-                     <h3>John Doe</h3>
-                     <p>Attorney at Law</p>
-                 </div>
-             </div>
-         </section>
+           
          <section id="servicess">
              <h2>Our Services</h2>
              <div className="cards">             
@@ -157,22 +135,20 @@ const Home = () => {
               </div> 
            </section>
         
-         <section id="contact">
-                <div className="last">
-                    <div className="map-carte">
-                     <p><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102439.54174620449!2d4.8550631212012645!3d36.6447804553586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128d2e53efa9d9cf%3A0x6ea31897a5bddc54!2sAmizour!5e0!3m2!1sfr!2sdz!4v1703300570108!5m2!1sfr!2sdz" width="600" height="450" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></p>
-                    </div>
-                    <div className="contactus">
-                     <h2>Get In Touch</h2>
-                     <h1>Contact</h1>
-                     <input type="text" placeholder="Your Name" />
-                     <input type="email" placeholder="Your Email" />
-                     <textarea id="message" name="message" placeholder="Enter your message here" ></textarea>
-                     <button><a href="#">Send Message</a></button>
-                  </div>
-               </div>
-          </section>
-          <Footer/>
+        <section id="contact">
+        <div className="last">
+           
+            <div className="contactus">
+             <h2>Get In Touch</h2>
+             <h1>Contact</h1>
+             <input type="text" placeholder="Your Name" />
+             <input type="email" placeholder="Your Email" />
+             <textarea id="message" name="message" placeholder="Enter your message here" ></textarea>
+             <button><a href="#">Send Message</a></button>
+            </div>
+        </div>
+        </section>
+        <Footer/>
       </main>
   );
 }

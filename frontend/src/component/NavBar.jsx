@@ -1,6 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUser} from 'react-icons/fa';
+
 import './NavBar.css';
+// import './avocat/LogInSignUpAvocat'; 
+
+
 
 function Navbar() {
   const navRef = useRef();
@@ -21,20 +25,25 @@ function Navbar() {
         <nav ref={navRef}>
           <a href="./Home">Home</a>
           <a href="./Lawyer">Lawyer</a>
-          <a href="#about">About Us</a>
-          <a href="#servicess">Services</a>
-          <a href="#contact">Contact Us</a>
+          <a href="./Home#about">About Us</a>
+          <a href="./Home/#servicess">Services</a>
+          <a href="./Home/#contact">Contact Us</a>
 
           {/* Le bouton du menu déroulant */}
           <div className="dropdown">
+          <span style={{ visibility: "hidden" }}>--</span>
             <button className="dropbtn" onClick={toggleDropdown}>
-             Inscription
+            
+            <FaUser />
+
               {/* {isDropdownOpen ? <FaTimes /> : <FaBars />} */}
             </button>
             {isDropdownOpen && (
               <div className="dropdown-content">
-                <a href="./loginAvocat">Lawyer</a>
+                <a href="./SignUpAvocat">Lawyer</a>
                 <a href="./User">User</a>
+                <a href="./Edit Profil">Edit Profil</a>
+                <a href="./Logout">Logout</a>
                 
               </div>
             )}

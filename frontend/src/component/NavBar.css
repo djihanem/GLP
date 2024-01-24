@@ -120,21 +120,27 @@ header .nav-close-btn {
     }
     header nav {
         position: fixed;
-        top: 0;
+        top: -7%;
         left: 0;
-        height: 100%;
+        height: 110%;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 1.5rem;
+        gap: 0.5rem;
         background-color: rgba(58, 38, 5, 0.959);
         transition: 1s;
         transform: translateY(-100vh);
     }
     header .responsive_nav {
         transform: none;
+    }
+    .dropdown .dropdown-content a {
+        width: 60%;
+        gap: 0.5rem;
+        font-size: 15px;
+        text-align: center;
     }
 }
 
