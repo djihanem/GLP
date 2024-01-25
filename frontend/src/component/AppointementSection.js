@@ -5,9 +5,9 @@ import './rendezvous.css';
 
 const AppointmentSection = () => {
     const lawyerTokenTimes = [
-        { date: 'January 1, 2024', hour: '09:00:00', clientName: 'Client A' },
-        { date: 'January 1, 2024', hour: '10:00:00', clientName: 'Client B' },
-        { date: 'January 2, 2024', hour: '11:00:00', clientName: 'Client C' },
+        { date: 'January 1, 2024', hour: '09:00:00', clientFirstName: 'Client A First', clientLastName: 'Client A Last' },
+        { date: 'January 1, 2024', hour: '10:00:00', clientFirstName: 'Client B First', clientLastName: 'Client B Last' },
+        { date: 'January 2, 2024', hour: '11:00:00', clientFirstName: 'Client C First', clientLastName: 'Client C Last' },
         // Add more token times as needed
     ];
 
@@ -28,24 +28,34 @@ const AppointmentSection = () => {
     const [selectedSlot, setSelectedSlot] = useState('');
     const [submitted, setSubmitted] = useState(false);
 
-    const [nom, setNom] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [selectedDayAndTime, setSelectedDayAndTime] = useState('');
+    const [selectedDay, setSelectedDay] = useState('');
+    const [selectedTime, setSelectedTime] = useState('');
 
     const handleSlotChange = (e) => {
         setSelectedSlot(e.target.value);
     };
 
-    const handleNomChange = (e) => {
-        setNom(e.target.value);
+    const handleFirstNameChange = (e) => {
+        setFirstName(e.target.value);
+    };
+
+    const handleLastNameChange = (e) => {
+        setLastName(e.target.value);
     };
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };
 
-    const handleDayAndTimeChange = (e) => {
-        setSelectedDayAndTime(e.target.value);
+    const handleDayChange = (e) => {
+        setSelectedDay(e.target.value);
+    };
+
+    const handleTimeChange = (e) => {
+        setSelectedTime(e.target.value);
     };
 
     const handleSubmit = (e) => {
@@ -56,96 +66,108 @@ const AppointmentSection = () => {
 
     const handleAppointmentSubmit = (e) => {
         e.preventDefault();
-        console.log(`Appointment details: Nom - ${nom}, Email - ${email}, Day and Time - ${selectedDayAndTime}`);
+        console.log(`Appointment details: 
+            First Name - ${firstName}, 
+            Last Name - ${lastName}, 
+            Email - ${email}, 
+            Day - ${selectedDay}, 
+            Time - ${selectedTime}`);
     };
 
     return (
         <section className="appointment-page">
-            <NavBar />
-            <div className="appointment-grid">
-                <div className="appointment-table">
-                    <h2 className="section-title">Rendez-vous</h2>
-
-                    {/* Token Times Table */}
-                    <div className="table-container">
-                        <h3>Token Times for the Lawyer</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Hour</th>
-                                    <th>Client Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {lawyerTokenTimes.map((token, index) => (
-                                    <tr key={index}>
-                                        <td>{token.date}</td>
-                                        <td>{token.hour}</td>
-                                        <td>{token.clientName}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    {/* Time of Work Table */}
-                    <div className="table-container">
-                        <h3>Time of Work for the Lawyer</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Day</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {lawyerTimeOfWork.map((timeOfWork, index) => (
-                                    <tr key={index}>
-                                        <td>{timeOfWork.day}</td>
-                                        <td>{timeOfWork.time}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                {/* Appointment Form */}
-                <div className="form-container">
-                    <h3>Make an Appointment</h3>
-                    <form onSubmit={handleAppointmentSubmit} className="appointment-form">
-                        <label>Nom:</label>
-                        <input type="text" value={nom} onChange={handleNomChange} required />
-
-                        <label>Email:</label>
-                        <input type="email" value={email} onChange={handleEmailChange} required />
-
-                        <label>Day and Time:</label>
-                        <select value={selectedDayAndTime} onChange={handleDayAndTimeChange} className="time-slot-dropdown" required>
-                            <option value="">Select a day and time</option>
-                            {availableSlots.map((slot, index) => (
-                                <option key={index} value={slot}>
-                                    {new Date(slot).toLocaleString()}
-                                </option>
-                            ))}
-                        </select>
-
-                        <button type="submit" className="submit-button">Réserver</button>
-                    </form>
-
-                    {/* Display confirmation message after submission */}
-                    {submitted && (
-                        <div className="confirmation-message">
-                            Vous avez réservé un rendez-vous pour : {new Date(selectedSlot).toLocaleString()}
-                        </div>
-                    )}
-                </div>
+          <NavBar />
+          <div className="appointment-grid">
+            <div className="appointment-table">
+              <h2 className="section-title">Rendez-vous</h2>
+    
+              <div className="table-container">
+                <h3>Time of Work for the Lawyer</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Day</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {lawyerTimeOfWork.map((timeOfWork, index) => (
+                      <tr key={index}>
+                        <td>{timeOfWork.day}</td>
+                        <td>{timeOfWork.time}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+    
+              <div className="table-container">
+                <h3>Token Times for the Lawyer</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Hour</th>
+                      <th>Client First Name</th>
+                      <th>Client Last Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {lawyerTokenTimes.map((token, index) => (
+                      <tr key={index}>
+                        <td>{token.date}</td>
+                        <td>{token.hour}</td>
+                        <td>{token.clientFirstName}</td>
+                        <td>{token.clientLastName}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-
-            <Footer />
+    
+            <div className="form-container">
+              <h3>Make an Appointment</h3>
+              <form onSubmit={handleAppointmentSubmit} className="appointment-form">
+                <label>First Name:</label>
+                <input type="text" value={firstName} onChange={handleFirstNameChange} required />
+    
+                <label>Last Name:</label>
+                <input type="text" value={lastName} onChange={handleLastNameChange} required />
+    
+                <label>Email:</label>
+                <input type="email" value={email} onChange={handleEmailChange} required />
+    
+                <label>Day:</label>
+                <select value={selectedDay} onChange={handleDayChange} required>
+                  <option value="">Select a day</option>
+                  <option value="Monday">Monday</option>
+                  <option value="Tuesday">Tuesday</option>
+                  <option value="Wednesday">Wednesday</option>
+                </select>
+    
+                <label>Time:</label>
+                <select value={selectedTime} onChange={handleTimeChange} required>
+                  <option value="">Select a time</option>
+                  <option value="09:00 AM">09:00 AM</option>
+                  <option value="10:00 AM">10:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                </select>
+    
+                <button type="submit" className="submit-button">Réserver</button>
+              </form>
+    
+              {submitted && (
+                <div className="confirmation-message">
+                  Vous avez réservé un rendez-vous pour : {new Date(selectedSlot).toLocaleString()}
+                </div>
+              )}
+            </div>
+          </div>
+    
+          <Footer />
         </section>
-    );
-};
-
-export default AppointmentSection;
+      );
+    };
+    
+    export default AppointmentSection;

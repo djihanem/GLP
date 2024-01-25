@@ -1,47 +1,45 @@
 .appointment-grid {
     font-family: 'Arial', sans-serif;
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-}
-
-.appointment-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr); /* Two columns: one for tables, one for form */
+    gap: 20px; /* Adjust the gap between columns as needed */
 }
 
 .section-title {
     color: #333;
+    grid-column: span 2; /* Ensure section title takes full width */
 }
 
 .table-container {
-    margin-top: 20px;
+    display: block;
 }
 
-table {
+.table-container table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
 }
 
-th, td {
+.table-container th, .table-container td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: left;
 }
 
-th {
+.table-container th {
     background-color: #f2f2f2;
 }
 
 .form-container {
-    margin-top: 20px;
+    max-width: 400px;
+    margin-top: 20px; /* Add margin to separate the form from the tables */
 }
 
 .appointment-form {
-    display: flex;
-    flex-direction: column;
+    margin-top: 10px;
 }
 
 label {
@@ -50,6 +48,7 @@ label {
 }
 
 input, select {
+    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
