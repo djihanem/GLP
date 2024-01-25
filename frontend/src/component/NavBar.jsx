@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FaBars, FaTimes, FaUser} from 'react-icons/fa';
-
+import avocat from './pic/avocat.jpg'
 import './NavBar.css';
 // import './avocat/LogInSignUpAvocat'; 
 
@@ -21,17 +21,19 @@ function Navbar() {
   return (
     <div>
       <header>
-        <h3>logo</h3>
+        <h3><a href="./Home"><img src={avocat}/></a></h3>
         <nav ref={navRef}>
-          <a href="./Home">Home</a>
-          <a href="./Lawyer">Lawyer</a>
-          <a href="./Home#about">About Us</a>
-          <a href="./Home/#servicess">Services</a>
-          <a href="./Home/#contact">Contact Us</a>
+         
+          <a href="./Home">Accueil</a>
+          
+          <a href="./Lawyer">Avocat</a>
+          <a href="/Home/#about">À propos de nous</a>
+          <a href="/Home/#servicess">Services</a>
+          <a href="/Home/#contact">Contactez-nous</a>
 
           {/* Le bouton du menu déroulant */}
           <div className="dropdown">
-          <span style={{ visibility: "hidden" }}>--</span>
+          <span style={{ visibility: "hidden" }}>----</span>
             <button className="dropbtn" onClick={toggleDropdown}>
             
             <FaUser />
@@ -40,10 +42,10 @@ function Navbar() {
             </button>
             {isDropdownOpen && (
               <div className="dropdown-content">
-                <a href="./SignUpAvocat">Lawyer</a>
-                <a href="./User">User</a>
-                <a href="./Edit Profil">Edit Profil</a>
-                <a href="./Logout">Logout</a>
+                <a href="/Avocat">Avocat</a>
+                <a href="/User">Utilisateur</a>
+                <a href="./Edit Profil">Modifier Profil</a>
+                <a href="./Logout">Deconnexion</a>
                 
               </div>
             )}
