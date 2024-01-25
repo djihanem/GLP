@@ -95,6 +95,8 @@ AUTHENTICATION_PROVIDERS = [
 
 ROOT_URLCONF = 'mouhami.urls'
 
+CORS_ALLOW_CREDENTIALS = True
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

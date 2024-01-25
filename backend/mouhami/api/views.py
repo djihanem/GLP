@@ -47,9 +47,14 @@ def searchLawyers(request):
 
 
 @csrf_exempt  
+@api_view(['POST'])
 def google_login(request):
     if request.method == 'POST':
         id_token_data = request.POST.get('idToken')
+        print('Received idToken:', id_token_data)
+
+        response = JsonResponse({'message': 'Authentication successful'})
+        response['Access-Control-Allow-Credentials'] = 'true'
 
         try:
             id_info = id_token.verify_oauth2_token(id_token_data, requests.Request())
