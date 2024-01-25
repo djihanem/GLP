@@ -35,6 +35,7 @@ const AppointmentSection = () => {
     const [selectedTime, setSelectedTime] = useState('');
 
     const handleSlotChange = (e) => {
+        const selectedSlot = e.target.value;
         setSelectedSlot(e.target.value);
     };
 
@@ -77,9 +78,10 @@ const AppointmentSection = () => {
     return (
         <section className="appointment-page">
           <NavBar />
+          <h2 className="section-title-rdv">Prennez votre Rendez-vous ici</h2>
           <div className="appointment-grid">
             <div className="appointment-table">
-              <h2 className="section-title">Rendez-vous</h2>
+              
     
               <div className="table-container">
                 <h3>Time of Work for the Lawyer</h3>
@@ -157,11 +159,6 @@ const AppointmentSection = () => {
                 <button type="submit" className="submit-button">Réserver</button>
               </form>
     
-              {submitted && (
-                <div className="confirmation-message">
-                  Vous avez réservé un rendez-vous pour : {new Date(selectedSlot).toLocaleString()}
-                </div>
-              )}
             </div>
           </div>
     

@@ -8,13 +8,21 @@
     gap: 20px; /* Adjust the gap between columns as needed */
 }
 
-.section-title {
-    color: #333;
-    grid-column: span 2; /* Ensure section title takes full width */
+.section-title-rdv {
+    color: rgb(222, 215, 206);
+    margin-top: 30px;
+    grid-column: span 2; 
+    font-size: 30px;
+    font-weight: bolder;
+
 }
 
 .table-container {
+    padding: 20px;
+    border-radius: 5px;
     display: block;
+    background-color: rgb(222, 215, 206);
+    margin-bottom: 20px;
 }
 
 .table-container table {
@@ -34,8 +42,10 @@
 }
 
 .form-container {
-    max-width: 400px;
-    margin-top: 20px; /* Add margin to separate the form from the tables */
+    /* max-width: 400px; */
+    background-color: rgb(222, 215, 206);
+    border-radius: 5px;
+    padding: 20px;
 }
 
 .appointment-form {
