@@ -152,7 +152,7 @@ section {
 
 .us img {
     width: 90%;
-    height: auto;
+    height: 85%;
 }
 
 .line {
@@ -160,60 +160,8 @@ section {
     border-top: 2px solid #ffffff9b;
 }
 
-.suite input {
-    padding: 3% 20%;
-    margin-top: 5%;
-    background-color: #ffffff9b;
-    font-size: 15px;
-}
-
-.suite button {
-    margin-top: 5%;
-    background-color: #745939;
-    font-size: 15px;
-    padding: 3% 10%;
-    margin-left: 1%;
-}
-
-.suite a {
-    text-decoration: none;
-    color: #ffffff9b;
-}
-
-.team-members {
-    padding-top: 5%;
-    display: flex;
-    justify-content: space-around;
-}
-
-.team-member1,
-.team-member2,
-.team-member3 {
-    text-align: center;
-    display: inline-block;
-    background-color: rgba(58, 41, 13, 0.5);
-    border-radius: 5%;
-}
-
-#team h2 {
-    color: #ffffff9b;
-    font-size: 40px;
-}
-
-.team-member1:hover,
-.team-member2:hover,
-.team-member3:hover {
-    padding: 1%;
-    background-color: rgba(58, 41, 13, 0.5);
-}
-
-.team-member1 img,
-.team-member2 img,
-.team-member3 img {
-    width: 100%;
-    height: auto;
-    border-radius: 5%;
-    margin-bottom: 10px;
+#servicess {
+    margin-top: -8%;
 }
 
 #servicess h2 {
@@ -222,10 +170,11 @@ section {
     margin-bottom: 5%;
 }
 
-.last {
-    display: flex;
+.last .contactus {
+    display: column;
     align-items: flex-start;
     /* Align items to the start by default */
+    text-align: center;
 }
 
 .contactus h2 {
