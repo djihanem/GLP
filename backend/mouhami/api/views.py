@@ -49,13 +49,11 @@ def searchLawyers(request):
 @csrf_exempt  
 @api_view(['POST'])
 def google_login(request):
+    print('please')
     if request.method == 'POST':
+        print('login started')
         id_token_data = request.POST.get('idToken')
-        print('Received idToken:', id_token_data)
-
-        response = JsonResponse({'message': 'Authentication successful'})
-        response['Access-Control-Allow-Credentials'] = 'true'
-
+        print('this is the id_token' , id_token_data)
         try:
             id_info = id_token.verify_oauth2_token(id_token_data, requests.Request())
 
@@ -66,7 +64,8 @@ def google_login(request):
             request.session['user_name'] = user_name
 
             return JsonResponse({'message': 'Login successful'})
-        except ValueError as e: 
+        except ValueError as e:
+            print('error is ', e) 
             return JsonResponse({'error': 'Invalid token'}, status=400)
 
     return JsonResponse({'error': 'Invalid request method'}, status=400)
@@ -206,3 +205,11 @@ def updateLawyer(request,pk):
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+from rest_framework import serializers
+from .models import Lawyer
+
+class LawyerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lawyer
+        fields = '__all__'

@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 SITE_ID = 1
 
+CORS_ALLOW_CREDENTIALS = True
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,14 +48,16 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
 
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
+  
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     
     'rest_framework.authtoken',
-
-    'social_django',
 ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '743505389927-hjfqqjm0hf0cvh4r1sc9icuu5qscq84f.apps.googleusercontent.com'
@@ -62,6 +66,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'AIzaSyAxfwGTnhGGMfetTA6TY3nxcBWotBjAbec'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  
+        'drf_social_oauth2.authentication.SocialAuthentication',
     ],
 }
 
@@ -108,10 +114,17 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'social_django.context_processors.backends',
+    'social_django.context_processors.login_redirect',
+)
 
 WSGI_APPLICATION = 'mouhami.wsgi.application'
 
@@ -149,16 +162,19 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
     'social_core.backends.google.GoogleOAuth2',
-    'path.to.YourCustomUserBackend',
+    'drf_social_oauth2.backends.DjangoOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
     'google' : {
-        'SCOPE' : {
+        'SCOPE' : [
             'profile',
             'email'
-        },
-        'AUTH_PARAMS': {'access_type' : 'online'}
+        ],
+        'AUTH_PARAMS': {'access_type' : 'online'},
+    'OAUTH_PKCE_ENABLED': True,
+
     },
 }
     

@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from api.views import google_login
+from django.urls import re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +27,4 @@ urlpatterns = [
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-    path('auth/google/', google_login, name='google_login')
 ]
