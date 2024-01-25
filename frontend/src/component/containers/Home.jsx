@@ -16,6 +16,8 @@ import { GiDiscussion } from "react-icons/gi";
 import { GrUserPolice } from "react-icons/gr";
 import { FaHandshake } from "react-icons/fa6";
 import Footer from "../Footer";
+import picturehome from '../pic/finlaw.jpg';
+
 
 
 
@@ -27,7 +29,7 @@ const Home = () => {
          <section id="home">
             <div className="home">
               <div className="my-pic">
-                <img src={home} />
+                <img src={picturehome} />
               </div>
            </div>
          </section>
@@ -36,21 +38,21 @@ const Home = () => {
              <div className="cards">             
                   <div className="card-one">
                      <CiBank/>
-                     <h1>Bankruptcy</h1>
+                     <h1>La faillite</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Surmontez les difficultés financières avec notre expertise en droit de la faillite, offrant des conseils éclairés et des solutions adaptées à votre situation.</p>
                   </div>
                   <div className="card-two">
                      <GoLaw/>
                      <h1>Modifications</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Effectuez des modifications en toute confiance avec notre assistance, garantissant des ajustements précis et conformes à vos besoins spécifiques.</p>
                   </div>
                   <div className="card-three">
                      <BsFillAwardFill/>
-                     <h1>Foreclosure</h1>
+                     <h1>Forclusion</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Naviguez avec assurance à travers les complexités de la forclusion avec notre équipe d'experts juridiques, prête à vous guider vers des solutions éclairées.</p>
                  </div>
               </div>
            </section>
@@ -60,18 +62,14 @@ const Home = () => {
                     <img src={law_icon} alt="" />
                 </div>
                 <div className="about">
-                    <h2>Who We Are</h2>
-                   <h3>About DZ-Mouhami</h3>
-                    <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vehicula mollis urna vel dignissim. Integer tincidunt viverra est, non congue</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vehicula mollis urna vel dignissim. Integer tincidunt viverra est, non congue lorem tempor ac. Sed dolor velit, convallis quis erat in, molestie eleifend enim. Integer eu metus at orci scelerisque rutrum. Vivamus condimentum, ipsum vitae iaculis cursus, turpis nisl ultricies massa, sit amet ultrices nunc dui at tellus. Pellentesque porta rutrum erat nec facilisis. Ut iaculis lectus urna, sit amet porttitor erat auctor at.</p>
-                    <br/><br />
+                    <h2>Qui nous sommes</h2>
+                   <h3>À propos de DZ-Mouhami</h3>
+                    <h5>DZ-Mouhami, votre partenaire juridique de confiance, est un site d'avocat dédié à fournir des services juridiques de qualité.</h5>
+                    <p>Notre équipe d'avocats expérimentés s'engage à vous offrir des conseils spécialisés et une représentation solide. Que vous ayez des préoccupations familiales, des questions criminelles ou des défis financiers, nous sommes là pour vous accompagner à chaque étape. Explorez notre site pour découvrir nos domaines d'expertise et la manière dont nous pouvons vous aider à résoudre vos problèmes juridiques avec professionnalisme et efficacité.</p>
+                    <br/><br /><br /><br />
                   <hr className="line" />
-                  <br /><br />
-                    <div className="suite">
-                      <h2>Instead of Join our Email List - Do you need Answers?</h2>
-                      <input type="email" placeholder="put your email" />
-                     <button><a href="#">Submit</a></button>
-                   </div>
+
+                  
               </div>
             </div>
            </section>
@@ -81,27 +79,27 @@ const Home = () => {
              <div className="cards">             
                   <div className="card-one">
                      <MdChat/>
-                     <h1>FREE CONSULTING</h1>
+                     <h1>CONSEIL GRATUIT</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Bénéficiez d'un conseil gratuit de qualité, notre engagement envers vous pour vous offrir l'assistance dont vous avez besoin sans frais initiaux.</p>
                   </div>
                   <div className="card-two">
                      <MdOutlineMiscellaneousServices/>
-                     <h1>SPECIAL SERVICES</h1>
+                     <h1>SERVICES SPÉCIAUX</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Explorez nos services spéciaux, une offre sur mesure pour des solutions uniques.</p>
                   </div>
                   <div className="card-three">
                      <GiDiscussion/>
-                     <h1>DISCUS STRATEGY</h1>
+                     <h1>DISCUTER DE STRATÉGIE</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Entamons la discussion sur votre stratégie, pour façonner ensemble la voie vers votre succès.</p>
                  </div>
                  <div className="card-one">
                      <GrUserPolice />
-                     <h1>CILVILL LAWYERES</h1>
+                     <h1>AVOCATS CIVILS</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Nos avocats civils dédiés sont là pour vous guider à travers les complexités du droit civil, assurant une représentation experte pour protéger vos intérêts.</p>
                  </div>
               </div> 
            </section>
@@ -110,27 +108,27 @@ const Home = () => {
              <div className="cards">             
                   <div className="card-one">
                      < MdMediation />
-                     <h1>MEDIATION</h1>
+                     <h1>LA MÉDIATION</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Choisissez la médiation pour des solutions équitables et durables dans la résolution des conflits.</p>
                   </div>
                   <div className="card-two">
                     <MdOutlineFamilyRestroom/>
-                     <h1>FAMILY DISPUTES</h1>
+                     <h1>DIFFÉRENDS FAMILIAUX</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Abordez vos différends familiaux avec sensibilité et expertise, notre équipe d'avocats vous accompagne pour des solutions adaptées à vos besoins.</p>
                   </div>
                   <div className="card-three">
                      <RiCriminalFill/>
-                     <h1>CRIMINALS</h1>
+                     <h1>LES CRIMINELS</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Affrontez les enjeux criminels avec notre équipe d'avocats dévoués, prêts à vous défendre avec détermination et compétence.</p>
                  </div>
                  <div className="card-one">
                      <FaHandshake/>
-                     <h1>BANKRUPTCY</h1>
+                     <h1>LA FAILLITE</h1>
                      <span>----</span>
-                     <p>Morbi semper, dui sodales aliquet imperdiet, lacus ligula congue neque, quis pretium lectus libero id.</p>
+                     <p>Surmontez les difficultés financières avec notre assistance experte en droit de la faillite.</p>
                  </div>
               </div> 
            </section>
@@ -139,12 +137,12 @@ const Home = () => {
         <div className="last">
            
             <div className="contactus">
-             <h2>Get In Touch</h2>
-             <h1>Contact</h1>
-             <input type="text" placeholder="Your Name" />
-             <input type="email" placeholder="Your Email" />
-             <textarea id="message" name="message" placeholder="Enter your message here" ></textarea>
-             <button><a href="#">Send Message</a></button>
+             <h2>Entrer en contact</h2>
+             <h1>Contactez-nous</h1>
+             <input type="text" placeholder="Votre Nom" />
+             <input type="email" placeholder="Votre Email" />
+             <textarea id="message" name="message" placeholder="Entrer votre message ici" ></textarea>
+             <button><a href="#">Envoyer Message</a></button>
             </div>
         </div>
         </section>
