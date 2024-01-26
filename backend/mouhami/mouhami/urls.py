@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 from api.views import google_login
 
+from django.conf import settings  # new
+from django.conf.urls.static import static  # new
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('api.urls')),
@@ -28,3 +31,5 @@ urlpatterns = [
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('auth/google/', google_login, name='google_login')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
