@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Commentaire, Lawyer, Comment ,RendezVous, Client
 from .serializers import CommentaireSerializer, LawyerSerializer, RendezVousSerializer , CommentSerializer
-from .forms import LawyerSignUpForm, ClientSignupForm
+from .forms import LawyerSignUpForm, ClientSignUpForm
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
@@ -102,7 +102,7 @@ def google_login(request):
 def user_signup(request):
     try:
         if request.method == 'POST':
-            form = ClientSignupForm(request.POST)
+            form = ClientSignUpForm(request.POST)
             print(request.POST)
             if form.is_valid():
                 user = form.save()
