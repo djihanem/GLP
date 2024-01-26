@@ -71,9 +71,12 @@ const Profile = () => {
 
   return (
     <div className="profile">
+      
       <NavBar /> 
+
       <button onClick={() => changeLanguage('fr')} className='translate'>French</button>
       <button onClick={() => changeLanguage('ar')} className='translate'>العربية</button>
+
       <div className="profile-container">
         <div className="first">
           <div className="profile-header">
