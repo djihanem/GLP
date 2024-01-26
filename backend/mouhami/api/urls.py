@@ -20,4 +20,11 @@ urlpatterns=[
     path('Lawyers/<str:pk>/',views.getLawyer,name='Lawyer'),
 
     path('search-lawyers/', views.searchLawyers, name='search-lawyers'),
+    path('delete-lawyer/<str:pk>/', views.deleteLawyer, name='delete-lawyer'),
+
+    # Nouvelles vues ajoutées
+    path('add-commentaire/', views.addCommentaire, name='add-commentaire'),
+    path('get-comments-by-lawyer/<str:lawyer_id>/', views.get_comments_by_lawyer, name='get-comments-by-lawyer'),
+    path('add-rendezvous/', views.add_rendezvous, name='add-rendezvous'),
+    path('get-rendezvous-by-lawyer/<str:lawyer_id>/', views.get_rendezvous_by_lawyer, name='get-rendezvous-by-lawyer'),
 ]

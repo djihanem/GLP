@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Commentaire, Lawyer
-from .serializers import CommentaireSerializer, LawyerSerializer
+from .models import Commentaire, Lawyer, Comment ,RendezVous, Client
+from .serializers import CommentaireSerializer, LawyerSerializer, RendezVousSerializer , CommentSerializer
 from .forms import LawyerSignUpForm
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -207,11 +207,12 @@ def updateLawyer(request,pk):
     return Response(serializer.data)
 
 
-api_view(['DELETE'])
-def deleteLawyer(request,pk):
-    lawyer=Lawyer.objects.get(id=pk)
+@api_view(['DELETE'])
+def deleteLawyer(request, pk):
+    lawyer = get_object_or_404(Lawyer, id=pk)
     lawyer.delete()
-    return Response('Lawyer was deleted')
+    
+    return Response({'message': 'Lawyer was deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
 
 # let deleteNote= async(()=>{
 #     fetch(`/api/lawyer/{lawyerID}/delete`),{
@@ -236,7 +237,14 @@ def addCommentaire(request):
         bodyComment=data['body']
     )
     serializer = CommentSerializer(commentaire, many=False)
-    return Response(serializer.data)
+
+    # Ajout du message de succès à la réponse
+    response_data = {
+        'message': 'Commentaire ajouté avec succès!',
+        'commentaire_data': serializer.data
+    }
+    
+    return Response(response_data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def get_comments_by_lawyer(request, lawyer_id):
@@ -268,7 +276,14 @@ def add_rendezvous(request):
         heureRDV=heure
     )
     serializer = RendezVousSerializer(rendezvous, many=False)
-    return Response(serializer.data)
+
+    # Ajout du message de succès à la réponse
+    response_data = {
+        'message': 'Rendez-vous ajouté avec succès!',
+        'rendezvous_data': serializer.data
+    }
+    
+    return Response(response_data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def get_rendezvous_by_lawyer(request, lawyer_id):
