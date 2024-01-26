@@ -45,7 +45,7 @@
 }
 
 .lawyer-card button {
-    background-color: #007bff;
+    background-color: rgba(58, 38, 5, 0.959);
     color: white;
     border: none;
     border-radius: 5px;
@@ -55,5 +55,5 @@
 }
 
 .lawyer-card button:hover {
-    background-color: #0056b3;
+    background-color: rgba(29, 19, 3, 0.959);
 }

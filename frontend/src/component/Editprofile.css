@@ -36,7 +36,7 @@ textarea {
 
 button.save-button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: rgba(58, 38, 5, 0.959);
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -45,7 +45,7 @@ button.save-button {
 }
 
 button.save-button:hover {
-    background-color: #0056b3;
+    background-color: rgba(46, 30, 3, 0.959);
 }
 
 
@@ -71,7 +71,7 @@ button.save-button:hover {
   }
 
   .form-group-img input[type="file"]:focus {
-    border-color: #007bff;
+    border-color: rgba(58, 38, 5, 0.959);
     outline: none;
   }
 
@@ -79,27 +79,27 @@ button.save-button:hover {
 
 
   .form-group-lang {
-    margin-bottom: 20px; /* Add some margin to the bottom */
+    margin-bottom: 20px; 
 }
 
 .form-group-lang label {
-    display: block; /* Display the label as a block element */
-    margin-bottom: 8px; /* Add margin to the bottom of the label */
-    font-weight: bold; /* Make the label text bold */
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: bold; 
 }
 
 .form-group-lang select {
-    width: 100%; /* Set the width to 100% of its container */
-    padding: 10px; /* Add padding inside the select element */
-    font-size: 16px; /* Set font size */
-    border-radius: 4px; /* Add border radius for rounded corners */
-    border: 1px solid #ccc; /* Add a border with a light gray color */
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
-    outline: none; /* Remove outline */
-    height: auto; /* Auto height */
+    width: 100%; 
+    padding: 10px; 
+    font-size: 16px; 
+    border-radius: 4px; 
+    border: 1px solid #ccc; 
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); 
+    outline: none; 
+    height: auto; 
 }
 
 /* Style for selected options */
 .form-group-lang select option:checked {
-    background-color: #e0e0e0; /* Change background color for selected options */
+    background-color: #e0e0e0; 
 }

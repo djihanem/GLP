@@ -134,7 +134,7 @@
 .rate-btn,
 .center-button,
 .add-comment-btn {
-    background-color: #007bff;
+    background-color: rgba(58, 38, 5, 0.959);
     color: #fff;
     padding: 8px 16px;
     border: none;
@@ -147,7 +147,7 @@
 .rate-btn:hover,
 .center-button:hover,
 .add-comment-btn:hover {
-    background-color: #0056b3;
+    background-color: rgba(36, 23, 2, 0.959);
 }
 
 .basic-info-section,
@@ -163,6 +163,15 @@
     margin: 20px auto;
 
     
+}
+.appointment-section button{
+    background-color: rgba(58, 38, 5, 0.959);
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 

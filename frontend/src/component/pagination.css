@@ -9,7 +9,7 @@
 
 .pagination button {
     background-color: #f8f9fa; 
-    color: #007bff; 
+    color: rgba(58, 38, 5, 0.959); 
     border: 1px solid #dee2e6; 
     padding: 8px 12px; 
     margin: 0 3px; 
@@ -20,9 +20,9 @@
 
 
 .pagination button.active {
-    background-color: #007bff; 
+    background-color: rgba(58, 38, 5, 0.959); 
     color: white; 
-    border: 1px solid #007bff;
+    border: 1px solid rgba(58, 38, 5, 0.959);
 }
 
 .pagination button:hover:not(.active) {
