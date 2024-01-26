@@ -7,6 +7,8 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 import { Link, useParams } from "react-router-dom";
 import avatar from "./pic/avatar.png";
+import StarRating from './StarRating';
+
 
 const Profile = () => {
   let { idlawyer } = useParams();
@@ -52,6 +54,14 @@ const Profile = () => {
     }
   };
 
+
+  const [rating, setRating] = useState(0);
+
+  const handleRatingChange = (newRating) => {
+    // Do something with the new rating, such as updating it in your state
+    setRating(newRating);
+  };
+
   return (
     <div className="profile">
       {/* navbar */}
@@ -78,7 +88,8 @@ const Profile = () => {
             <h2 className="section-title">Informations de Base</h2>
 
             <p className="info-item">
-              <strong>rating :</strong> 4.5
+              <strong>rating : {rating}</strong>
+              <StarRating initialRating={rating} onChange={handleRatingChange} />
             </p>
 
             <p className="info-item">
@@ -92,7 +103,7 @@ const Profile = () => {
               <strong>Langues parlées :</strong> {lawyer.langues}
             </p>
 
-            <div className="rate">
+            {/* <div className="rate">
               <select className="rate-select">
                 <option value="" disabled>
                   Select Rating
@@ -104,7 +115,7 @@ const Profile = () => {
                 ))}
               </select>
               <button className="rate-btn">Rate</button>
-            </div>
+            </div> */}
           </section>
 
           {/* Skills and Experience Section */}

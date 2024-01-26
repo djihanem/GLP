@@ -11,10 +11,9 @@
 .section-title-rdv {
     color: rgb(222, 215, 206);
     margin-top: 30px;
-    grid-column: span 2; 
+    grid-column: span 2;
     font-size: 30px;
     font-weight: bolder;
-
 }
 
 .table-container {
@@ -42,7 +41,6 @@
 }
 
 .form-container {
-    /* max-width: 400px; */
     background-color: rgb(222, 215, 206);
     border-radius: 5px;
     padding: 20px;
@@ -75,4 +73,32 @@ input, select {
 .confirmation-message {
     margin-top: 20px;
     color: green;
+}
+
+/* Responsive styles for small devices */
+
+@media only screen and (max-width: 600px) {
+    .appointment-grid {
+        grid-template-columns: 1fr; /* Display one column on small screens */
+    }
+
+    .section-title-rdv {
+        grid-column: span 1; /* Span only one column on small screens */
+    }
+
+    .table-container,
+    .form-container {
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+.appointment-grid{
+    margin: 0 auto;
+}
+.table-container {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
 }
