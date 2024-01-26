@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import lawyer_signup, lawyer_login, google_login, logout
+from .views import lawyer_signup, lawyer_login, google_login, logout, user_login, user_signup
 
 urlpatterns=[
     path('',views.getRoutes,name="routes"),
@@ -10,6 +10,10 @@ urlpatterns=[
 
     path('signup/', lawyer_signup, name='lawyer_signup'),
     path('login/', lawyer_login, name='lawyer_login'),
+
+    path('signupUser/', user_signup, name='user_signup'),
+    path('loginUser/', user_login, name='user_login'),
+
     path('auth/google/', google_login, name='google_login'),
     path('logout/', logout, name='logout'),
 
