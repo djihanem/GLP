@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n'; 
 import NavBar from './NavBar';
 import Footer from './Footer';
 import './rendezvous.css';
 
 const AppointmentSection = () => {
+    const { t } = useTranslation();
+    const changeLanguage = (lng) => {
+        console.log('Changing language to:', lng);
+        i18n.changeLanguage(lng);
+      };
+
+
     const lawyerTokenTimes = [
         { date: '1 janvier 2024', hour: '09:00:00', clientFirstName: 'Client A Prénom', clientLastName: 'Client A Nom' },
         { date: '1 janvier 2024', hour: '10:00:00', clientFirstName: 'Client B Prénom', clientLastName: 'Client B Nom' },
@@ -78,18 +87,22 @@ const AppointmentSection = () => {
     return (
         <section className="appointment-page">
             <NavBar />
-            <h2 className="section-title-rdv">Prenez votre rendez-vous ici</h2>
+
+            <button onClick={() => changeLanguage('fr')} className='translate'>French</button>
+            <button onClick={() => changeLanguage('ar')} className='translate'>العربية</button>
+
+            <h2 className="section-title-rdv">{t('appointment.title')}</h2>
             <div className="appointment-grid">
                 <div className="appointment-table">
 
 
                     <div className="table-container">
-                        <h3>Heures de travail pour l'avocat</h3>
+                        <h3>{t('appointment.table.workHours')}</h3>
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Jour</th>
-                                    <th>Heure</th>
+                                    <th>{t('appointment.table.date')}</th>
+                                    <th>{t('appointment.table.time')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,14 +117,14 @@ const AppointmentSection = () => {
                     </div>
 
                     <div className="table-container">
-                        <h3>Horaires de jetons pour l'avocat</h3>
+                        <h3>{t('appointment.table.tokenHours')}</h3>
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Heure</th>
-                                    <th>Prénom du client</th>
-                                    <th>Nom du client</th>
+                                    <th>{t('appointment.table.date')}</th>
+                                    <th>{t('appointment.table.time')}</th>
+                                    <th>{t('appointment.table.clientFirstName')}</th>
+                                    <th>{t('appointment.table.clientLastName')}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -129,42 +142,41 @@ const AppointmentSection = () => {
                 </div>
 
                 <div className="form-container">
-                    <h3>Prendre un rendez-vous</h3>
-                    <form onSubmit={handleAppointmentSubmit} className="appointment-form">
-                        <label>Prénom :</label>
-                        <input type="text" value={firstName} onChange={handleFirstNameChange} required />
+          <h3>{t('appointment.form.title')}</h3>
+          <form onSubmit={handleAppointmentSubmit} className="appointment-form">
+            <label>{t('appointment.form.firstName')}:</label>
+            <input type="text" value={firstName} onChange={handleFirstNameChange} required />
 
-                        <label>Nom :</label>
-                        <input type="text" value={lastName} onChange={handleLastNameChange} required />
+            <label>{t('appointment.form.lastName')}:</label>
+            <input type="text" value={lastName} onChange={handleLastNameChange} required />
 
-                        <label>Email :</label>
-                        <input type="email" value={email} onChange={handleEmailChange} required />
+            <label>{t('appointment.form.email')}:</label>
+            <input type="email" value={email} onChange={handleEmailChange} required />
 
-                        <label>Jour :</label>
-                        <select value={selectedDay} onChange={handleDayChange} required>
-                            <option value="">Sélectionnez un jour</option>
-                            <option value="Lundi">Lundi</option>
-                            <option value="Mardi">Mardi</option>
-                            <option value="Mercredi">Mercredi</option>
-                        </select>
+            <label>{t('appointment.form.day')}:</label>
+            <select value={selectedDay} onChange={handleDayChange} required>
+              <option value="">{t('appointment.form.selectDay')}</option>
+              <option value="Lundi">{t('days.monday')}</option>
+              <option value="Mardi">{t('days.tuesday')}</option>
+              <option value="Mercredi">{t('days.wednesday')}</option>
+            </select>
 
-                        <label>Heure :</label>
-                        <select value={selectedTime} onChange={handleTimeChange} required>
-                            <option value="">Sélectionnez une heure</option>
-                            <option value="09:00 AM">09:00 AM</option>
-                            <option value="10:00 AM">10:00 AM</option>
-                            <option value="11:00 AM">11:00 AM</option>
-                        </select>
+            <label>{t('appointment.form.time')}:</label>
+            <select value={selectedTime} onChange={handleTimeChange} required>
+              <option value="">{t('appointment.form.selectTime')}</option>
+              <option value="09:00 AM">09:00 AM</option>
+              <option value="10:00 AM">10:00 AM</option>
+              <option value="11:00 AM">11:00 AM</option>
+            </select>
 
-                        <button type="submit" className="submit-button">Réserver</button>
-                    </form>
+            <button type="submit" className="submit-button">{t('appointment.form.book')}</button>
+          </form>
+        </div>
+      </div>
 
-                </div>
-            </div>
-
-            <Footer />
-        </section>
-    );
+      <Footer />
+    </section>
+  );
 };
 
 export default AppointmentSection;

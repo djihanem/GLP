@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import i18n from '../i18n';  // Adjust the path accordingly
+import i18n from '../i18n'; 
 import "./profile.css";
 import { useState, useEffect } from "react";
 import AppointmentSection from './AppointementSection';
