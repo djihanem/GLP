@@ -7,7 +7,7 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 import { Link, useParams } from "react-router-dom";
 import avatar from "./pic/avatar.png";
-import StarRating from './StarRating';
+import StarRating from "./StarRating";
 
 const Profile = () => {
   let { idlawyer } = useParams();
@@ -18,8 +18,16 @@ const Profile = () => {
     getCommentaires();
   }, []);
 
+  // let getCommentaires = async () => {
+  //   let response = await fetch("http://127.0.0.1:8000/api/commentaires/");
+  //   let data = await response.json();
+  //   console.log("DATA", data);
+  //   setCommentaires(data);
+  // };
   let getCommentaires = async () => {
-    let response = await fetch("http://127.0.0.1:8000/api/commentaires/");
+    let response = await fetch(
+      `http://127.0.0.1:8000/api/get-comments-by-lawyer/${idlawyer}/`
+    );
     let data = await response.json();
     console.log("DATA", data);
     setCommentaires(data);
@@ -61,7 +69,7 @@ const Profile = () => {
 
   return (
     <div className="profile">
-      <NavBar /> 
+      <NavBar />
       <div className="profile-container">
         <div className="first">
           <div className="profile-header">
@@ -80,14 +88,18 @@ const Profile = () => {
 
             <p className="info-item">
               <strong>Évaluation : {rating}</strong>
-              <StarRating initialRating={rating} onChange={handleRatingChange} />
+              <StarRating
+                initialRating={rating}
+                onChange={handleRatingChange}
+              />
             </p>
 
             <p className="info-item">
               <strong>Spécialité :</strong> {lawyer.specialite}
             </p>
             <p className="info-item">
-              <strong>Coordonnées :</strong> {lawyer.phoneNumber} | {lawyer.email}
+              <strong>Coordonnées :</strong> {lawyer.phoneNumber} |{" "}
+              {lawyer.email}
             </p>
             <p className="info-item">
               <strong>Langues parlées :</strong> {lawyer.langues}
@@ -111,14 +123,17 @@ const Profile = () => {
                   Associé principal chez XYZ Cabinet d'Avocats
                 </h3>
                 <p className="experience-description">
-                  Gestion d'une variété d'affaires civiles et fourniture de conseils juridiques...
+                  Gestion d'une variété d'affaires civiles et fourniture de
+                  conseils juridiques...
                 </p>
               </div>
             </div>
           </section>
 
           <div className="appointment-section">
-            <button>Prendre rendez-vous</button>
+            <Link to={`/rendezvous/${idlawyer}`}>
+              <button>Prendre rendez-vous</button>
+            </Link>
           </div>
         </div>
 
@@ -131,12 +146,12 @@ const Profile = () => {
                   <li key={comment.id} className="comment-card">
                     <img
                       src={avatar}
-                      alt={comment.name}
+                      alt={comment.clientName}
                       className="lawyer-avatar"
                     />
                     <div className="comment-content">
-                      <h4>{comment.name}</h4>
-                      <p>{comment.body}</p>
+                      <h4>{comment.clientName}</h4>
+                      <p>{comment.bodyComment}</p>
                     </div>
                   </li>
                 ))}
