@@ -22,10 +22,10 @@ class LawyerSignUpForm(forms.ModelForm):
             user.save()
         return user
 
-class ClientSignUpForm(forms.ModelForm):
+class UserSignUpForm(forms.ModelForm):
     class Meta: 
         model = Client
-        fields = ['clientName', 'clientEmail', 'clientPassword']
+        fields = ['clientName', 'clientEmail', 'ClientPassword']
     def save(self, commit=True):
         user = super().save(commit=False)
         user.password = make_password(self.cleaned_data['password'])

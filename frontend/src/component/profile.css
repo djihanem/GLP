@@ -112,7 +112,7 @@
 
 .comment-content > h4 {
     color: #444;
-    text-align: left;
+    padding: 0;
 }
 
 .comment-content p,

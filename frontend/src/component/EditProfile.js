@@ -1,4 +1,7 @@
+// src/components/EditProfile.js
 import React, { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n'; 
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 import "./Editprofile.css";
@@ -6,6 +9,12 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 const EditProfile = () => {
+  const { t } = useTranslation();
+  const changeLanguage = (lng) => {
+      console.log('Changing language to:', lng);
+      i18n.changeLanguage(lng);
+  };
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const lawyerId = searchParams.get("id");
@@ -13,7 +22,7 @@ const EditProfile = () => {
   let [lawyer, setLawyer] = useState({});
 
   useEffect(() => {
-    getLawyer(); // Ajoutez des parenthèses pour appeler la fonction
+    getLawyer();
   }, [lawyerId]);
 
   let getLawyer = async () => {
@@ -46,23 +55,25 @@ const EditProfile = () => {
   const handleSubmit = (e) => {
     updateLawyer();
     e.preventDefault();
-    window.location.reload(); // Recharge la page après la soumission du formulaire
-    console.log("Profil de l'avocat mis à jour :", lawyer);
+    window.location.reload();
+    console.log("Lawyer profile updated:", lawyer);
   };
 
   return (
     <div className="edit-lawyer-profile">
       <NavBar />
+      <button onClick={() => changeLanguage('fr')} className='translate'>French</button>
+        <button onClick={() => changeLanguage('ar')} className='translate'>العربية</button>
       <div className="editing-section">
-        <h2>Modifier le Profil de l'Avocat</h2>
+        <h2>{t('editProfile.title')}</h2>
         <form className="profile-form">
           <div className="form-group-img">
-            <label htmlFor="image">Télécharger une Photo :</label>
+            <label htmlFor="image">{t('editProfile.form.uploadPhoto')}</label>
             <input type="file" id="image" name="image" accept="image/*" />
           </div>
 
           <div className="form-group">
-            <label htmlFor="firstName">Prénom :</label>
+            <label htmlFor="firstName">{t('editProfile.form.firstName')}</label>
             <input
               type="text"
               id="firstName"
@@ -75,7 +86,7 @@ const EditProfile = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="secondName">Nom :</label>
+            <label htmlFor="secondName">{t('editProfile.form.lastName')}</label>
             <input
               type="text"
               id="secondName"
@@ -88,7 +99,7 @@ const EditProfile = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="specialite">Spécialité :</label>
+            <label htmlFor="specialite">{t('editProfile.form.speciality')}</label>
             <input
               type="text"
               id="specialite"
@@ -100,7 +111,7 @@ const EditProfile = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="description">Description :</label>
+            <label htmlFor="description">{t('editProfile.form.description')}</label>
             <textarea
               id="description"
               name="description"
@@ -112,7 +123,7 @@ const EditProfile = () => {
           </div>
 
           <div className="form-group-lang">
-            <label htmlFor="langues">Langues :</label>
+            <label htmlFor="langues">{t('editProfile.form.languages')}</label>
             <select
               id="langues"
               name="languages"
@@ -130,7 +141,7 @@ const EditProfile = () => {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="phoneNumber">Téléphone :</label>
+            <label htmlFor="phoneNumber">{t('editProfile.form.phoneNumber')}</label>
             <input
               type="tel"
               id="phoneNumber"
@@ -142,7 +153,7 @@ const EditProfile = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email :</label>
+            <label htmlFor="email">{t('editProfile.form.email')}</label>
             <input
               type="email"
               id="email"
@@ -154,7 +165,7 @@ const EditProfile = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="adresse">Adresse :</label>
+            <label htmlFor="adresse">{t('editProfile.form.address')}</label>
             <textarea
               id="adresse"
               name="adresse"
@@ -164,9 +175,8 @@ const EditProfile = () => {
               }}
             ></textarea>
           </div>
-          {/* Pour des champs plus avancés, envisagez d'utiliser des composants tels que MultiSelect pour les compétences, expériences, etc. */}
           <button type="submit" className="save-button" onClick={handleSubmit}>
-            Enregistrer les Changements
+            {t('editProfile.form.saveChanges')}
           </button>
         </form>
       </div>
