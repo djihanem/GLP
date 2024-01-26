@@ -1,4 +1,5 @@
 from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from .models import Commentaire,Lawyer, Client, Comment, RendezVous
 
 class CommentaireSerializer(ModelSerializer):
@@ -13,9 +14,11 @@ class LawyerSerializer(ModelSerializer):
         # fields=['firstName','secondName','phoneNumber','email','adresse','specialite',"langues",'desciption'] 
 
 class CommentSerializer(ModelSerializer):
+    clientName = serializers.CharField(source='clientComment.clientName', read_only=True)
+
     class Meta:
         model = Comment
-        fields = ['clientComment', 'lawyerComment', 'bodyComment']
+        fields = ['id', 'clientName', 'bodyComment']
 
 class ClientSerializer(ModelSerializer):
     class Meta:
@@ -23,6 +26,7 @@ class ClientSerializer(ModelSerializer):
         fields='__all__'  
 
 class RendezVousSerializer(ModelSerializer):
+    clientName = serializers.CharField(source='client.clientName', read_only=True)
     class Meta:
         model = RendezVous
-        fields = ['client', 'avocat', 'dateRDV', 'heureRDV']
+        fields = ['clientName', 'avocat', 'dateRDV', 'heureRDV']

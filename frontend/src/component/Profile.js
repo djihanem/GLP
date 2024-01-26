@@ -1,25 +1,15 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import i18n from '../i18n'; 
+import React from "react";
 import "./profile.css";
 import { useState, useEffect } from "react";
-import AppointmentSection from './AppointementSection';
-import NavBar from './NavBar';
-import Footer from './Footer';
-import { Link, useParams } from 'react-router-dom';
-import avatar from './pic/avatar.png';
-import StarRating from './StarRating';
+import AppointmentSection from "./AppointementSection";
+import lawyer1 from "./pic/lawyers/lawyer1.jpeg";
+import NavBar from "./NavBar";
+import Footer from "./Footer";
+import { Link, useParams } from "react-router-dom";
+import avatar from "./pic/avatar.png";
+import StarRating from "./StarRating";
 
 const Profile = () => {
-  const { t } = useTranslation();
-
-  const changeLanguage = (lng) => {
-    console.log('Changing language to:', lng);
-    i18n.changeLanguage(lng);
-  };
-
-  console.log('Current language:', i18n.language);
-
   let { idlawyer } = useParams();
 
   let [commentaires, setCommentaires] = useState([]);
@@ -28,8 +18,16 @@ const Profile = () => {
     getCommentaires();
   }, []);
 
+  // let getCommentaires = async () => {
+  //   let response = await fetch("http://127.0.0.1:8000/api/commentaires/");
+  //   let data = await response.json();
+  //   console.log("DATA", data);
+  //   setCommentaires(data);
+  // };
   let getCommentaires = async () => {
-    let response = await fetch("http://127.0.0.1:8000/api/commentaires/");
+    let response = await fetch(
+      `http://127.0.0.1:8000/api/get-comments-by-lawyer/${idlawyer}/`
+    );
     let data = await response.json();
     console.log("DATA", data);
     setCommentaires(data);
@@ -71,17 +69,12 @@ const Profile = () => {
 
   return (
     <div className="profile">
-      
-      <NavBar /> 
-
-      <button onClick={() => changeLanguage('fr')} className='translate'>French</button>
-      <button onClick={() => changeLanguage('ar')} className='translate'>العربية</button>
-
+      <NavBar />
       <div className="profile-container">
         <div className="first">
           <div className="profile-header">
             <h1>
-              {t('profile.firstName')} {lawyer.secondName}
+              {lawyer.firstName} {lawyer.secondName}
             </h1>
             <img
               src={lawyer.image ? lawyer.image.url : avatar}
@@ -91,29 +84,33 @@ const Profile = () => {
           </div>
 
           <section className="basic-info-section">
-            <h2 className="section-title">{t('profile.basicInfo')}</h2>
+            <h2 className="section-title">Informations de Base</h2>
 
             <p className="info-item">
-              <strong>{t('profile.rating')} : {rating}</strong>
-              <StarRating initialRating={rating} onChange={handleRatingChange} />
+              <strong>Évaluation : {rating}</strong>
+              <StarRating
+                initialRating={rating}
+                onChange={handleRatingChange}
+              />
             </p>
 
             <p className="info-item">
-              <strong>{t('profile.specialty')} :</strong> {lawyer.specialite}
+              <strong>Spécialité :</strong> {lawyer.specialite}
             </p>
             <p className="info-item">
-              <strong>{t('profile.contactDetails')} :</strong> {lawyer.phoneNumber} | {lawyer.email}
+              <strong>Coordonnées :</strong> {lawyer.phoneNumber} |{" "}
+              {lawyer.email}
             </p>
             <p className="info-item">
-              <strong>{t('profile.languages')} :</strong> {lawyer.langues}
+              <strong>Langues parlées :</strong> {lawyer.langues}
             </p>
           </section>
 
           <section className="skills-experience-section">
-            <h2 className="section-title">{t('profile.skillsAndExperience')}</h2>
+            <h2 className="section-title">Compétences et Expériences</h2>
             <ul className="skills-list">
               <p className="info-item">
-                <strong>{t('profile.description')} :</strong> {lawyer.description}
+                <strong>Description :</strong> {lawyer.description}
               </p>
               <li className="skill-item">Médiation</li>
               <li className="skill-item">Droit des contrats</li>
@@ -126,32 +123,35 @@ const Profile = () => {
                   Associé principal chez XYZ Cabinet d'Avocats
                 </h3>
                 <p className="experience-description">
-                  Gestion d'une variété d'affaires civiles et fourniture de conseils juridiques...
+                  Gestion d'une variété d'affaires civiles et fourniture de
+                  conseils juridiques...
                 </p>
               </div>
             </div>
           </section>
 
           <div className="appointment-section">
-            <button>{t('profile.takeAppointment')}</button>
+            <Link to={`/rendezvous/${idlawyer}`}>
+              <button>Prendre rendez-vous</button>
+            </Link>
           </div>
         </div>
 
         <div className="second">
           <section className="reviews-section">
             <div className="comments">
-              <h2 className="section-title">{t('profile.commentsAndRatings')}</h2>
+              <h2 className="section-title">Commentaires et Évaluations</h2>
               <ul className="comment-list">
                 {displayedComments.map((comment, index) => (
                   <li key={comment.id} className="comment-card">
                     <img
                       src={avatar}
-                      alt={comment.name}
+                      alt={comment.clientName}
                       className="lawyer-avatar"
                     />
                     <div className="comment-content">
-                      <h4>{comment.name}</h4>
-                      <p>{comment.body}</p>
+                      <h4>{comment.clientName}</h4>
+                      <p>{comment.bodyComment}</p>
                     </div>
                   </li>
                 ))}
@@ -163,8 +163,8 @@ const Profile = () => {
                   className="center-button"
                 >
                   {showAllComments
-                    ? t('profile.viewLess')
-                    : t('profile.viewAllComments')}
+                    ? "Voir moins"
+                    : "Voir tous les commentaires"}
                 </button>
               )}
             </div>
@@ -172,28 +172,28 @@ const Profile = () => {
             <div className="add-comment-section">
               <input
                 type="text"
-                placeholder={t('profile.addComment')}
+                placeholder="Ajouter un commentaire..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
                 className="comment-input"
               />
               <button onClick={handleAddComment} className="add-comment-btn">
-                {t('profile.addCommentBtn')}
+                Ajouter
               </button>
             </div>
           </section>
 
           <section className="map-section">
-            <h2 className="section-title">{t('profile.geographicalMap')}</h2>
+            <h2 className="section-title">Carte Géographique</h2>
             <p className="address-info">{lawyer.adresse}</p>
             <div className="map-carte">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102439.54174620449!2d4.8550631212012645!3d36.6447804553586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128d2e53efa9d9cf%3A0x6ea31897a5bddc54!2sAmizour!5e0!3m2!1sfr!2sdz!4v1703300570108!5m2!1sfr!2sdz"
                 width="600"
                 height="450"
-                allowFullScreen=""
+                allowfullscreen=""
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
+                referrerpolicy="no-referrer-when-downgrade"
                 className="map-iframe"
               ></iframe>
             </div>

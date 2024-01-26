@@ -10,13 +10,9 @@ import Profile from "./component/Profile";
 import EditProfile from "./component/EditProfile";
 import AppointmentSection from "./component/AppointementSection";
 import SignUpAvocat from "./component/avocat/SignUpAvocat";
-import LoginUser from "./component/user/userlogin";
-
 
 function App() {
-
   return (
-    
     <div className="App">
       <BrowserRouter>
         <Routes>
@@ -24,14 +20,15 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/lawyer" element={<Lawyer />} />
-          <Route path="/avocat" element={<SignUpAvocat/>}/>
-          <Route path="/LoginAvocat" element={<loginAvocat/>}/>
+          <Route path="/avocat" element={<SignUpAvocat />} />
           <Route path="/user" element={<User />} />
           <Route path="/footer" element={<Footer />} />
           <Route path="/profil/:idlawyer" element={<Profile />} />
           <Route path="/editprofile" element={<EditProfile />} />
-          <Route path="/rendezvous" element={<AppointmentSection />} />
-         
+          <Route
+            path="/rendezvous/:idlawyer"
+            element={<AppointmentSection />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
