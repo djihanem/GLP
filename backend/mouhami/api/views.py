@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Commentaire, Lawyer
-from .serializers import CommentaireSerializer, LawyerSerializer
+from .models import Commentaire, Lawyer, Comment ,RendezVous, Client
+from .serializers import CommentaireSerializer, LawyerSerializer, RendezVousSerializer , CommentSerializer
 from .forms import LawyerSignUpForm
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -19,7 +19,7 @@ from google.auth.transport import requests
 from google.oauth2 import id_token
 from rest_framework import status
 from django.contrib.auth import logout
-
+from django.shortcuts import get_object_or_404
 
 @api_view(['GET'])
 def searchLawyers(request):
@@ -206,10 +206,88 @@ def updateLawyer(request,pk):
         serializer.save()
     return Response(serializer.data)
 
-from rest_framework import serializers
-from .models import Lawyer
 
-class LawyerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Lawyer
-        fields = '__all__'
+@api_view(['DELETE'])
+def deleteLawyer(request, pk):
+    lawyer = get_object_or_404(Lawyer, id=pk)
+    lawyer.delete()
+    
+    return Response({'message': 'Lawyer was deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+
+# let deleteNote= async(()=>{
+#     fetch(`/api/lawyer/{lawyerID}/delete`),{
+#         method: 'DELETE',
+#         'headers':{
+#                'Content-Type':'application/json'
+#         }}
+#         navigate('/')
+#     })
+
+@api_view(['POST'])
+def addCommentaire(request):
+    data = request.data
+    user_id = data.get('user_id', None)
+    lawyer_id = data.get('lawyer_id', None)
+    avocat = get_object_or_404(Lawyer, pk=lawyer_id)
+    utilisateur = get_object_or_404(Client, pk=user_id)
+
+    commentaire = Comment.objects.create(
+        clientComment=utilisateur,
+        lawyerComment=avocat,
+        bodyComment=data['body']
+    )
+    serializer = CommentSerializer(commentaire, many=False)
+
+    # Ajout du message de succès à la réponse
+    response_data = {
+        'message': 'Commentaire ajouté avec succès!',
+        'commentaire_data': serializer.data
+    }
+    
+    return Response(response_data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+def get_comments_by_lawyer(request, lawyer_id):
+    avocat = get_object_or_404(Lawyer, pk=lawyer_id)
+    comments = Comment.objects.filter(lawyerComment=avocat)
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def add_rendezvous(request):
+    data = request.data
+    user_id = data.get('user_id', None)
+    lawyer_id = data.get('lawyer_id', None)
+    date = data.get('date', None)
+    heure = data.get('heure', None)
+
+    user = get_object_or_404(Client, pk=user_id)
+
+    existing_rendezvous = RendezVous.objects.filter(client=user, avocat_id=lawyer_id, dateRDV=date, heureRDV=heure)
+    if existing_rendezvous.exists():
+        return Response({'error': 'Vous avez déjà un rendez-vous à cette date et heure avec cet avocat.'}, status=400)
+
+    avocat = get_object_or_404(Lawyer, pk=lawyer_id)
+
+    rendezvous = RendezVous.objects.create(
+        client=user,
+        avocat=avocat,
+        dateRDV=date,
+        heureRDV=heure
+    )
+    serializer = RendezVousSerializer(rendezvous, many=False)
+
+    # Ajout du message de succès à la réponse
+    response_data = {
+        'message': 'Rendez-vous ajouté avec succès!',
+        'rendezvous_data': serializer.data
+    }
+    
+    return Response(response_data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+def get_rendezvous_by_lawyer(request, lawyer_id):
+    avocat = get_object_or_404(Lawyer, pk=lawyer_id)
+    rendezvous = RendezVous.objects.filter(avocat=avocat)
+    serializer = RendezVousSerializer(rendezvous, many=True)
+    return Response(serializer.data)
