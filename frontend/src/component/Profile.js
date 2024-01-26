@@ -40,7 +40,8 @@ const Profile = () => {
     let data = await response.json();
     setLawyer(data);
   };
-
+  
+  //const chemin_image = `../../../../backend/mouhami${lawyer.image_url}`
   const displayedComments = showAllComments
     ? commentaires
     : commentaires.slice(0, 3);
@@ -55,7 +56,7 @@ const Profile = () => {
   return (
     <div className="profile">
       {/* navbar */}
-      <NavBar />
+      <NavBar /> 
       <div className="profile-container">
         <div className="first">
           <div className="profile-header">
@@ -63,9 +64,11 @@ const Profile = () => {
               {lawyer.firstName} {lawyer.secondName}
             </h1>
             <img
-              src={lawyer.image || avatar}
+              //src={lawyer.image || avatar}
+              src={lawyer.image ? lawyer.image.url : avatar}
               //src={test}
-              // src={`../../../../backend/mouhami${lawyer.image}`}
+              //src=`../../../../backend/mouhami${lawyer.image}`
+              //src={require(`.${chemin_image}`).default}
 
               alt={`${lawyer.firstName} ${lawyer.secondName}`}
               className="profile-image"
