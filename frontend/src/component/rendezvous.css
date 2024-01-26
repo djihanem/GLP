@@ -4,8 +4,8 @@
     margin: 0 auto;
     padding: 20px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns: one for tables, one for form */
-    gap: 20px; /* Adjust the gap between columns as needed */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px; 
 }
 
 .section-title-rdv {
@@ -75,15 +75,15 @@ input, select {
     color: green;
 }
 
-/* Responsive styles for small devices */
+/* Responsive*/
 
 @media only screen and (max-width: 600px) {
     .appointment-grid {
-        grid-template-columns: 1fr; /* Display one column on small screens */
+        grid-template-columns: 1fr; 
     }
 
     .section-title-rdv {
-        grid-column: span 1; /* Span only one column on small screens */
+        grid-column: span 1;
     }
 
     .table-container,

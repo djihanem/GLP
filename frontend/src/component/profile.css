@@ -166,7 +166,7 @@
 }
 
 
-/* Responsive styles for small devices */
+/* Responsive  */
 
 @media only screen and (max-width: 1000px) {
 
@@ -198,7 +198,7 @@
 
 
 
-/* General styles for all screen sizes */
+/* map responisve */
 
 .map-section {
     background-color: rgba(249, 249, 249, 0.8);
@@ -230,7 +230,7 @@
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive styles for small devices */
+/* Responsive */
 
 @media only screen and (max-width: 1200px) {
     .map-section {
@@ -242,8 +242,8 @@
     }
 
     .map-iframe {
-        width: 100%; /* Make the map iframe responsive by taking full width */
-        height: 300px; /* Adjust the height as needed for your design */
+        width: 100%; 
+        height: 300px; 
     }
 }
 
