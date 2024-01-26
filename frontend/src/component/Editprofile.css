@@ -103,3 +103,20 @@ button.save-button:hover {
 .form-group-lang select option:checked {
     background-color: #e0e0e0; 
 }
+
+
+
+/* styles for the translation button */
+
+.translate {
+    background-color: rgba(58, 38, 5, 0.959);
+    color: #fff; 
+    padding: 8px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 12px;
+    margin-right: 10px;
+  }
+  

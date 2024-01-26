@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Commentaire, Lawyer, Comment ,RendezVous, Client
 from .serializers import CommentaireSerializer, LawyerSerializer, RendezVousSerializer , CommentSerializer
-from .forms import LawyerSignUpForm
+from .forms import LawyerSignUpForm, ClientSignupForm
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
@@ -45,6 +45,33 @@ def searchLawyers(request):
 
     return Response(serializer.data)
 
+@csrf_exempt
+@api_view(['POST'])
+def user_login(request):
+    try:
+        if request.method == 'POST':
+            # Get email and password from the request
+            email = request.data.get('clientEmail')
+            password = request.data.get('cientPassword')
+
+            # Check if email exists in the database
+            user = Client.objects.filter(clientEmail=email).first()
+
+            if user is not None and check_password(password, user.password):
+                # # Here you might want to create tokens or send any success response
+                # return JsonResponse({'message': 'Login successful'})
+
+                 # Login successful, include user ID in the response
+                print(user.id)
+                return JsonResponse({'message': 'Client Login successful', 'user_id': int(user.id)})
+            else:
+                return JsonResponse({'message': 'Invalid credentials'}, status=401)
+        else:
+            return JsonResponse({'message': 'Invalid request method'}, status=400)
+    except Exception as e:
+        print(f"Error in user_login view: {str(e)}")
+        return JsonResponse({'message': 'Internal Server Error'}, status=500)
+
 
 @csrf_exempt  
 @api_view(['POST'])
@@ -69,6 +96,30 @@ def google_login(request):
             return JsonResponse({'error': 'Invalid token'}, status=400)
 
     return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def user_signup(request):
+    try:
+        if request.method == 'POST':
+            form = ClientSignupForm(request.POST)
+            print(request.POST)
+            if form.is_valid():
+                user = form.save()
+                refresh = RefreshToken.for_user(user)
+                access_token = str(refresh.access_token)
+                user_id = user.id  # Récupérer l'ID de l'utilisateur créé
+                return JsonResponse({'message': 'Signup successful', 'access_token': access_token, 'user_id': int(user.id)})
+                print(user_id)
+                # return JsonResponse({'message': 'Signup successful', 'access_token': access_token})
+            else:
+                print(form.errors)
+                return JsonResponse({'message': 'Invalid form data'}, status=400)
+        else:
+            return JsonResponse({'message': 'Invalid request method'}, status=400)
+    except Exception as e:
+        print(f"Error in lawyer_signup view: {str(e)}")
+        return JsonResponse({'message': 'Internal Server Error'}, status=500)
 
 def logout(request):
     logout(request)
