@@ -6,19 +6,53 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      en: {
+      fr: {
         translation: {
-          helloWorld: 'Hello, World!',
+          profile: {
+            firstName: 'Prénom',
+            secondName: 'Nom de famille',
+            rating: 'Évaluation',
+            specialty: 'Spécialité',
+            contactDetails: 'Coordonnées',
+            languages: 'Langues parlées',
+            basicInfo: 'Informations de Base',
+            skillsAndExperience: 'Compétences et Expériences',
+            description: 'Description',
+            takeAppointment: 'Prendre rendez-vous',
+            commentsAndRatings: 'Commentaires et Évaluations',
+            addComment: 'Ajouter un commentaire...',
+            addCommentBtn: 'Ajouter',
+            viewAllComments: 'Voir tous les commentaires',
+            viewLess: 'Voir moins',
+            geographicalMap: 'Carte Géographique',
+          },
         },
       },
       ar: {
         translation: {
-          helloWorld: 'مرحبًا بك في العالم!',
+          profile: {
+            firstName: 'الاسم الأول',
+            secondName: 'اسم العائلة',
+            rating: 'التقييم',
+            specialty: 'التخصص',
+            contactDetails: 'تفاصيل الاتصال',
+            languages: 'اللغات المتحدث بها',
+            basicInfo: 'معلومات أساسية',
+            skillsAndExperience: 'المهارات والخبرات',
+            description: 'الوصف',
+            takeAppointment: 'تحديد موعد',
+            commentsAndRatings: 'التعليقات والتقييمات',
+            addComment: 'إضافة تعليق...',
+            addCommentBtn: 'إضافة',
+            viewAllComments: 'عرض جميع التعليقات',
+            viewLess: 'عرض أقل',
+            geographicalMap: 'الخريطة الجغرافية',
+          },
         },
       },
     },
-    lng: 'en', // default language
-    fallbackLng: 'en', // fallback language
+    lng: 'fr', // default language
+    fallbackLng: 'fr', // fallback language
     interpolation: {
       escapeValue: false,
     },

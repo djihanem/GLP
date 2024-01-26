@@ -9,10 +9,13 @@ import Footer from "./component/Footer";
 import Profile from "./component/Profile";
 import EditProfile from "./component/EditProfile";
 import AppointmentSection from "./component/AppointementSection";
-import SignUpAvocat from "./component/avocat/SignUpAvocat"
+import SignUpAvocat from "./component/avocat/SignUpAvocat";
+
 
 function App() {
+
   return (
+    
     <div className="App">
       <BrowserRouter>
         <Routes>

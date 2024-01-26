@@ -275,3 +275,21 @@
         background-color: rgb(222, 215, 206);
     }
 }
+
+
+
+/* styles for the translation button */
+
+.translate {
+  background-color: rgba(58, 38, 5, 0.959);
+  color: #fff; 
+  padding: 8px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+
