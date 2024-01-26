@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import "./rendezvous.css";
 import { useParams } from "react-router-dom";
 
 const AppointmentSection = () => {
+  const { t } = useTranslation();
+  const changeLanguage = (lng) => {
+      console.log('Changing language to:', lng);
+      i18n.changeLanguage(lng);
+    };
   const { idlawyer } = useParams();
   const [rendezvous, setRendezvous] = useState([]);
 

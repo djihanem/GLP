@@ -1,4 +1,6 @@
 import Navbar from "../NavBar";
+import { useTranslation } from 'react-i18next';
+import i18n from '../../i18n'; 
 import './Home.css';
 import lawyer_icon from '../pic/lawyer.jpg';
 import {CiBank} from 'react-icons/ci';
@@ -22,10 +24,17 @@ import picturehome from '../pic/finlaw.jpg';
 
 
 const Home = () => {
+   const { t } = useTranslation();
+   const changeLanguage = (lng) => {
+       console.log('Changing language to:', lng);
+       i18n.changeLanguage(lng);
+   };
     return ( 
        
         <main>
          <Navbar/>
+         <button onClick={() => changeLanguage('fr')} className='translate'>French</button>
+        <button onClick={() => changeLanguage('ar')} className='translate'>العربية</button>
          <section id="home">
             <div className="home">
               <div className="my-pic">
