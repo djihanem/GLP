@@ -20,8 +20,8 @@ const LoginUser = () => {
     e.preventDefault();
     try {
       const formDataObject = new FormData();
-      formDataObject.append('email', formData.email);
-      formDataObject.append('password', formData.password);
+      formDataObject.append('clientEmail', formData.email);
+      formDataObject.append('clientPassword', formData.password);
 
       const response = await axios.post('http://127.0.0.1:8000/api/loginUser/', formDataObject, {
         headers: {
@@ -29,11 +29,7 @@ const LoginUser = () => {
         }
       });
       console.log('Logged in:', response.data);
-      // navigate('/editprofile');
-      const lawyerId = response.data.user_id; // Supposons que l'ID de l'avocat soit récupéré de la réponse
-    
-    // Redirection vers la page d'édition du profil avec l'ID en tant que paramètre de requête
-    navigate(`/editprofile?id=${lawyerId}`); // Redirection vers la page d'édition du profil avec l'ID de l'avocat
+    navigate(`/`); 
 
     
     } catch (error) {

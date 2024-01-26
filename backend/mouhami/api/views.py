@@ -50,27 +50,22 @@ def searchLawyers(request):
 def user_login(request):
     try:
         if request.method == 'POST':
-            # Get email and password from the request
             email = request.data.get('clientEmail')
-            password = request.data.get('cientPassword')
+            password = request.data.get('clientPassword')
 
-            # Check if email exists in the database
             user = Client.objects.filter(clientEmail=email).first()
 
-            if user is not None and check_password(password, user.password):
-                # # Here you might want to create tokens or send any success response
-                # return JsonResponse({'message': 'Login successful'})
-
-                 # Login successful, include user ID in the response
+            if user is not None and check_password(password, user.clientPassword):
                 print(user.id)
                 return JsonResponse({'message': 'Client Login successful', 'user_id': int(user.id)})
             else:
-                return JsonResponse({'message': 'Invalid credentials'}, status=401)
+                return lawyer_login(request)
         else:
             return JsonResponse({'message': 'Invalid request method'}, status=400)
     except Exception as e:
         print(f"Error in user_login view: {str(e)}")
         return JsonResponse({'message': 'Internal Server Error'}, status=500)
+
 
 
 @csrf_exempt  
