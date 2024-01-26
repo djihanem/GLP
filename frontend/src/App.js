@@ -10,7 +10,7 @@ import Profile from "./component/Profile";
 import EditProfile from "./component/EditProfile";
 import AppointmentSection from "./component/AppointementSection";
 import SignUpAvocat from "./component/avocat/SignUpAvocat";
-import LoginUser from "./component/user/userlogin";
+// import LoginUser from "./component/user/userlogin";
 
 
 function App() {
