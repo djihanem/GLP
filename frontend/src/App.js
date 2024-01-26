@@ -10,6 +10,7 @@ import Profile from "./component/Profile";
 import EditProfile from "./component/EditProfile";
 import AppointmentSection from "./component/AppointementSection";
 import SignUpAvocat from "./component/avocat/SignUpAvocat";
+import LoginUser from "./component/user/userlogin";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/lawyer" element={<Lawyer />} />
           <Route path="/avocat" element={<SignUpAvocat/>}/>
+          <Route path="/LoginAvocat" element={<loginAvocat/>}/>
           <Route path="/user" element={<User />} />
           <Route path="/footer" element={<Footer />} />
           <Route path="/profil/:idlawyer" element={<Profile />} />

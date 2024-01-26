@@ -110,8 +110,9 @@
 
 /* Reviews Section styles */
 
-.comment-content h4 {
+.comment-content > h4 {
     color: #444;
+    padding: 0;
 }
 
 .comment-content p,
