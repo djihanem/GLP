@@ -11,7 +11,7 @@ class Lawyer(models.Model):
     langues = models.CharField(max_length=100, null=True)
     description = models.TextField(null=True)
     adresse = models.CharField(max_length=200, null=True)
-    image = models.ImageField(upload_to='./lawyer_images/', null=True, blank=True)
+    image = models.ImageField(upload_to = 'images/', null=True, blank=True)
 
 class Commentaire(models.Model):
     name = models.CharField(max_length=30)

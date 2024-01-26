@@ -147,7 +147,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
     'social_core.backends.google.GoogleOAuth2',
-    'path.to.YourCustomUserBackend',
+    #'path.to.YourCustomUserBackend',
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -204,3 +204,6 @@ LOGGING = {
         },
     },
 }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
