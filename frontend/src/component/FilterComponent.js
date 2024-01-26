@@ -1,4 +1,3 @@
-// FilterComponent.js
 import "./filter.css";
 import React from "react";
 
@@ -10,24 +9,24 @@ const FilterComponent = ({ onSearch, onFilterChange }) => {
 
   const handleInputChange = (e, filterType) => {
     const value = e.target.value;
-    onFilterChange(filterType, value); // Mettre à jour le filtre approprié dans le composant Lawyer
+    onFilterChange(filterType, value); // Mettre à jour le filtre approprié dans le composant Avocat
   };
 
   return (
     <form onSubmit={handleSubmit} className="filter">
       <input
         type="text"
-        placeholder="Speciality"
+        placeholder="Spécialité"
         onChange={(e) => handleInputChange(e, "specialite")}
       />
       <input
         type="text"
-        placeholder="Address"
+        placeholder="Adresse"
         onChange={(e) => handleInputChange(e, "adresse")}
       />
       <input
         type="text"
-        placeholder="Language"
+        placeholder="Langue"
         onChange={(e) => handleInputChange(e, "langues")}
       />
 

@@ -9,7 +9,6 @@ import { Link, useParams } from "react-router-dom";
 import avatar from "./pic/avatar.png";
 import StarRating from './StarRating';
 
-
 const Profile = () => {
   let { idlawyer } = useParams();
 
@@ -32,7 +31,7 @@ const Profile = () => {
 
   let [lawyer, setLawyer] = useState({});
   useEffect(() => {
-    getLawyer(); // Add parentheses to call the function
+    getLawyer();
   }, [idlawyer]);
 
   let getLawyer = async () => {
@@ -42,8 +41,7 @@ const Profile = () => {
     let data = await response.json();
     setLawyer(data);
   };
-  
-  //const chemin_image = `../../../../backend/mouhami${lawyer.image_url}`
+
   const displayedComments = showAllComments
     ? commentaires
     : commentaires.slice(0, 3);
@@ -51,21 +49,18 @@ const Profile = () => {
   const handleAddComment = () => {
     if (newComment.trim() !== "") {
       setComments((prevComments) => [...prevComments, newComment]);
-      setNewComment(""); // Clear the input field after adding the comment
+      setNewComment("");
     }
   };
-
 
   const [rating, setRating] = useState(0);
 
   const handleRatingChange = (newRating) => {
-    // Do something with the new rating, such as updating it in your state
     setRating(newRating);
   };
 
   return (
     <div className="profile">
-      {/* navbar */}
       <NavBar /> 
       <div className="profile-container">
         <div className="first">
@@ -74,24 +69,17 @@ const Profile = () => {
               {lawyer.firstName} {lawyer.secondName}
             </h1>
             <img
-              //src={lawyer.image || avatar}
               src={lawyer.image ? lawyer.image.url : avatar}
-              //src={test}
-              //src=`../../../../backend/mouhami${lawyer.image}`
-              //src={require(`.${chemin_image}`).default}
-
               alt={`${lawyer.firstName} ${lawyer.secondName}`}
               className="profile-image"
             />
-            {/* <h1> this is ID {idlawyer}</h1> */}
-            {/* <button>Editer Le Profile</button> */}
           </div>
 
           <section className="basic-info-section">
             <h2 className="section-title">Informations de Base</h2>
 
             <p className="info-item">
-              <strong>rating : {rating}</strong>
+              <strong>Évaluation : {rating}</strong>
               <StarRating initialRating={rating} onChange={handleRatingChange} />
             </p>
 
@@ -99,69 +87,42 @@ const Profile = () => {
               <strong>Spécialité :</strong> {lawyer.specialite}
             </p>
             <p className="info-item">
-              <strong>Coordonnées :</strong> {lawyer.phoneNumber} |{" "}
-              {lawyer.email}
+              <strong>Coordonnées :</strong> {lawyer.phoneNumber} | {lawyer.email}
             </p>
             <p className="info-item">
               <strong>Langues parlées :</strong> {lawyer.langues}
             </p>
-
-            {/* <div className="rate">
-              <select className="rate-select">
-                <option value="" disabled>
-                  Select Rating
-                </option>
-                {[...Array(10)].map((_, index) => (
-                  <option key={index} value={index + 1}>
-                    {index + 1}
-                  </option>
-                ))}
-              </select>
-              <button className="rate-btn">Rate</button>
-            </div> */}
           </section>
 
-          {/* Skills and Experience Section */}
           <section className="skills-experience-section">
             <h2 className="section-title">Compétences et Expériences</h2>
             <ul className="skills-list">
-              {" "}
               <p className="info-item">
                 <strong>Description :</strong> {lawyer.description}
               </p>
-              <li className="skill-item">Mediation</li>
-              <li className="skill-item">Contract Law</li>
-              <li className="skill-item">Litigation</li>
+              <li className="skill-item">Médiation</li>
+              <li className="skill-item">Droit des contrats</li>
+              <li className="skill-item">Contentieux</li>
             </ul>
-            {/* <ul className="skills-list">
-              {lawyer.skills.map((skill, index) => (
-                <li key={index} className="skill-item">
-                  {skill}
-                </li>
-              ))}
-            </ul> */}
 
             <div className="experiences">
               <div className="experience-item">
                 <h3 className="experience-title">
-                  Senior Associate at XYZ Law Firm
+                  Associé principal chez XYZ Cabinet d'Avocats
                 </h3>
                 <p className="experience-description">
-                  Handled a variety of civil cases and provided legal counsel...
+                  Gestion d'une variété d'affaires civiles et fourniture de conseils juridiques...
                 </p>
               </div>
             </div>
           </section>
 
-          {/* Appointment Section */}
           <div className="appointment-section">
-            <button>Prendre rendez vous</button>
+            <button>Prendre rendez-vous</button>
           </div>
         </div>
-        {/*  secoooooooooooooooooooooooooond */}
 
         <div className="second">
-          {/* Reviews Section */}
           <section className="reviews-section">
             <div className="comments">
               <h2 className="section-title">Commentaires et Évaluations</h2>
@@ -193,7 +154,6 @@ const Profile = () => {
               )}
             </div>
 
-            {/* Input field for adding a new comment */}
             <div className="add-comment-section">
               <input
                 type="text"
@@ -207,7 +167,7 @@ const Profile = () => {
               </button>
             </div>
           </section>
-          {/* Google Maps Section */}
+
           <section className="map-section">
             <h2 className="section-title">Carte Géographique</h2>
             <p className="address-info">{lawyer.adresse}</p>
