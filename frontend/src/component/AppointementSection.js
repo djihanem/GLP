@@ -100,41 +100,46 @@ const AppointmentSection = () => {
   return (
     <section className="appointment-page">
       <NavBar />
-      <h2 className="section-title-rdv">Prenez votre rendez-vous ici</h2>
-      <div className="appointment-grid">
-        <div className="appointment-table">
-          <div className="table-container">
-            <h3>Heures de travail pour l'avocat</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Jour</th>
-                  <th>Heure</th>
-                </tr>
-              </thead>
-              <tbody>
-                {lawyerTimeOfWork.map((timeOfWork, index) => (
-                  <tr key={index}>
-                    <td>{timeOfWork.day}</td>
-                    <td>{timeOfWork.time}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+      <button onClick={() => changeLanguage('fr')} className='translate'>French</button>
+            <button onClick={() => changeLanguage('ar')} className='translate'>العربية</button>
 
-          <div className="table-container">
-            <h3>Horaires de jetons pour l'avocat</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Heure</th>
-                  <th>Client Concerné</th>
-                  <th>Motif du rendez-vous</th>
-                </tr>
-              </thead>
-              <tbody>
+            <h2 className="section-title-rdv">{t('appointment.title')}</h2>
+            <div className="appointment-grid">
+                <div className="appointment-table">
+
+
+                    <div className="table-container">
+                        <h3>{t('appointment.table.workHours')}</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>{t('appointment.table.date')}</th>
+                                    <th>{t('appointment.table.time')}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {lawyerTimeOfWork.map((timeOfWork, index) => (
+                                    <tr key={index}>
+                                        <td>{timeOfWork.day}</td>
+                                        <td>{timeOfWork.time}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="table-container">
+                        <h3>{t('appointment.table.tokenHours')}</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>{t('appointment.table.date')}</th>
+                                    <th>{t('appointment.table.time')}</th>
+                                    <th>{t('appointment.table.clientFirstName')}</th>
+                                    <th>{t('appointment.table.clientLastName')}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                 {rendezvous.map((token, index) => (
                   <tr key={index}>
                     <td>{token.dateRDV}</td>
@@ -149,57 +154,34 @@ const AppointmentSection = () => {
         </div>
 
         <div className="form-container">
-          <h3>Prendre un rendez-vous</h3>
+          <h3>{t('appointment.form.title')}</h3>
           <form onSubmit={handleAppointmentSubmit} className="appointment-form">
-            <label>Prénom :</label>
-            <input
-              type="text"
-              value={firstName}
-              onChange={handleFirstNameChange}
-              required
-            />
+            <label>{t('appointment.form.firstName')}:</label>
+            <input type="text" value={firstName} onChange={handleFirstNameChange} required />
 
-            <label>Nom :</label>
-            <input
-              type="text"
-              value={lastName}
-              onChange={handleLastNameChange}
-              required
-            />
+            <label>{t('appointment.form.lastName')}:</label>
+            <input type="text" value={lastName} onChange={handleLastNameChange} required />
 
-            <label>Email :</label>
-            <input
-              type="email"
-              value={email}
-              onChange={handleEmailChange}
-              required
-            />
+            <label>{t('appointment.form.email')}:</label>
+            <input type="email" value={email} onChange={handleEmailChange} required />
 
-            <label>Jour :</label>
+            <label>{t('appointment.form.day')}:</label>
             <select value={selectedDay} onChange={handleDayChange} required>
-              <option value="">Sélectionnez un jour</option>
-              <option value="Lundi">Dimanche</option>
-              <option value="Lundi">Lundi</option>
-              <option value="Mardi">Mardi</option>
-              <option value="Mercredi">Mercredi</option>
-              <option value="Mercredi">Jeudi</option>
+              <option value="">{t('appointment.form.selectDay')}</option>
+              <option value="Lundi">{t('days.monday')}</option>
+              <option value="Mardi">{t('days.tuesday')}</option>
+              <option value="Mercredi">{t('days.wednesday')}</option>
             </select>
 
-            <label>Heure :</label>
+            <label>{t('appointment.form.time')}:</label>
             <select value={selectedTime} onChange={handleTimeChange} required>
-              <option value="">Sélectionnez une heure</option>
+              <option value="">{t('appointment.form.selectTime')}</option>
               <option value="09:00 AM">09:00 AM</option>
               <option value="10:00 AM">10:00 AM</option>
               <option value="11:00 AM">11:00 AM</option>
-              <option value="12:00 AM">12:00 AM</option>
-              <option value="13:00 AM">13:00 AM</option>
-              <option value="14:00 AM">14:00 AM</option>
-              <option value="15:00 AM">15:00 AM</option>
             </select>
 
-            <button type="submit" className="submit-button">
-              Réserver
-            </button>
+            <button type="submit" className="submit-button">{t('appointment.form.book')}</button>
           </form>
         </div>
       </div>
