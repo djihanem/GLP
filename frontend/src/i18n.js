@@ -63,6 +63,7 @@ i18n
               saveChanges: 'Enregistrer les Changements',
             },
           },
+          
         },
       },
       ar: {
