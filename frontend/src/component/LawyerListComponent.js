@@ -1,4 +1,3 @@
-// LawyerListComponent.js
 import React, { useState, useEffect } from "react";
 import "./lawyerlist.css";
 import { Link } from "react-router-dom";
@@ -28,7 +27,7 @@ const LawyerListComponent = ({ lawyersData }) => {
       setLawyers(data);
       setErrorMessage(""); // Réinitialiser le message d'erreur en cas de succès
     } catch (error) {
-      console.error("Error fetching lawyers:", error);
+      console.error("Erreur lors de la récupération des avocats :", error);
       setErrorMessage("Erreur lors de la récupération des avocats");
     }
   };
@@ -47,11 +46,11 @@ const LawyerListComponent = ({ lawyersData }) => {
                 <h3>
                   {lawyer.firstName} {lawyer.secondName}
                 </h3>
-                <p>Language: {lawyer.langues}</p>
-                <p>Address: {lawyer.adresse}</p>
-                <p>Speciality: {lawyer.specialite}</p>
+                <p>Langue : {lawyer.langues}</p>
+                <p>Adresse : {lawyer.adresse}</p>
+                <p>Spécialité : {lawyer.specialite}</p>
                 <button>
-                  <Link to={`/profil/${lawyer.id}`}>Voir Profile</Link>
+                  <Link to={`/profil/${lawyer.id}`}>Voir le Profil</Link>
                 </button>
               </div>
             </div>
