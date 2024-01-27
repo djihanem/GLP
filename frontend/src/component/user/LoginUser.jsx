@@ -5,6 +5,7 @@ import email_icon from '../pic/email.png';
 import password_icon from '../pic/password.png';
 import { useNavigate } from 'react-router-dom'; // Import de useHistory depuis react-router-dom
 
+
 const LoginUser = () => {
   let navigate = useNavigate(); // Use useNavigate to get navigation functionality
   const [formData, setFormData] = useState({
@@ -20,8 +21,9 @@ const LoginUser = () => {
     e.preventDefault();
     try {
       const formDataObject = new FormData();
-      formDataObject.append('email', formData.email);
-      formDataObject.append('password', formData.password);
+      formDataObject.append('clientEmail', formData.email);
+      formDataObject.append('clientPassword', formData.password);
+
 
       const response = await axios.post('http://127.0.0.1:8000/api/loginUser/', formDataObject, {
         headers: {
@@ -29,12 +31,10 @@ const LoginUser = () => {
         }
       });
       console.log('Logged in:', response.data);
-      // navigate('/editprofile');
-      const lawyerId = response.data.user_id; // Supposons que l'ID de l'avocat soit récupéré de la réponse
-    
-    // Redirection vers la page d'édition du profil avec l'ID en tant que paramètre de requête
-    navigate(`/editprofile?id=${lawyerId}`); // Redirection vers la page d'édition du profil avec l'ID de l'avocat
 
+      localStorage.setItem('userId', response.data.user_id); //stocker l'id du client 
+     navigate(`/`); 
+ 
     
     } catch (error) {
       console.error('Error:', error);

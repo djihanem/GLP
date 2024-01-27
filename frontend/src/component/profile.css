@@ -118,7 +118,9 @@
 .comment-content p,
 .comment-input {
     color: #666;
+    text-align: left;
 }
+
 
 .add-comment-section {
     margin-top: 20px;

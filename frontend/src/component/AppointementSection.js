@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useTranslation } from 'react-i18next';
-import i18n from '../i18n';
+import { useTranslation } from "react-i18next";
+import i18n from "../i18n";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import "./rendezvous.css";
 import { useParams } from "react-router-dom";
 
 const AppointmentSection = () => {
+  const userId = localStorage.getItem("userId");
+  console.log(userId);
+
   const { t } = useTranslation();
   const changeLanguage = (lng) => {
-      console.log('Changing language to:', lng);
-      i18n.changeLanguage(lng);
-    };
+    console.log("Changing language to:", lng);
+    i18n.changeLanguage(lng);
+  };
   const { idlawyer } = useParams();
   const [rendezvous, setRendezvous] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     getRendezvous();
@@ -49,9 +53,9 @@ const AppointmentSection = () => {
 
   const [selectedSlot, setSelectedSlot] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [detail, setDetail] = useState("");
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [clientName, setclientName] = useState("");
   const [email, setEmail] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -61,12 +65,8 @@ const AppointmentSection = () => {
     setSelectedSlot(e.target.value);
   };
 
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
+  const handleclientNameChange = (e) => {
+    setclientName(e.target.value);
   };
 
   const handleEmailChange = (e) => {
@@ -74,9 +74,17 @@ const AppointmentSection = () => {
   };
 
   const handleDayChange = (e) => {
-    setSelectedDay(e.target.value);
-  };
+    const selectedDay = e.target.value;
+    const selectedDate = new Date(selectedDay);
 
+    // Vérifier si le jour sélectionné n'est pas vendredi (5) ni samedi (6)
+    if (selectedDate.getDay() !== 5 && selectedDate.getDay() !== 4) {
+      setSelectedDay(selectedDay);
+      setDetail("");
+    } else {
+      setDetail("Vous ne pouvez pas sélectionner vendredi ou samedi.");
+    }
+  };
   const handleTimeChange = (e) => {
     setSelectedTime(e.target.value);
   };
@@ -87,59 +95,95 @@ const AppointmentSection = () => {
     setSubmitted(true);
   };
 
-  const handleAppointmentSubmit = (e) => {
+  const handleAppointmentSubmit = async (e) => {
     e.preventDefault();
-    console.log(`Détails du rendez-vous :
 
-            Nom - ${lastName}, 
-            Email - ${email}, 
-            Jour - ${selectedDay}, 
-            Heure - ${selectedTime}`);
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/add-rendezvous/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            lawyer_id: idlawyer,
+            date: selectedDay,
+            heure: selectedTime,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        // Rafraîchir la liste des rendez-vous après l'ajout
+        getRendezvous();
+        console.log("Rendez-vous ajouté avec succès !");
+        // Réinitialiser les champs et le flag "submitted" après la soumission réussie
+        setclientName("");
+        setEmail("");
+        setSelectedDay("");
+        setSelectedTime("");
+        setSubmitted(true);
+        setError(""); // Réinitialiser l'erreur
+      } else {
+        const data = await response.json();
+        console.error("Erreur lors de l'ajout du rendez-vous :", data.error);
+        setError(data.error); // Mettre à jour l'erreur
+      }
+    } catch (error) {
+      console.error("Erreur lors de la requête POST :", error);
+      setError(
+        "Une erreur s'est produite lors de la soumission du rendez-vous."
+      );
+    }
   };
 
   return (
     <section className="appointment-page">
       <NavBar />
-      <button onClick={() => changeLanguage('fr')} className='translate'>French</button>
-            <button onClick={() => changeLanguage('ar')} className='translate'>العربية</button>
+      <button onClick={() => changeLanguage("fr")} className="translate">
+        French
+      </button>
+      <button onClick={() => changeLanguage("ar")} className="translate">
+        العربية
+      </button>
 
-            <h2 className="section-title-rdv">{t('appointment.title')}</h2>
-            <div className="appointment-grid">
-                <div className="appointment-table">
+      <h2 className="section-title-rdv">{t("appointment.title")}</h2>
+      <div className="appointment-grid">
+        <div className="appointment-table">
+          <div className="table-container">
+            <h3>{t("appointment.table.workHours")}</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>{t("appointment.table.date")}</th>
+                  <th>{t("appointment.table.time")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {lawyerTimeOfWork.map((timeOfWork, index) => (
+                  <tr key={index}>
+                    <td>{timeOfWork.day}</td>
+                    <td>{timeOfWork.time}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-
-                    <div className="table-container">
-                        <h3>{t('appointment.table.workHours')}</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>{t('appointment.table.date')}</th>
-                                    <th>{t('appointment.table.time')}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {lawyerTimeOfWork.map((timeOfWork, index) => (
-                                    <tr key={index}>
-                                        <td>{timeOfWork.day}</td>
-                                        <td>{timeOfWork.time}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div className="table-container">
-                        <h3>{t('appointment.table.tokenHours')}</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>{t('appointment.table.date')}</th>
-                                    <th>{t('appointment.table.time')}</th>
-                                    <th>{t('appointment.table.clientFirstName')}</th>
-                                    <th>{t('appointment.table.clientLastName')}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+          <div className="table-container">
+            <h3>{t("appointment.table.tokenHours")}</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>{t("appointment.table.date")}</th>
+                  <th>{t("appointment.table.time")}</th>
+                  <th>{t("Nom Client")}</th>
+                  <th>{t("Motif du rendezvous")}</th>
+                </tr>
+              </thead>
+              <tbody>
                 {rendezvous.map((token, index) => (
                   <tr key={index}>
                     <td>{token.dateRDV}</td>
@@ -154,34 +198,72 @@ const AppointmentSection = () => {
         </div>
 
         <div className="form-container">
-          <h3>{t('appointment.form.title')}</h3>
+          <h3>{t("appointment.form.title")}</h3>
           <form onSubmit={handleAppointmentSubmit} className="appointment-form">
-            <label>{t('appointment.form.firstName')}:</label>
-            <input type="text" value={firstName} onChange={handleFirstNameChange} required />
+            {/* <label>{t("appointment.form.firstName")}:</label>
+            <input
+              type="text"
+              value={clientName}
+              onChange={handleclientNameChange}
+              required
+            /> */}
 
-            <label>{t('appointment.form.lastName')}:</label>
-            <input type="text" value={lastName} onChange={handleLastNameChange} required />
+            {/* <label>{t("appointment.form.lastName")}:</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={handleLastNameChange}
+              required
+            /> */}
+            {/* 
+            <label>{t("appointment.form.email")}:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            /> */}
 
-            <label>{t('appointment.form.email')}:</label>
-            <input type="email" value={email} onChange={handleEmailChange} required />
-
-            <label>{t('appointment.form.day')}:</label>
+            {/* <label>{t("appointment.form.day")}:</label>
             <select value={selectedDay} onChange={handleDayChange} required>
-              <option value="">{t('appointment.form.selectDay')}</option>
-              <option value="Lundi">{t('days.monday')}</option>
-              <option value="Mardi">{t('days.tuesday')}</option>
-              <option value="Mercredi">{t('days.wednesday')}</option>
+              <option value="">{t("appointment.form.selectDay")}</option>
+              <option value="Lundi">{t("days.monday")}</option>
+              <option value="Mardi">{t("days.tuesday")}</option>
+              <option value="Mercredi">{t("days.wednesday")}</option>
             </select>
-
-            <label>{t('appointment.form.time')}:</label>
+          */}
+            <label>{t("appointment.form.time")}:</label>
             <select value={selectedTime} onChange={handleTimeChange} required>
-              <option value="">{t('appointment.form.selectTime')}</option>
-              <option value="09:00 AM">09:00 AM</option>
-              <option value="10:00 AM">10:00 AM</option>
-              <option value="11:00 AM">11:00 AM</option>
+              <option value="">{t("appointment.form.selectTime")}</option>
+              <option value="09:00:00">09:00:00</option>
+              <option value="10:00:00">10:00:00</option>
+              <option value="11:00:00">11:00:00</option>
+              <option value="12:00:00">12:00:00</option>
+              <option value="13:00:00">13:00:00</option>
+              <option value="14:00:00">14:00:00</option>
+              <option value="15:00:00">16:00:00</option>
             </select>
 
-            <button type="submit" className="submit-button">{t('appointment.form.book')}</button>
+            <label>{t("appointment.form.day")}:</label>
+            <input
+              type="date"
+              value={selectedDay}
+              onChange={handleDayChange}
+              required
+            />
+            <span>{detail}</span>
+            {/* <label>{t("appointment.form.time")}:</label>
+            <input
+              type="time"
+              value={selectedTime}
+              onChange={handleTimeChange}
+              required
+            /> */}
+
+            <button type="submit" className="submit-button">
+              {t("appointment.form.book")}
+            </button>
+            {error && <div className="error-message">{error}</div>}
           </form>
         </div>
       </div>

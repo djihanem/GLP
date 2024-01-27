@@ -4,7 +4,7 @@ from django.db import models
 class Lawyer(models.Model):
     firstName = models.CharField(max_length=100)
     secondName = models.CharField(max_length=100)
-    phoneNumber = models.IntegerField()
+    phoneNumber = models.IntegerField(null=True, default='0518142560')
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=100)
     specialite = models.CharField(max_length=100, null=True)

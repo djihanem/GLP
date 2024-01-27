@@ -3,13 +3,14 @@ import axios from 'axios';
 import './userSignup.css';
 import email_icon from '../pic/email.png';
 import password_icon from '../pic/password.png';
-import { useNavigate } from 'react-router-dom'; // Import de useHistory depuis react-router-dom
+import { useNavigate } from 'react-router-dom';
 
 const SignupUser = () => {
-  let navigate = useNavigate(); // Use useNavigate to get navigation functionality
+  let navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    clientName: '', 
+    clientEmail: '', 
+    clientPassword: '', 
   });
 
   const handleChange = (e) => {
@@ -20,22 +21,18 @@ const SignupUser = () => {
     e.preventDefault();
     try {
       const formDataObject = new FormData();
-      formDataObject.append('email', formData.email);
-      formDataObject.append('password', formData.password);
+      formDataObject.append('clientName', formData.clientName);
+      formDataObject.append('clientEmail', formData.clientEmail);
+      formDataObject.append('clientPassword', formData.clientPassword); 
 
       const response = await axios.post('http://127.0.0.1:8000/api/signupUser/', formDataObject, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-        }
+        } 
       });
       console.log('Signed up:', response.data);
-      // navigate('/editprofile');
-      const lawyerId = response.data.user_id; // Supposons que l'ID de l'avocat soit récupéré de la réponse
-    
-    // Redirection vers la page d'édition du profil avec l'ID en tant que paramètre de requête
-    navigate('/'); // Redirection vers la page d'édition du profil avec l'ID de l'avocat
-
-    
+      localStorage.setItem('userId', response.data.user_id); //stocker l'id du client 
+      navigate('/');
     } catch (error) {
       console.error('Error:', error);
     }
@@ -43,34 +40,38 @@ const SignupUser = () => {
 
   return (
     <div className='container'>
-          
-          <div className="header">
-            <div className="text">Sign Up User</div>
-            <div className="underline"></div>
+      <div className="header">
+        <div className="text">Sign Up User</div>
+        <div className="underline"></div>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <div className="inputs">
+          <div className="input">
+            <img src={email_icon} alt="" />
+            <input type="text" name="clientName" placeholder='Client Name' value={formData.clientName} onChange={handleChange} />
           </div>
-    
-          <form onSubmit={handleSubmit}>
-            <div className="inputs">
-              <div className="input">
-                <img src={email_icon} alt="" />
-                <input type="email" name="email" placeholder='Email ID' value={formData.email} onChange={handleChange} />
-              </div>
-    
-              <div className="input">
-                <img src={password_icon} alt="" />
-                <input type="password" name="password" placeholder='Password' value={formData.password} onChange={handleChange} />
-              </div>
-            </div>
-    
-            <div className="forgot-password">
-              J'ai deja un compte <span><a href="/LoginUser">Login</a></span>
-            </div>
-    
-            <div className="submit-container">
-              <button type='submit' className="submit">Sign Up</button>
-            </div>
-          </form>
+
+          <div className="input">
+            <img src={email_icon} alt="" />
+            <input type="email" name="clientEmail" placeholder='Email ID' value={formData.clientEmail} onChange={handleChange} />
+          </div>
+
+          <div className="input">
+            <img src={password_icon} alt="" />
+            <input type="password" name="clientPassword" placeholder='Password' value={formData.clientPassword} onChange={handleChange} />
+          </div>
         </div>
+
+        <div className="forgot-password">
+          J'ai déjà un compte <span><a href="/LoginUser">Login</a></span>
+        </div>
+
+        <div className="submit-container">
+          <button type='submit' className="submit">Sign Up</button>
+        </div>
+      </form>
+    </div>
   );
 }
 

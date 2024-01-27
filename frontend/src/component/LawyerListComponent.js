@@ -39,16 +39,33 @@ const LawyerListComponent = ({ lawyersData }) => {
         ? lawyers.map((lawyer) => (
             <div key={lawyer.id} className="lawyer-card">
               <img
-                src={lawyer.image || avatar}
+                src={
+                  lawyer.image ? `http://127.0.0.1:8000${lawyer.image}` : avatar
+                }
                 alt={`${lawyer.firstName} ${lawyer.secondName}`}
+                className="profile-image"
               />
               <div className="lawyer-details">
                 <h3>
                   {lawyer.firstName} {lawyer.secondName}
                 </h3>
-                <p>Langue : {lawyer.langues}</p>
-                <p>Adresse : {lawyer.adresse}</p>
-                <p>Spécialité : {lawyer.specialite}</p>
+                <p>
+                  <strong>Langues:</strong> {lawyer.langues}
+                </p>
+                <p>
+                  <strong>Adresse:</strong>{" "}
+                  {lawyer.adresse && lawyer.adresse.length > 30
+                    ? `${lawyer.adresse.slice(0, 30)}...`
+                    : lawyer.adresse}
+                </p>
+
+                <p>
+                  <strong>Spécialité:</strong>{" "}
+                  {lawyer.specialite && lawyer.specialite.length > 30
+                    ? `${lawyer.specialite.slice(0, 30)}...`
+                    : lawyer.specialite}
+                </p>
+
                 <button>
                   <Link to={`/profil/${lawyer.id}`}>Voir le Profil</Link>
                 </button>

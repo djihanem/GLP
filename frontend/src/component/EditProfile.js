@@ -1,7 +1,7 @@
 // src/components/EditProfile.js
 import React, { useEffect, useState } from "react";
-import { useTranslation } from 'react-i18next';
-import i18n from '../i18n'; 
+import { useTranslation } from "react-i18next";
+import i18n from "../i18n";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
 import "./Editprofile.css";
@@ -9,10 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 const EditProfile = () => {
+  let navigate = useNavigate(); // Use useNavigate to get navigation functionality
   const { t } = useTranslation();
   const changeLanguage = (lng) => {
-      console.log('Changing language to:', lng);
-      i18n.changeLanguage(lng);
+    console.log("Changing language to:", lng);
+    i18n.changeLanguage(lng);
   };
 
   const location = useLocation();
@@ -34,12 +35,20 @@ const EditProfile = () => {
   };
 
   let updateLawyer = async () => {
+    const formData = new FormData();
+    formData.append("image", document.getElementById("image").files[0]);
+    formData.append("firstName", lawyer.firstName);
+    formData.append("secondName", lawyer.secondName);
+    formData.append("specialite", lawyer.specialite);
+    formData.append("description", lawyer.description);
+    formData.append("langues", lawyer.langues);
+    formData.append("phoneNumber", lawyer.phoneNumber);
+    formData.append("email", lawyer.email);
+    formData.append("adresse", lawyer.adresse);
+
     fetch(`http://127.0.0.1:8000/api/Lawyers/${lawyerId}/update/`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(lawyer),
+      body: formData,
     });
   };
 
@@ -55,25 +64,30 @@ const EditProfile = () => {
   const handleSubmit = (e) => {
     updateLawyer();
     e.preventDefault();
-    window.location.reload();
+    navigate(`/profil/${lawyer.id}`);
+    //window.location.reload();
     console.log("Lawyer profile updated:", lawyer);
   };
 
   return (
     <div className="edit-lawyer-profile">
       <NavBar />
-      <button onClick={() => changeLanguage('fr')} className='translate'>French</button>
-        <button onClick={() => changeLanguage('ar')} className='translate'>العربية</button>
+      <button onClick={() => changeLanguage("fr")} className="translate">
+        French
+      </button>
+      <button onClick={() => changeLanguage("ar")} className="translate">
+        العربية
+      </button>
       <div className="editing-section">
-        <h2>{t('editProfile.title')}</h2>
+        <h2>{t("editProfile.title")}</h2>
         <form className="profile-form">
           <div className="form-group-img">
-            <label htmlFor="image">{t('editProfile.form.uploadPhoto')}</label>
+            <label htmlFor="image">{t("editProfile.form.uploadPhoto")}</label>
             <input type="file" id="image" name="image" accept="image/*" />
           </div>
 
           <div className="form-group">
-            <label htmlFor="firstName">{t('editProfile.form.firstName')}</label>
+            <label htmlFor="firstName">{t("editProfile.form.firstName")}</label>
             <input
               type="text"
               id="firstName"
@@ -86,7 +100,7 @@ const EditProfile = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="secondName">{t('editProfile.form.lastName')}</label>
+            <label htmlFor="secondName">{t("editProfile.form.lastName")}</label>
             <input
               type="text"
               id="secondName"
@@ -99,7 +113,9 @@ const EditProfile = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="specialite">{t('editProfile.form.speciality')}</label>
+            <label htmlFor="specialite">
+              {t("editProfile.form.speciality")}
+            </label>
             <input
               type="text"
               id="specialite"
@@ -111,7 +127,9 @@ const EditProfile = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="description">{t('editProfile.form.description')}</label>
+            <label htmlFor="description">
+              {t("editProfile.form.description")}
+            </label>
             <textarea
               id="description"
               name="description"
@@ -123,7 +141,7 @@ const EditProfile = () => {
           </div>
 
           <div className="form-group-lang">
-            <label htmlFor="langues">{t('editProfile.form.languages')}</label>
+            <label htmlFor="langues">{t("editProfile.form.languages")}</label>
             <select
               id="langues"
               name="languages"
@@ -141,7 +159,9 @@ const EditProfile = () => {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="phoneNumber">{t('editProfile.form.phoneNumber')}</label>
+            <label htmlFor="phoneNumber">
+              {t("editProfile.form.phoneNumber")}
+            </label>
             <input
               type="tel"
               id="phoneNumber"
@@ -153,7 +173,7 @@ const EditProfile = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="email">{t('editProfile.form.email')}</label>
+            <label htmlFor="email">{t("editProfile.form.email")}</label>
             <input
               type="email"
               id="email"
@@ -165,7 +185,7 @@ const EditProfile = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="adresse">{t('editProfile.form.address')}</label>
+            <label htmlFor="adresse">{t("editProfile.form.address")}</label>
             <textarea
               id="adresse"
               name="adresse"
@@ -176,7 +196,7 @@ const EditProfile = () => {
             ></textarea>
           </div>
           <button type="submit" className="save-button" onClick={handleSubmit}>
-            {t('editProfile.form.saveChanges')}
+            {t("editProfile.form.saveChanges")}
           </button>
         </form>
       </div>
