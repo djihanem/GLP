@@ -99,6 +99,8 @@
     font-weight: 700;
     cursor: pointer;
 }
+
+
 /* Media Query for Smaller Screens */
 
 @media (max-width: 480px) {

@@ -44,10 +44,10 @@ function Navbar() {
             </button>
             {isDropdownOpen && (
               <div className="dropdown-content">
-                <a href="/Avocat">Avocat</a>
-                <a href="/User">Utilisateur</a>
+                <a href="/AvocateSign">Avocat</a>
+                <a href="/UserSign">Utilisateur</a>
                 <Link to={`/editprofile?id=${lawyerId}`}>Modifier Profil</Link>
-                <a href="/Logout">Deconnexion</a>
+                <a href="/AdminDash">Deconnexion</a>
                 
               </div>
             )}
