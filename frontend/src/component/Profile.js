@@ -101,6 +101,7 @@ const Profile = () => {
             <p className="info-item">
               <strong>{t('profile.rating')} : {rating}</strong>
               <StarRating initialRating={rating} onChange={handleRatingChange} />
+              <button>Submit</button>
             </p>
 
             <p className="info-item">
