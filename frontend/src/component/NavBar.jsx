@@ -2,11 +2,13 @@ import React, { useRef, useState } from 'react';
 import { FaBars, FaTimes, FaUser} from 'react-icons/fa';
 import avocat from './pic/avocat.jpg'
 import './NavBar.css';
+import { Link } from "react-router-dom";
 // import './avocat/LogInSignUpAvocat'; 
 
 
 
 function Navbar() {
+  const lawyerId = localStorage.getItem("lawyerId");
   const navRef = useRef();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -21,12 +23,12 @@ function Navbar() {
   return (
     <div>
       <header>
-        <h3><a href="./Home"><img src={avocat}/></a></h3>
+        <h3><a href="/Home"><img src={avocat}/></a></h3>
         <nav ref={navRef}>
          
-          <a href="./Home">Accueil</a>
+          <a href="/Home">Accueil</a>
           
-          <a href="./Lawyer">Avocat</a>
+          <a href="/Lawyer">Avocat</a>
           <a href="/Home/#about">À propos de nous</a>
           <a href="/Home/#servicess">Services</a>
           <a href="/Home/#contact">Contactez-nous</a>
@@ -44,8 +46,8 @@ function Navbar() {
               <div className="dropdown-content">
                 <a href="/Avocat">Avocat</a>
                 <a href="/User">Utilisateur</a>
-                <a href="./Edit Profil">Modifier Profil</a>
-                <a href="./Logout">Deconnexion</a>
+                <Link to={`/editprofile?id=${lawyerId}`}>Modifier Profil</Link>
+                <a href="/Logout">Deconnexion</a>
                 
               </div>
             )}

@@ -242,14 +242,16 @@ def getLawyer(request,pk):
     return Response(serializer.data)
     
 @api_view(['PUT'])
-def updateLawyer(request,pk):
-    data= request.data
-    lawyer=Lawyer.objects.get(id=pk)
-    serializer=LawyerSerializer(instance=lawyer,data=data)
+def updateLawyer(request, pk):
+    data = request.data
+    lawyer = Lawyer.objects.get(id=pk)
+    serializer = LawyerSerializer(instance=lawyer, data=data, partial=True)
 
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
+        return Response(serializer.data)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['DELETE'])
@@ -268,28 +270,67 @@ def deleteLawyer(request, pk):
 #         navigate('/')
 #     })
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import get_object_or_404
+from .models import Lawyer, Comment, Client
+from .serializers import CommentSerializer
+
 @api_view(['POST'])
 def addCommentaire(request):
     data = request.data
     user_id = data.get('user_id', None)
-    lawyer_id = data.get('lawyer_id', None)
-    avocat = get_object_or_404(Lawyer, pk=lawyer_id)
-    utilisateur = get_object_or_404(Client, pk=user_id)
-
-    commentaire = Comment.objects.create(
-        clientComment=utilisateur,
-        lawyerComment=avocat,
-        bodyComment=data['body']
-    )
-    serializer = CommentSerializer(commentaire, many=False)
-
-    # Ajout du message de succès à la réponse
-    response_data = {
-        'message': 'Commentaire ajouté avec succès!',
-        'commentaire_data': serializer.data
-    }
     
-    return Response(response_data, status=status.HTTP_201_CREATED)
+    if user_id is not None:
+        # L'utilisateur est connecté
+        lawyer_id = data.get('lawyer_id', None)
+        avocat = get_object_or_404(Lawyer, pk=lawyer_id)
+        utilisateur = get_object_or_404(Client, pk=user_id)
+
+        commentaire = Comment.objects.create(
+            clientComment=utilisateur,
+            lawyerComment=avocat,
+            bodyComment=data['body']
+        )
+        serializer = CommentSerializer(commentaire, many=False)
+
+        # Ajout du message de succès à la réponse
+        response_data = {
+            'message': 'Commentaire ajouté avec succès!',
+            'commentaire_data': serializer.data
+        }
+    
+        return Response(response_data, status=status.HTTP_201_CREATED)
+    else:
+        # L'utilisateur n'est pas connecté, renvoyez une réponse d'erreur
+        error_data = {
+            'error': 'Vous devez d\'abord vous authentifier pour ajouter un commentaire.'
+        }
+        return Response(error_data, status=status.HTTP_401_UNAUTHORIZED)
+
+# @api_view(['POST'])
+# def addCommentaire(request):
+#     data = request.data
+#     user_id = data.get('user_id', None)
+#     lawyer_id = data.get('lawyer_id', None)
+#     avocat = get_object_or_404(Lawyer, pk=lawyer_id)
+#     utilisateur = get_object_or_404(Client, pk=user_id)
+
+#     commentaire = Comment.objects.create(
+#         clientComment=utilisateur,
+#         lawyerComment=avocat,
+#         bodyComment=data['body']
+#     )
+#     serializer = CommentSerializer(commentaire, many=False)
+
+#     # Ajout du message de succès à la réponse
+#     response_data = {
+#         'message': 'Commentaire ajouté avec succès!',
+#         'commentaire_data': serializer.data
+#     }
+    
+#     return Response(response_data, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
 def get_comments_by_lawyer(request, lawyer_id):
@@ -306,12 +347,12 @@ def add_rendezvous(request):
     date = data.get('date', None)
     heure = data.get('heure', None)
 
-    user = get_object_or_404(Client, pk=user_id)
-
-    existing_rendezvous = RendezVous.objects.filter(client=user, avocat_id=lawyer_id, dateRDV=date, heureRDV=heure)
+    # Vérifier si l'avocat a déjà un rendez-vous à cette heure
+    existing_rendezvous = RendezVous.objects.filter(avocat_id=lawyer_id, dateRDV=date, heureRDV=heure)
     if existing_rendezvous.exists():
-        return Response({'error': 'Vous avez déjà un rendez-vous à cette date et heure avec cet avocat.'}, status=400)
+        return Response({'error': 'Le créneau horaire est déjà pris par un autre client.'}, status=400)
 
+    user = get_object_or_404(Client, pk=user_id)
     avocat = get_object_or_404(Lawyer, pk=lawyer_id)
 
     rendezvous = RendezVous.objects.create(
@@ -329,6 +370,7 @@ def add_rendezvous(request):
     }
     
     return Response(response_data, status=status.HTTP_201_CREATED)
+
 
 @api_view(['GET'])
 def get_rendezvous_by_lawyer(request, lawyer_id):

@@ -16,11 +16,15 @@ const Profile = () => {
   console.log(userId);
   const { t } = useTranslation();
 
+  const [showAuthError, setShowAuthError] = useState(false);
+
   const changeLanguage = (lng) => {
     console.log("Changing language to:", lng);
     i18n.changeLanguage(lng);
   };
   let { idlawyer } = useParams();
+
+  const [errorAddingComment, setErrorAddingComment] = useState("");
 
   let [commentaires, setCommentaires] = useState([]);
 
@@ -78,18 +82,20 @@ const Profile = () => {
             body: JSON.stringify({
               user_id: userId,
               lawyer_id: idlawyer,
-              body: newComment, // Assurez-vous que le nom correspond à celui attendu par votre backend
+              body: newComment,
             }),
           }
         );
 
         if (response.ok) {
-          // Rafraîchir la liste des commentaires après l'ajout
           getCommentaires();
-          setNewComment(""); // Effacer le champ de commentaire après l'ajout
+          setNewComment("");
           console.log("Commentaire ajouté avec succès !");
         } else {
-          console.error("Erreur lors de l'ajout du commentaire");
+          const errorData = await response.json();
+          setErrorAddingComment(
+            errorData.error || "Erreur lors de l'ajout du commentaire"
+          );
         }
       } catch (error) {
         console.error("Erreur lors de la requête POST :", error);
@@ -104,7 +110,15 @@ const Profile = () => {
   const handleRatingChange = (newRating) => {
     setRating(newRating);
   };
-
+  const handleTakeAppointment = () => {
+    if (userId) {
+      // Utilisateur connecté, rediriger vers la page rendezvous
+      window.location.href = `/rendezvous/${idlawyer}`;
+    } else {
+      // Utilisateur non connecté, afficher le message d'erreur
+      setShowAuthError(true);
+    }
+  };
   return (
     <div className="profile">
       <NavBar />
@@ -124,7 +138,9 @@ const Profile = () => {
               {lawyer.secondName}
             </h1>
             <img
-              src={lawyer.image ? lawyer.image.url : avatar}
+              src={
+                lawyer.image ? `http://127.0.0.1:8000${lawyer.image}` : avatar
+              }
               alt={`${lawyer.firstName} ${lawyer.secondName}`}
               className="profile-image"
             />
@@ -143,9 +159,6 @@ const Profile = () => {
               />
             </p>
 
-            <p className="info-item">
-              <strong>{t("profile.specialty")} :</strong> {lawyer.specialite}
-            </p>
             <p className="info-item">
               <strong>{t("profile.contactDetails")} :</strong>{" "}
               {lawyer.phoneNumber} | {lawyer.email}
@@ -182,13 +195,24 @@ const Profile = () => {
             </div>
           </section>
 
-          <div className="appointment-section">
+          {/* <div className="appointment-section">
             <Link to={`/rendezvous/${idlawyer}`}>
               <button>{t("profile.takeAppointment")}</button>
             </Link>
+          </div> */}
+
+          <div className="appointment-section">
+            <button onClick={handleTakeAppointment}>
+              {t("profile.takeAppointment")}
+            </button>
+            {showAuthError && (
+              <p className="error-message">
+                Vous devez d'abord vous authentifier pour prendre un
+                rendez-vous.
+              </p>
+            )}
           </div>
         </div>
-
         <div className="second">
           <section className="reviews-section">
             <div className="comments">
@@ -234,6 +258,9 @@ const Profile = () => {
               <button onClick={handleAddComment} className="add-comment-btn">
                 {t("profile.addCommentBtn")}
               </button>
+              {errorAddingComment && (
+                <p className="error-message">{errorAddingComment}</p>
+              )}
             </div>
           </section>
 

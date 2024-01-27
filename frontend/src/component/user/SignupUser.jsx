@@ -28,7 +28,7 @@ const SignupUser = () => {
       const response = await axios.post('http://127.0.0.1:8000/api/signupUser/', formDataObject, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-        }
+        } 
       });
       console.log('Signed up:', response.data);
       localStorage.setItem('userId', response.data.user_id); //stocker l'id du client 
