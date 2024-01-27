@@ -150,11 +150,6 @@ const Profile = () => {
             <h2 className="section-title">{t("profile.basicInfo")}</h2>
 
             <p className="info-item">
-<<<<<<< HEAD
-              <strong>{t('profile.rating')} : {rating}</strong>
-              <StarRating initialRating={rating} onChange={handleRatingChange} />
-              <button>Submit</button>
-=======
               <strong>
                 {t("profile.rating")} : {rating}
               </strong>
@@ -162,7 +157,6 @@ const Profile = () => {
                 initialRating={rating}
                 onChange={handleRatingChange}
               />
->>>>>>> 88c922370e323baf32deefaf882471475de235bf
             </p>
 
             <p className="info-item">
