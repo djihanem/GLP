@@ -333,6 +333,6 @@ def add_rendezvous(request):
 @api_view(['GET'])
 def get_rendezvous_by_lawyer(request, lawyer_id):
     avocat = get_object_or_404(Lawyer, pk=lawyer_id)
-    rendezvous = RendezVous.objects.filter(avocat=avocat)
+    rendezvous = RendezVous.objects.filter(avocat=avocat).order_by('dateRDV', 'heureRDV')
     serializer = RendezVousSerializer(rendezvous, many=True)
     return Response(serializer.data)

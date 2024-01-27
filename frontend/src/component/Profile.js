@@ -1,6 +1,6 @@
 import React from "react";
-import { useTranslation } from 'react-i18next';
-import i18n from '../i18n'; 
+import { useTranslation } from "react-i18next";
+import i18n from "../i18n";
 import "./profile.css";
 import { useState, useEffect } from "react";
 import AppointmentSection from "./AppointementSection";
@@ -12,10 +12,12 @@ import avatar from "./pic/avatar.png";
 import StarRating from "./StarRating";
 
 const Profile = () => {
+  const userId = localStorage.getItem("userId");
+  console.log(userId);
   const { t } = useTranslation();
 
   const changeLanguage = (lng) => {
-    console.log('Changing language to:', lng);
+    console.log("Changing language to:", lng);
     i18n.changeLanguage(lng);
   };
   let { idlawyer } = useParams();
@@ -32,6 +34,7 @@ const Profile = () => {
   //   console.log("DATA", data);
   //   setCommentaires(data);
   // };
+
   let getCommentaires = async () => {
     let response = await fetch(
       `http://127.0.0.1:8000/api/get-comments-by-lawyer/${idlawyer}/`
@@ -61,13 +64,40 @@ const Profile = () => {
   const displayedComments = showAllComments
     ? commentaires
     : commentaires.slice(0, 3);
-
-  const handleAddComment = () => {
+  // ******************** add comment link
+  const handleAddComment = async () => {
     if (newComment.trim() !== "") {
-      setComments((prevComments) => [...prevComments, newComment]);
-      setNewComment("");
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/add-commentaire/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user_id: userId,
+              lawyer_id: idlawyer,
+              body: newComment, // Assurez-vous que le nom correspond à celui attendu par votre backend
+            }),
+          }
+        );
+
+        if (response.ok) {
+          // Rafraîchir la liste des commentaires après l'ajout
+          getCommentaires();
+          setNewComment(""); // Effacer le champ de commentaire après l'ajout
+          console.log("Commentaire ajouté avec succès !");
+        } else {
+          console.error("Erreur lors de l'ajout du commentaire");
+        }
+      } catch (error) {
+        console.error("Erreur lors de la requête POST :", error);
+      }
     }
   };
+
+  // *************************
 
   const [rating, setRating] = useState(0);
 
@@ -79,14 +109,19 @@ const Profile = () => {
     <div className="profile">
       <NavBar />
 
-      <button onClick={() => changeLanguage('fr')} className='translate'>French</button>
-      <button onClick={() => changeLanguage('ar')} className='translate'>العربية</button>
+      <button onClick={() => changeLanguage("fr")} className="translate">
+        French
+      </button>
+      <button onClick={() => changeLanguage("ar")} className="translate">
+        العربية
+      </button>
 
-<div className="profile-container">
+      <div className="profile-container">
         <div className="first">
           <div className="profile-header">
             <h1>
-              {t('profile.firstName')} {lawyer.secondName}
+              {lawyer.firstName}
+              {lawyer.secondName}
             </h1>
             <img
               src={lawyer.image ? lawyer.image.url : avatar}
@@ -96,31 +131,40 @@ const Profile = () => {
           </div>
 
           <section className="basic-info-section">
-            <h2 className="section-title">{t('profile.basicInfo')}</h2>
+            <h2 className="section-title">{t("profile.basicInfo")}</h2>
 
             <p className="info-item">
-              <strong>{t('profile.rating')} : {rating}</strong>
-              <StarRating initialRating={rating} onChange={handleRatingChange} />
+              <strong>
+                {t("profile.rating")} : {rating}
+              </strong>
+              <StarRating
+                initialRating={rating}
+                onChange={handleRatingChange}
+              />
             </p>
 
             <p className="info-item">
-              <strong>{t('profile.specialty')} :</strong> {lawyer.specialite}
+              <strong>{t("profile.specialty")} :</strong> {lawyer.specialite}
             </p>
             <p className="info-item">
-              <strong>{t('profile.contactDetails')} :</strong> {lawyer.phoneNumber} | {lawyer.email}
+              <strong>{t("profile.contactDetails")} :</strong>{" "}
+              {lawyer.phoneNumber} | {lawyer.email}
             </p>
             <p className="info-item">
-              <strong>{t('profile.languages')} :</strong> {lawyer.langues}
+              <strong>{t("profile.languages")} :</strong> {lawyer.langues}
             </p>
           </section>
 
           <section className="skills-experience-section">
-            <h2 className="section-title">{t('profile.skillsAndExperience')}</h2>
+            <h2 className="section-title">
+              {t("profile.skillsAndExperience")}
+            </h2>
             <ul className="skills-list">
               <p className="info-item">
-                <strong>{t('profile.description')} :</strong> {lawyer.description}
+                <strong>{t("profile.description")} :</strong>{" "}
+                {lawyer.description}
               </p>
-              <li className="skill-item">Médiation</li>
+              <li className="skill-item">Médiation </li>
               <li className="skill-item">Droit des contrats</li>
               <li className="skill-item">Contentieux</li>
             </ul>
@@ -131,16 +175,16 @@ const Profile = () => {
                   Associé principal chez XYZ Cabinet d'Avocats
                 </h3>
                 <p className="experience-description">
-                  Gestion d'une variété d'affaires civiles et fourniture de conseils juridiques...
+                  Gestion d'une variété d'affaires civiles et fourniture de
+                  conseils juridiques...
                 </p>
               </div>
             </div>
           </section>
 
-
           <div className="appointment-section">
             <Link to={`/rendezvous/${idlawyer}`}>
-            <button>{t('profile.takeAppointment')}</button>
+              <button>{t("profile.takeAppointment")}</button>
             </Link>
           </div>
         </div>
@@ -148,18 +192,20 @@ const Profile = () => {
         <div className="second">
           <section className="reviews-section">
             <div className="comments">
-              <h2 className="section-title">{t('profile.commentsAndRatings')}</h2>
+              <h2 className="section-title">
+                {t("profile.commentsAndRatings")}
+              </h2>
               <ul className="comment-list">
                 {displayedComments.map((comment, index) => (
                   <li key={comment.id} className="comment-card">
                     <img
                       src={avatar}
-                      alt={comment.name}
+                      alt={comment.clientName}
                       className="lawyer-avatar"
                     />
                     <div className="comment-content">
-                      <h4>{comment.name}</h4>
-                      <p>{comment.body}</p>
+                      <h4>{comment.clientName}</h4>
+                      <p>{comment.bodyComment}</p>
                     </div>
                   </li>
                 ))}
@@ -171,8 +217,8 @@ const Profile = () => {
                   className="center-button"
                 >
                   {showAllComments
-                    ? t('profile.viewLess')
-                    : t('profile.viewAllComments')}
+                    ? t("profile.viewLess")
+                    : t("profile.viewAllComments")}
                 </button>
               )}
             </div>
@@ -180,19 +226,19 @@ const Profile = () => {
             <div className="add-comment-section">
               <input
                 type="text"
-                placeholder={t('profile.addComment')}
+                placeholder={t("profile.addComment")}
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
                 className="comment-input"
               />
               <button onClick={handleAddComment} className="add-comment-btn">
-                {t('profile.addCommentBtn')}
+                {t("profile.addCommentBtn")}
               </button>
             </div>
           </section>
 
           <section className="map-section">
-            <h2 className="section-title">{t('profile.geographicalMap')}</h2>
+            <h2 className="section-title">{t("profile.geographicalMap")}</h2>
             <p className="address-info">{lawyer.adresse}</p>
             <div className="map-carte">
               <iframe

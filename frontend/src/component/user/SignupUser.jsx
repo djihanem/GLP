@@ -31,8 +31,7 @@ const SignupUser = () => {
         }
       });
       console.log('Signed up:', response.data);
-
-      const lawyerId = response.data.user_id;
+      localStorage.setItem('userId', response.data.user_id); //stocker l'id du client 
       navigate('/');
     } catch (error) {
       console.error('Error:', error);
