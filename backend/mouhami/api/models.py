@@ -46,3 +46,10 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.bodyComment}"
 
+class Rating(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    lawyer = models.ForeignKey(Lawyer, on_delete=models.CASCADE)
+    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
+
+    def __str__(self):
+        return f"{self.client.clientName} -> {self.lawyer.firstName} {self.lawyer.secondName}: {self.stars} rating"
