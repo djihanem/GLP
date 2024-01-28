@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Commentaire, Lawyer, Comment ,RendezVous, Client
-from .serializers import CommentaireSerializer, LawyerSerializer, RendezVousSerializer , CommentSerializer
+from .models import Commentaire, Lawyer, Comment ,RendezVous, Client, Rating
+from .serializers import CommentaireSerializer, LawyerSerializer, RendezVousSerializer , CommentSerializer, RatingSerializer, AverageRatingSerializer
 from .forms import LawyerSignUpForm, ClientSignUpForm
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -366,4 +366,55 @@ def get_rendezvous_by_lawyer(request, lawyer_id):
     avocat = get_object_or_404(Lawyer, pk=lawyer_id)
     rendezvous = RendezVous.objects.filter(avocat=avocat).order_by('dateRDV', 'heureRDV')
     serializer = RendezVousSerializer(rendezvous, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def add_rating(request):
+    data = request.data
+    user_id = data.get('user_id', None)
+
+    if user_id is not None:
+        # L'utilisateur est connecté
+        lawyer_id = data.get('lawyer_id', None)
+        avocat = get_object_or_404(Lawyer, pk=lawyer_id)
+        utilisateur = get_object_or_404(Client, pk=user_id)
+
+        existing_rating = Rating.objects.filter(clientRating=utilisateur, lawyerRating=avocat).first()
+
+        if existing_rating:
+            existing_rating.rating = data['rating']
+            existing_rating.save()
+        else:
+            rating = Rating.objects.create(
+                clientRating=utilisateur,
+                lawyerRating=avocat,
+                rating=data['rating']
+            )
+        serializer = RatingSerializer(rating, many=False)
+
+        # Ajout du message de succès à la réponse
+        response_data = {
+            'message': 'Évaluation ajoutée avec succès!',
+            'rating_data': serializer.data
+        }
+
+        return Response(response_data, status=status.HTTP_201_CREATED)
+    else:
+        # L'utilisateur n'est pas connecté, renvoyez une réponse d'erreur
+        error_data = {
+            'error': 'Vous devez d\'abord vous authentifier pour ajouter un commentaire.'
+        }
+        return Response(error_data, status=status.HTTP_401_UNAUTHORIZED)
+    
+@api_view(['GET'])
+def get_rating_by_lawyer(request, lawyer_id):
+    avocat = get_object_or_404(Lawyer, pk=lawyer_id)
+    rating = Rating.objects.filter(lawyerRating=avocat)
+    total_ratings = rating.count()
+    if total_ratings > 0:
+        average_rating = sum(rating.rating  for rating in rating) / total_ratings
+    else:
+        average_rating = 0
+
+    serializer = AverageRatingSerializer({'average_rating': average_rating})
     return Response(serializer.data)

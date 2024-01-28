@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
-from .models import Commentaire,Lawyer, Client, Comment, RendezVous
+from .models import Commentaire,Lawyer, Client, Comment, RendezVous, Rating
 
 class CommentaireSerializer(ModelSerializer):
     class Meta:
@@ -30,3 +30,13 @@ class RendezVousSerializer(ModelSerializer):
     class Meta:
         model = RendezVous
         fields = ['clientName', 'avocat', 'dateRDV', 'heureRDV']
+
+class RatingSerializer(ModelSerializer):
+    clientName = serializers.CharField(source='clientRating.clientName', read_only=True)
+
+    class Meta:
+        model = Rating
+        fields = ['rating', 'clientName']
+
+class AverageRatingSerializer(serializers.Serializer):
+    average_rating = serializers.FloatField()
