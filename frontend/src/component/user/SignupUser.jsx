@@ -4,6 +4,7 @@ import './userSignup.css';
 import email_icon from '../pic/email.png';
 import password_icon from '../pic/password.png';
 import { useNavigate } from 'react-router-dom';
+import User from "../avocat/User";
 
 const SignupUser = () => {
   let navigate = useNavigate();
@@ -64,11 +65,15 @@ const SignupUser = () => {
         </div>
 
         <div className="forgot-password">
-          J'ai déjà un compte <span><a href="/LoginUser">Login</a></span>
+          J'ai déjà un compte <span>
+           
+            <a href="./UserLogin">Login</a></span>
         </div>
-
+        <div className="user" style={{ margin: "20px 0" }}>
+         <User/>
+        </div>  
         <div className="submit-container">
-          <button type='submit' className="submit">Sign Up</button>
+          <button type='submit' className="submit" style={{ margin: "-60% 20%" }}>Sign Up</button>
         </div>
       </form>
     </div>

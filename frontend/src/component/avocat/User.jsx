@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import Navbar from '../NavBar';
-import Footer from '../Footer';
 import './User.css';
 
 const User = () => {
@@ -55,12 +53,9 @@ const User = () => {
 
     return (
         <div className='container-main'>
-            <Navbar />
+           
             <GoogleOAuthProvider clientId="743505389927-hjfqqjm0hf0cvh4r1sc9icuu5qscq84f.apps.googleusercontent.com">
-                <div className='register'>
-                    <h1>Vous n'êtes pas encore inscrit ?</h1>
-                    <h2>Commencez maintenant!</h2>
-                </div>
+               
 
                 <div className='google-login-container'>
                     <GoogleLogin
@@ -71,7 +66,7 @@ const User = () => {
                 </div>
             </GoogleOAuthProvider>
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <Footer/>
+         
         </div>
     );
 };

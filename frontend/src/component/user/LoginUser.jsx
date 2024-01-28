@@ -4,6 +4,7 @@ import './userlogin.css';
 import email_icon from '../pic/email.png';
 import password_icon from '../pic/password.png';
 import { useNavigate } from 'react-router-dom'; // Import de useHistory depuis react-router-dom
+import User from "../avocat/User";
 
 
 const LoginUser = () => {
@@ -61,15 +62,21 @@ const LoginUser = () => {
                 <input type="password" name="password" placeholder='Password' value={formData.password} onChange={handleChange} />
               </div>
             </div>
-    
+            
             <div className="forgot-password">
-              don't have an account yet? <span><a href="/SignUpUser">Sign Up</a></span>
+              don't have an account yet? <span><a href="/UserSign">Sign Up</a></span>
             </div>
-    
+            <div className="user" style={{ margin: "20px 0" }}>
+             <User/>
+            </div>
             <div className="submit-container">
-              <button type='submit' className="submit">Login</button>
+             
+              <button type='submit' className="submit" style={{ margin: "-60% 20%" }}>Login</button>
+              
             </div>
+            
           </form>
+          
         </div>
   );
 }
