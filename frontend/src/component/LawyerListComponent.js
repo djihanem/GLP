@@ -83,7 +83,12 @@ const LawyerListComponent = ({ lawyersData }) => {
                   </p>
 
                   <button>
-                    <Link to={`/profil/${lawyer.id}`}>Voir le Profil</Link>
+                    <Link
+                      style={{ color: "white", textDecoration: "none" }}
+                      to={`/profil/${lawyer.id}`}
+                    >
+                      Voir le Profil
+                    </Link>
                   </button>
                 </div>
               </div>
