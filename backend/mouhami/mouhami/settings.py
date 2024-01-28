@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 
     'social_django',
+    'drf_yasg',
 ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '743505389927-hjfqqjm0hf0cvh4r1sc9icuu5qscq84f.apps.googleusercontent.com'

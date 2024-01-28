@@ -32,7 +32,7 @@ class RendezVousSerializer(ModelSerializer):
         fields = ['clientName', 'avocat', 'dateRDV', 'heureRDV']
 
 class RatingSerializer(ModelSerializer):
-    clientName = serializers.CharField(source='clientRating.clientName', read_only=True)
+    clientName = serializers.CharField(source='client.clientName', read_only=True)
 
     class Meta:
         model = Rating
