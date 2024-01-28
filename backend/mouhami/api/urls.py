@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import lawyer_signup, lawyer_login, google_login, logout, user_login, user_signup
+from .views import lawyer_signup, lawyer_login, google_login, logout, user_login, user_signup, get_rating_by_lawyer, add_rating
 
 urlpatterns=[
     path('',views.getRoutes,name="routes"),
@@ -26,9 +26,11 @@ urlpatterns=[
     path('search-lawyers/', views.searchLawyers, name='search-lawyers'),
     path('delete-lawyer/<str:pk>/', views.deleteLawyer, name='delete-lawyer'),
 
-    # Nouvelles vues ajoutées
     path('add-commentaire/', views.addCommentaire, name='add-commentaire'),
     path('get-comments-by-lawyer/<str:lawyer_id>/', views.get_comments_by_lawyer, name='get-comments-by-lawyer'),
     path('add-rendezvous/', views.add_rendezvous, name='add-rendezvous'),
     path('get-rendezvous-by-lawyer/<str:lawyer_id>/', views.get_rendezvous_by_lawyer, name='get-rendezvous-by-lawyer'),
+    path('add-rating/', add_rating, name='add-rating'),
+    path('get-rating-by-lawyer/<str:lawyer_id>/', get_rating_by_lawyer, name='get-rating-by-lawyer'),
+
 ]
