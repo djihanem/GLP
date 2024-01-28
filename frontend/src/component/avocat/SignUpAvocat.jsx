@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './SignUpAvocat.css';
-import email_icon from '../pic/email.png';
+import email_icon from '../pic/email.png'; 
 import password_icon from '../pic/password.png';
 import number_icon from '../pic/number.png';
 import { useNavigate } from 'react-router-dom';
@@ -116,12 +116,12 @@ const SignUpAvocat = () => {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-        });
+        }); 
 
         console.log('Signed up:', response.data);
         const lawyerId = response.data.user_id;
         localStorage.setItem('lawyerId', response.data.user_id);
-        navigate(`/editprofile?id=${lawyerId}`);
+        navigate(`/profil/${lawyerId}`);
       } catch (error) {
         console.error('Error:', error);
       }
