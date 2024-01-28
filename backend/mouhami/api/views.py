@@ -21,6 +21,29 @@ from rest_framework import status
 from django.contrib.auth import logout
 from django.shortcuts import get_object_or_404
 
+
+from rest_framework.pagination import PageNumberPagination
+@api_view(['GET'])
+def getLawyers(request):
+    Lawyers=Lawyer.objects.all() #get all lawyers from the database 
+    serializer = LawyerSerializer(Lawyers, many=True) #serialize them
+    return Response(serializer.data)
+
+
+# @api_view(['GET'])
+# def get_lawyers(request):
+#     page_size = 6
+#     paginator = PageNumberPagination()
+#     paginator.page_size = page_size
+
+#     lawyers = Lawyer.objects.all()
+#     result_page = paginator.paginate_queryset(lawyers, request)
+
+#     serializer = LawyerSerializer(result_page, many=True)
+    
+#     return paginator.get_paginated_response(serializer.data)
+
+
 @api_view(['GET'])
 def searchLawyers(request):
     # Récupère les paramètres de recherche depuis la requête GET
@@ -229,11 +252,6 @@ def getCommentaire(request,pk):
     serializer = CommentaireSerializer(commentaire, many=False) #serialize them
     return Response(serializer.data)
 
-@api_view(['GET'])
-def getLawyers(request):
-    Lawyers=Lawyer.objects.all() #get all lawyers from the database 
-    serializer = LawyerSerializer(Lawyers, many=True) #serialize them
-    return Response(serializer.data)
 
 @api_view(['GET'])
 def getLawyer(request,pk):
