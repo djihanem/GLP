@@ -119,6 +119,7 @@ try:
         time.sleep(0.2)
     time.sleep(2)
     
+    
     input_element = driver.find_element(By.NAME, "email")
     text_to_type = "melissa@gmail.com"
 
