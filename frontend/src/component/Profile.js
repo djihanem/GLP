@@ -22,8 +22,8 @@ const Profile = () => {
   const [showAllComments, setShowAllComments] = useState(false);
   const [newComment, setNewComment] = useState("");
   let [lawyer, setLawyer] = useState({});
-  const [rating, setRating] = useState(0);
-  const [ratingAvg, setRatingAvg] = useState(0);
+  const [rating, setRating] = useState();
+  const [ratingAvg, setRatingAvg] = useState();
 
 
   const changeLanguage = (lng) => {
@@ -46,8 +46,17 @@ const Profile = () => {
   
   useEffect(() => {
     getCommentaires();
-    getRatingAvg();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getRatingAvg();
+      console.log('Rating Average:', ratingAvg);
+    };
+    fetchData();
+  }, []);
+
+
 
   const displayedComments = showAllComments
     ? commentaires
@@ -96,7 +105,13 @@ const Profile = () => {
   };
 
   const handleRatingChange = async (newRating) => {
+    
     try {
+      if (!userId) {
+        console.log("User is not authenticated. Please log in.");
+        return;
+      }
+
       const response = await fetch(`http://127.0.0.1:8000/api/add-rating/`, {
         method: "POST",
         headers: {
@@ -111,23 +126,23 @@ const Profile = () => {
   
       if (response.ok) {
         // Check if the user has already rated this lawyer
-        const existingRatingIndex = commentaires.findIndex(
-          (comment) =>
-            comment.client_id === parseInt(userId) &&
-            comment.lawyer_id === parseInt(idlawyer)
+        const existingRatingIndex = rating.findIndex(
+          (ratingItem) =>
+            ratingItem.client_id === parseInt(userId) &&
+            ratingItem.lawyer_id === parseInt(idlawyer)
         );
   
         if (existingRatingIndex !== -1) {
           // Update the existing rating in the state
-          setCommentaires((prevComments) => {
-            const updatedComments = [...prevComments];
-            updatedComments[existingRatingIndex].rating = newRating;
-            return updatedComments;
+          setCommentaires((prevRating) => {
+            const updatedRating = [...prevRating];
+            updatedRating[existingRatingIndex].rating = newRating;
+            return updatedRating;
           });
         } else {
           // Add a new rating to the state
-          setCommentaires((prevComments) => [
-            ...prevComments,
+          setCommentaires((prevRating) => [
+            ...prevRating,
             {
               client_id: parseInt(userId),
               lawyer_id: parseInt(idlawyer),
@@ -137,8 +152,9 @@ const Profile = () => {
         }
   
         // Fetch the average rating after updating
-        getRatingAvg();
+        await getRatingAvg();
         console.log("Évaluation ajoutée avec succès !");
+        window.location.reload();
       } else {
         const errorData = await response.json();
         setErrorAddingRating(
@@ -157,6 +173,7 @@ const Profile = () => {
       if (response.ok) {
         const data = await response.json();
         setRatingAvg(data.average_rating);
+        console.log("Server response:", data);
       } else {
         setErrorAddingAvg("Erreur lors de la récupération de la note moyenne");
       }
@@ -206,8 +223,10 @@ const Profile = () => {
             <h2 className="section-title">{t("profile.basicInfo")}</h2>
 
             <p className="info-item">
-            <strong>{t("profile.rating")} : {ratingAvg}</strong>
-              <StarRating readOnly initialRating={ratingAvg} />
+            <strong>{t("profile.rating")} </strong>
+              {typeof ratingAvg === 'number' && (
+                <StarRating readOnly initialRating={ratingAvg} />
+              )}
             </p>
 
             <p className="info-item">
@@ -312,15 +331,23 @@ const Profile = () => {
               {errorAddingComment && (
                 <p className="error-message">{errorAddingComment}</p>
               )}
-
-              <section className="add-rating-section">
-                <h2 className="section-title">{t("profile.addRating")}</h2>
-                <StarRating initialRating={rating} onChange={handleRatingChange} />
-              </section>
-              {errorAddingRating && (
-                <p className="error-message">{errorAddingRating}</p>
-              )}
             </div>
+          </section>
+
+          <section className="reviews-section">
+            <h2 className="section-title">{t("Ajoutez votre notation")}</h2>
+              {userId ? (
+                rating ? (
+              <>
+              <p>Your rating: {rating}</p>
+              <StarRating readOnly initialRating={rating} />
+              </>
+              ) : (
+              <StarRating initialRating={0} onChange={handleRatingChange} />
+              )
+            ) : (
+              <p>Vous devez s'authentifier pour pouvoir ajouter votre feedback.</p>
+            )}
           </section>
 
           <section className="map-section">

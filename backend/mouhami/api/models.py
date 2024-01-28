@@ -52,4 +52,5 @@ class Rating(models.Model):
     rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
 
     def __str__(self):
-        return f"{self.client.clientName} -> {self.lawyer.firstName} {self.lawyer.secondName}: {self.rating} rating"
+        return f"{self.clientRating.clientName} -> {self.lawyerRating.firstName} {self.lawyerRating.secondName}: {self.rating} rating"
+    

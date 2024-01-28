@@ -384,13 +384,14 @@ def add_rating(request):
         if existing_rating:
             existing_rating.rating = data['rating']
             existing_rating.save()
+            serializer = RatingSerializer(existing_rating, many=False)
         else:
             rating = Rating.objects.create(
                 clientRating=utilisateur,
                 lawyerRating=avocat,
                 rating=data['rating']
             )
-        serializer = RatingSerializer(rating, many=False)
+            serializer = RatingSerializer(rating, many=False)
 
         # Ajout du message de succès à la réponse
         response_data = {
@@ -405,6 +406,8 @@ def add_rating(request):
             'error': 'Vous devez d\'abord vous authentifier pour ajouter un commentaire.'
         }
         return Response(error_data, status=status.HTTP_401_UNAUTHORIZED)
+
+
     
 @api_view(['GET'])
 def get_rating_by_lawyer(request, lawyer_id):
@@ -412,7 +415,7 @@ def get_rating_by_lawyer(request, lawyer_id):
     rating = Rating.objects.filter(lawyerRating=avocat)
     total_ratings = rating.count()
     if total_ratings > 0:
-        average_rating = sum(rating.rating  for rating in rating) / total_ratings
+        average_rating = (sum(rating.rating  for rating in rating) // total_ratings)
     else:
         average_rating = 0
 
