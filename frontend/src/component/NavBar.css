@@ -1,12 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
-
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Vadodara&family=PT+Serif&display=swap');
     * {
         border: 0;
         margin: 0;
         box-sizing: border-box;
-        font-family: 'DM Serif Display', serif !important;
-
-        
+        font-family: 'Hind Vadodara', sans-serif;
     }
     
      :root {
@@ -16,7 +13,7 @@
         ---textColor: #eee;
     }
     
- header {
+    header {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -25,7 +22,6 @@
         background-color: rgba(58, 38, 5, 0.959);
         color: var(---textColor);
         width: 100%;
-        
     }
     
     nav a {
@@ -34,13 +30,11 @@
         text-decoration: none;
         font-size: 1.5rem;
         width: 200px;
-        margin-left: -10%;
     }
     
     header h3 a img {
-        width:30%;
-       margin-top:-5% !important;
-       margin-left: -55%;
+        width: 30%;
+        border-radius: 50%;
     }
     
     nav {

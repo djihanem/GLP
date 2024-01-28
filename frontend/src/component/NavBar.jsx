@@ -4,7 +4,7 @@ import avocat from './pic/avocat.jpg'
 import './NavBar.css';
 import { Link } from "react-router-dom";
 // import './avocat/LogInSignUpAvocat'; 
-import Muhami from './pic/mouhamidz-high-resolution-logo-transparent.png'
+
 
 
 function Navbar() {
@@ -21,20 +21,20 @@ function Navbar() {
   };
 
   return (
-    <div id='font-nav'>
+    <div>
       <header>
-        <h3><a href="/Home"><img src={Muhami}/></a></h3>
+        <h3><a href="/Home"><img src={avocat}/></a></h3>
         <nav ref={navRef}>
          
           <a href="/Home">Accueil</a>
           
-          <a href="/Lawyer">Avocats</a>
-          <a href="/Home/#about">À propos</a>
+          <a href="/Lawyer">Avocat</a>
+          <a href="/Home/#about">À propos de nous</a>
           <a href="/Home/#servicess">Services</a>
-          <a href="/Home/#contact">Contact</a>
+          <a href="/Home/#contact">Contactez-nous</a>
 
           {/* Le bouton du menu déroulant */}
-          <div className="dropdown" style={{ marginRight: "4.5%" }}>
+          <div className="dropdown">
           <span style={{ visibility: "hidden" }}>----</span>
             <button className="dropbtn" onClick={toggleDropdown}>
             
@@ -44,12 +44,12 @@ function Navbar() {
             </button>
             {isDropdownOpen && (
               <div className="dropdown-content">
-              <a href="/AvocateSign">Avocat</a>
-              <a href="/UserSign">Utilisateur</a>
-              <Link to={`/editprofile?id=${lawyerId}`}>Modifier Profil</Link>
-              <a href="/AdminDash">Deconnexion</a>
-            </div>
-            
+                <a href="/AvocateSign">Avocat</a>
+                <a href="/UserSign">Utilisateur</a>
+                <Link to={`/editprofile?id=${lawyerId}`}>Modifier Profil</Link>
+                <a href="/AdminDash">Deconnexion</a>
+                
+              </div>
             )}
           </div>
 
