@@ -22,27 +22,13 @@ from django.contrib.auth import logout
 from django.shortcuts import get_object_or_404
 
 
+
 from rest_framework.pagination import PageNumberPagination
 @api_view(['GET'])
 def getLawyers(request):
     Lawyers=Lawyer.objects.all() #get all lawyers from the database 
     serializer = LawyerSerializer(Lawyers, many=True) #serialize them
     return Response(serializer.data)
-
-
-# @api_view(['GET'])
-# def get_lawyers(request):
-#     page_size = 6
-#     paginator = PageNumberPagination()
-#     paginator.page_size = page_size
-
-#     lawyers = Lawyer.objects.all()
-#     result_page = paginator.paginate_queryset(lawyers, request)
-
-#     serializer = LawyerSerializer(result_page, many=True)
-    
-#     return paginator.get_paginated_response(serializer.data)
-
 
 @api_view(['GET'])
 def searchLawyers(request):
@@ -279,21 +265,6 @@ def deleteLawyer(request, pk):
     
     return Response({'message': 'Lawyer was deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
 
-# let deleteNote= async(()=>{
-#     fetch(`/api/lawyer/{lawyerID}/delete`),{
-#         method: 'DELETE',
-#         'headers':{
-#                'Content-Type':'application/json'
-#         }}
-#         navigate('/')
-#     })
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from django.shortcuts import get_object_or_404
-from .models import Lawyer, Comment, Client
-from .serializers import CommentSerializer
 
 @api_view(['POST'])
 def addCommentaire(request):
