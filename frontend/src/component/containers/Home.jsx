@@ -19,6 +19,7 @@ import { GrUserPolice } from "react-icons/gr";
 import { FaHandshake } from "react-icons/fa6";
 import Footer from "../Footer";
 import picturehome from '../pic/finlaw.jpg';
+import pichome from '../pic/homee.JPG';
 
 
 
@@ -38,7 +39,7 @@ const Home = () => {
          <section id="home">
             <div className="home">
               <div className="my-pic">
-                <img src={picturehome} />
+                <img src={pichome} />
               </div>
            </div>
          </section>

@@ -356,7 +356,7 @@ const Profile = () => {
             <p className="address-info">{lawyer.adresse}</p>
             <div className="map-carte">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102272.51549283971!2d4.9245762739371415!3d36.77018100325001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12f2cca1a82082c5%3A0x7807b41e13330b6e!2zQsOpamHDr2E!5e0!3m2!1sfr!2sdz!4v1706494521457!5m2!1sfr!2sdz"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102656.45963598845!2d2.717788105303067!3d36.48136915559906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128f0c66865a4cd1%3A0xccfcf9c073646dfe!2sBlida!5e0!3m2!1sfr!2sdz!4v1706502173694!5m2!1sfr!2sdz"
                 width="600"
                 height="450"
                 allowFullScreen=""
