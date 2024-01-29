@@ -179,8 +179,8 @@ const AppointmentSection = () => {
                 <tr>
                   <th>{t("appointment.table.date")}</th>
                   <th>{t("appointment.table.time")}</th>
-                  <th>{t("appointment.table.clientName")}</th>
-                  <th>{t("appointment.table.motif")}</th>
+                  <th>{t("Nom Client")}</th>
+                  <th>{t("Motif du rendezvous")}</th>
                 </tr>
               </thead>
               <tbody>

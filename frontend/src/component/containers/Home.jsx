@@ -7,8 +7,6 @@ import {CiBank} from 'react-icons/ci';
 import { GoLaw } from "react-icons/go";
 import { BsFillAwardFill } from "react-icons/bs";
 import law_icon from '../pic/law.jpg';
-import pichome from '../pic/homee.JPG';
-
 import team_one from '../pic/team1.jpg';
 import team_two from '../pic/team2.jpg';
 import home from '../pic/homee.JPG';
@@ -40,7 +38,7 @@ const Home = () => {
          <section id="home">
             <div className="home">
               <div className="my-pic">
-                <img src={pichome} />
+                <img src={picturehome} />
               </div>
            </div>
          </section>

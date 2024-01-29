@@ -66,7 +66,7 @@ const LoginAvocat = () => {
       localStorage.setItem('lawyerId', response.data.user_id);
 
       // Redirect to the edit profile page with the lawyer ID as a query parameter
-      navigate(`/profil/${lawyerId}`);
+      navigate(`/editprofile?id=${lawyerId}`);
     } catch (error) {
       console.error('Error:', error);
     }
