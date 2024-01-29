@@ -46,8 +46,9 @@ function Navbar() {
               <div className="dropdown-content">
               <a href="/AvocateSign">Avocat</a>
               <a href="/UserSign">Utilisateur</a>
-              <Link to={`/editprofile?id=${lawyerId}`}>Modifier Profil</Link>
-              <a href="/AdminDash">Deconnexion</a>
+              <Link to={`/editprofile?id=${lawyerId}`}>Modifier Profil</Link> 
+              {/* <a href="/AdminDash">Admin</a> */}
+              <a href="/Home">Deconnexion</a>
             </div>
             
             )}

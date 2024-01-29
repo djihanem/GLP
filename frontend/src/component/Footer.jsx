@@ -2,14 +2,14 @@ import React from 'react';
 import './Footer.css'; 
 import { FaInstagram , FaFacebook,FaTwitter} from "react-icons/fa6";
 import avocat from './pic/avocat.jpg';
-
+import Muhami from './pic/mouhamidz-high-resolution-logo-transparent.png'
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="inner-container">
         <div className="column">
-         <h3><a href="./Home"><img src={avocat}/></a></h3>
+         <h3><a href="./Home"><img src={Muhami}/></a></h3>
           <p>À propos de notre entreprise et de notre mission.</p>
         </div>
         <div className="column">

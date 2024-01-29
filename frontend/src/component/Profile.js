@@ -11,6 +11,7 @@ import StarRating from "./StarRating";
 
 const Profile = () => {
   const userId = localStorage.getItem("userId");
+  //const userId = null;
   console.log(userId);
   const { t } = useTranslation();
 
@@ -24,7 +25,6 @@ const Profile = () => {
   let [lawyer, setLawyer] = useState({});
   const [rating, setRating] = useState();
   const [ratingAvg, setRatingAvg] = useState();
-
 
   const changeLanguage = (lng) => {
     console.log("Changing language to:", lng);
@@ -43,7 +43,7 @@ const Profile = () => {
     let data = await response.json();
     setLawyer(data);
   };
-  
+
   useEffect(() => {
     getCommentaires();
   }, []);
@@ -51,12 +51,10 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       await getRatingAvg();
-      console.log('Rating Average:', ratingAvg);
+      console.log("Rating Average:", ratingAvg);
     };
     fetchData();
   }, []);
-
-
 
   const displayedComments = showAllComments
     ? commentaires
@@ -105,7 +103,6 @@ const Profile = () => {
   };
 
   const handleRatingChange = async (newRating) => {
-    
     try {
       if (!userId) {
         console.log("User is not authenticated. Please log in.");
@@ -123,7 +120,7 @@ const Profile = () => {
           rating: newRating,
         }),
       });
-  
+
       if (response.ok) {
         // Check if the user has already rated this lawyer
         const existingRatingIndex = rating.findIndex(
@@ -131,17 +128,17 @@ const Profile = () => {
             ratingItem.client_id === parseInt(userId) &&
             ratingItem.lawyer_id === parseInt(idlawyer)
         );
-  
+
         if (existingRatingIndex !== -1) {
           // Update the existing rating in the state
-          setCommentaires((prevRating) => {
+          setRating((prevRating) => {
             const updatedRating = [...prevRating];
             updatedRating[existingRatingIndex].rating = newRating;
             return updatedRating;
           });
         } else {
           // Add a new rating to the state
-          setCommentaires((prevRating) => [
+          setRating((prevRating) => [
             ...prevRating,
             {
               client_id: parseInt(userId),
@@ -150,11 +147,10 @@ const Profile = () => {
             },
           ]);
         }
-  
+
         // Fetch the average rating after updating
         await getRatingAvg();
         console.log("Évaluation ajoutée avec succès !");
-        window.location.reload();
       } else {
         const errorData = await response.json();
         setErrorAddingRating(
@@ -165,11 +161,12 @@ const Profile = () => {
       console.error("Erreur lors de la requête POST :", error);
     }
   };
-  
 
   const getRatingAvg = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/get-rating-by-lawyer/${idlawyer}/`);
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/get-rating-by-lawyer/${idlawyer}/`
+      );
       if (response.ok) {
         const data = await response.json();
         setRatingAvg(data.average_rating);
@@ -178,10 +175,12 @@ const Profile = () => {
         setErrorAddingAvg("Erreur lors de la récupération de la note moyenne");
       }
     } catch (error) {
-      console.error("Erreur lors de la récupération de la note moyenne :", error);
+      console.error(
+        "Erreur lors de la récupération de la note moyenne :",
+        error
+      );
     }
   };
-
 
   const handleTakeAppointment = () => {
     if (userId) {
@@ -223,8 +222,8 @@ const Profile = () => {
             <h2 className="section-title">{t("profile.basicInfo")}</h2>
 
             <p className="info-item">
-            <strong>{t("profile.rating")} </strong>
-              {typeof ratingAvg === 'number' && (
+              <strong>{t("profile.rating")} </strong>
+              {typeof ratingAvg === "number" && (
                 <StarRating readOnly initialRating={ratingAvg} />
               )}
             </p>
@@ -336,17 +335,19 @@ const Profile = () => {
 
           <section className="reviews-section">
             <h2 className="section-title">{t("Ajoutez votre notation")}</h2>
-              {userId ? (
-                rating ? (
-              <>
-              <p>Your rating: {rating}</p>
-              <StarRating readOnly initialRating={rating} />
-              </>
+            {userId ? (
+              rating ? (
+                <>
+                  <p>Your rating: {rating}</p>
+                  <StarRating readOnly initialRating={rating} />
+                </>
               ) : (
-              <StarRating initialRating={0} onChange={handleRatingChange} />
+                <StarRating initialRating={0} onChange={handleRatingChange} />
               )
             ) : (
-              <p>Vous devez s'authentifier pour pouvoir ajouter votre feedback.</p>
+              <p>
+                Vous devez s'authentifier pour pouvoir ajouter votre feedback.
+              </p>
             )}
           </section>
 
@@ -355,7 +356,7 @@ const Profile = () => {
             <p className="address-info">{lawyer.adresse}</p>
             <div className="map-carte">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102439.54174620449!2d4.8550631212012645!3d36.6447804553586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128d2e53efa9d9cf%3A0x6ea31897a5bddc54!2sAmizour!5e0!3m2!1sfr!2sdz!4v1703300570108!5m2!1sfr!2sdz"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102272.51549283971!2d4.9245762739371415!3d36.77018100325001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12f2cca1a82082c5%3A0x7807b41e13330b6e!2zQsOpamHDr2E!5e0!3m2!1sfr!2sdz!4v1706494521457!5m2!1sfr!2sdz"
                 width="600"
                 height="450"
                 allowFullScreen=""
@@ -363,6 +364,7 @@ const Profile = () => {
                 referrerPolicy="no-referrer-when-downgrade"
                 className="map-iframe"
               ></iframe>
+              {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102272.51549283971!2d4.9245762739371415!3d36.77018100325001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12f2cca1a82082c5%3A0x7807b41e13330b6e!2zQsOpamHDr2E!5e0!3m2!1sfr!2sdz!4v1706494521457!5m2!1sfr!2sdz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> */}
             </div>
           </section>
         </div>

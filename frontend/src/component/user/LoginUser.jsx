@@ -33,7 +33,11 @@ const LoginUser = () => {
       });
       console.log('Logged in:', response.data);
 
-      localStorage.setItem('userId', response.data.user_id); //stocker l'id du client 
+      localStorage.setItem('userId', response.data.user_id);
+       //stocker l'id du client 
+
+      //  localStorage.setItem('userId', null);
+
      navigate(`/`); 
  
     
